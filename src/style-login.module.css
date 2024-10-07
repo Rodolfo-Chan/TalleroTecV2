@@ -1,0 +1,136 @@
+.contenedor {
+    display: flex;
+    height: 100vh; 
+    position: relative; /* Agregado */
+}
+
+.imagen {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    position: relative; 
+}
+
+.imagen img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.imagen::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 10%; /* anchura semicírculo */
+    background-color: #ffffff; 
+    overflow: hidden;
+    border-radius: 40% 0% 0% 40%; /* redondeado */
+    z-index: 2; /* Asegura que esté por encima del triángulo derecho */
+}
+
+.triangulo-equilatero-bottom-left {
+    position: absolute;
+    bottom: 0; /* Alineado con la parte inferior del contenedor */
+    left: 0; /* Alineado con el lado izquierdo del contenedor */
+    width: 0;
+    height: 0;
+    border-right: 50px solid transparent; /* Ancho del triángulo */
+    border-top: 200px solid transparent; /* Altura del triángulo */
+    border-left: 500px solid #011364; /* Ancho del triángulo */
+}
+
+.triangulo-derecho {
+    position: absolute;
+    bottom: 0; /* Alineado con la parte inferior del contenedor */
+    right: 0; /* Alineado con el lado derecho del contenedor */
+    width: 0;
+    height: 0;
+    border-left: 50px solid transparent; /* Ancho del triángulo */
+    border-top: 200px solid transparent; /* Altura del triángulo */
+    border-right: 500px solid #395aff; /* Ancho del triángulo */
+    z-index: 1; /* Para que esté por debajo del pseudo-elemento */
+}
+
+
+.cuadro-login {
+    flex: 1;
+    background-color: rgb(255, 255, 255);
+    display: flex; 
+    justify-content: center;
+    align-items: center; 
+    flex-direction: column;
+}
+
+.logo-tec {
+    width: 150px;
+    height: 170px;
+    filter: drop-shadow(1px 1px 10px #05000e);
+}
+
+.formulario {
+    margin-top: 20px;
+}
+
+.campo {
+    margin-bottom: 15px;
+    color: #058AFF;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input {
+    width: 10cm;
+    padding: 10px;
+    border-radius: 5px;
+    border: 2px solid #0A76EB;
+}
+
+.button-login {
+    width: 5cm;
+    padding: 10px;
+    border-radius: 5px;
+    border: 3px solid #7eb1df;
+    background-color: #11325A;
+    color: white;
+    cursor: pointer;
+    margin-left: auto;
+    margin-right: auto;
+    display: block; 
+}
+
+button:hover {
+    background-color: #0D47A1; /* Cambia el color al pasar el mouse sobre el botón */
+}
+
+button:active {
+    background-color: #0A276C; /* Cambia el color cuando se hace clic en el botón */
+}
+
+.title {
+    color: #00193a;
+}
+
+/* Estilos para el contenedor de la contraseña */
+.password-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  
+  .password-container input {
+    width: 100%;
+    padding-right: 30px; /* Espacio para el ícono */
+  }
+  
+  .password-toggle {
+    position: absolute;
+    right: 10px;
+    cursor: pointer;
+    color: #1150ff;
+  }
+  

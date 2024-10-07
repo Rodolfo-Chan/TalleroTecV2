@@ -1,0 +1,63 @@
+.navbar {
+  background-color: #00087a;
+  color: white;
+  padding: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 19px;
+  position: relative;
+  flex-wrap: wrap; /* Permite que los elementos se ajusten en pantallas pequeñas */
+}
+
+.logoContainer { 
+  display: flex;
+  align-items: center;
+}
+
+.logoImg {  
+  width: 70px;
+  height: auto;
+  margin-right: 20px;
+}
+
+.siteName {
+  font-size: 90px;
+  font-weight: bold;
+  color: rgb(255, 255, 255);
+  display: block;
+  font-size: 2em;
+}
+
+.menuToggle {
+  font-size: 30px;
+  color: rgb(255, 255, 255);
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: none;
+  padding: 0; /* Elimina padding extra */
+  margin: 0;  /* Asegura que no haya márgenes extra */
+  line-height: 1; /* Ajusta el alineamiento vertical */
+}
+
+/* Estilo para pantallas pequeñas */
+@media (max-width: 768px) {
+  .menuToggle {
+    display: block;
+    align-self: center; /* Asegura que esté centrado verticalmente */
+  }
+
+  .siteName {
+    font-size: 1.5em; /* Reduce el tamaño del título en pantallas pequeñas */
+  }
+
+  .logoImg {
+    width: 50px; /* Reduce el tamaño del logo en pantallas pequeñas */
+    margin-right: 10px;
+  }
+
+  .navbar {
+    padding: 5px; /* Ajuste de padding para pantallas pequeñas */
+  }
+}

@@ -1,0 +1,345 @@
+
+/* Definición de las animaciones y propiedades personalizadas */
+@keyframes hero-gradient-animation {
+    0% {
+        --x-0: 37%;
+        --s-start-0: 16%;
+        --s-end-0: 78%;
+        --c-0: rgb(0, 5, 73);
+        --y-0: 27%;
+        --c-1: rgb(0, 2, 63);
+        --y-1: 34%;
+        --x-1: 37%;
+        --s-start-1: 1%;
+        --s-end-1: 76%;
+        --s-start-2: 4%;
+        --s-end-2: 75%;
+        --c-2: rgb(1, 19, 63);
+        --x-2: 20%;
+        --y-2: 96%;
+        --y-3: 74%;
+        --c-3: rgb(26, 0, 139);
+        --x-3: 77%;
+        --s-start-3: 5%;
+        --s-end-3: 53%;
+        --x-4: 89%;
+        --y-4: 40%;
+        --s-start-4: 10%;
+        --s-end-4: 73%;
+        --c-4: rgba(0, 5, 80, 0.397);
+    }
+    100% {
+        --x-0: 41%;
+        --s-start-0: 18%;
+        --s-end-0: 69%;
+        --c-0: rgb(0, 4, 54);
+        --y-0: 2%;
+        --c-1: rgb(0, 9, 58);
+        --y-1: 73%;
+        --x-1: 0%;
+        --s-start-1: 12%;
+        --s-end-1: 88%;
+        --s-start-2: 9%;
+        --s-end-2: 56%;
+        --c-2: rgb(207, 225, 238);
+        --x-2: 24%;
+        --y-2: 15%;
+        --y-3: 15%;
+        --c-3: rgb(7, 0, 109);
+        --x-3: 9%;
+        --s-start-3: 5%;
+        --s-end-3: 87%;
+        --x-4: 84%;
+        --y-4: 50%;
+        --s-start-4: 0%;
+        --s-end-4: 89%;
+        --c-4: rgb(24, 0, 109);
+    }
+  }
+  
+  @property --x-0 {
+    syntax: '<percentage>';
+    inherits: false;
+    initial-value: 37%;
+  }
+  
+  @property --s-start-0 {
+    syntax: '<percentage>';
+    inherits: false;
+    initial-value: 16%;
+  }
+  
+  @property --s-end-0 {
+    syntax: '<percentage>';
+    inherits: false;
+    initial-value: 78%;
+  }
+  
+  @property --c-0 {
+    syntax: '<color>';
+    inherits: false;
+    initial-value: rgb(14, 0, 65);
+  }
+  
+  @property --y-0 {
+    syntax: '<percentage>';
+    inherits: false;
+    initial-value: 27%;
+  }
+  
+  @property --c-1 {
+    syntax: '<color>';
+    inherits: false;
+    initial-value: rgb(0, 2, 59);
+  }
+  
+  @property --y-1 {
+    syntax: '<percentage>';
+    inherits: false;
+    initial-value: 34%;
+  }
+  
+  @property --x-1 {
+    syntax: '<percentage>';
+    inherits: false;
+    initial-value: 37%;
+  }
+  
+  @property --s-start-1 {
+    syntax: '<percentage>';
+    inherits: false;
+    initial-value: 1%;
+  }
+  
+  @property --s-end-1 {
+    syntax: '<percentage>';
+    inherits: false;
+    initial-value: 76%;
+  }
+  
+  @property --s-start-2 {
+    syntax: '<percentage>';
+    inherits: false;
+    initial-value: 4%;
+  }
+  
+  @property --s-end-2 {
+    syntax: '<percentage>';
+    inherits: false;
+    initial-value: 75%;
+  }
+  
+  @property --c-2 {
+    syntax: '<color>';
+    inherits: false;
+    initial-value: rgb(0, 13, 43);
+  }
+  
+  @property --x-2 {
+    syntax: '<percentage>';
+    inherits: false;
+    initial-value: 20%;
+  }
+  
+  @property --y-2 {
+    syntax: '<percentage>';
+    inherits: false;
+    initial-value: 96%;
+  }
+  
+  @property --y-3 {
+    syntax: '<percentage>';
+    inherits: false;
+    initial-value: 74%;
+  }
+  
+  @property --c-3 {
+    syntax: '<color>';
+    inherits: false;
+    initial-value: hsla(106, 35%, 81%, 1);
+  }
+  
+  @property --x-3 {
+    syntax: '<percentage>';
+    inherits: false;
+    initial-value: 77%;
+  }
+  
+  @property --s-start-3 {
+    syntax: '<percentage>';
+    inherits: false;
+    initial-value: 5%;
+  }
+  
+  @property --s-end-3 {
+    syntax: '<percentage>';
+    inherits: false;
+    initial-value: 53%;
+  }
+  
+  @property --x-4 {
+    syntax: '<percentage>';
+    inherits: false;
+    initial-value: 89%;
+  }
+  
+  @property --y-4 {
+    syntax: '<percentage>';
+    inherits: false;
+    initial-value: 40%;
+  }
+  
+  @property --s-start-4 {
+    syntax: '<percentage>';
+    inherits: false;
+    initial-value: 10%;
+  }
+  
+  @property --s-end-4 {
+    syntax: '<percentage>';
+    inherits: false;
+    initial-value: 73%;
+  }
+  
+  @property --c-4 {
+    syntax: '<color>';
+    inherits: false;
+    initial-value: hsla(109, 57%, 96%, 1);
+  }
+  
+
+
+
+  .sidebar {
+    width: 200px;
+    background-color: #0d0142;
+    color: white;
+    padding: 20px;
+    height: 100vh;
+    transition: left 0.3s ease;
+    position: relative;
+    overflow-y: auto; /* Habilita el scroll vertical si el contenido excede la altura */
+    max-height: 100vh; /* Asegura que el sidebar no exceda la altura de la pantalla */
+    --x-0: 37%;
+    --c-0: rgb(3, 29, 34);
+    --y-0: 27%;
+    --c-1: rgb(0, 2, 65);
+    --y-1: 34%;
+    --x-1: 37%;
+    --c-2: rgb(2, 26, 82);
+    --x-2: 20%;
+    --y-2: 96%;
+    --y-3: 74%;
+    --c-3: rgb(2, 0, 90);
+    --x-3: 77%;
+    --x-4: 89%;
+    --y-4: 40%;
+    --c-4: rgba(0, 12, 22, 0.477);
+    
+    background-color: rgb(12, 3, 104);
+    background-image: radial-gradient(circle at var(--x-0) var(--y-0), var(--c-0) var(--s-start-0), transparent var(--s-end-0)),
+                      radial-gradient(circle at var(--x-1) var(--y-1), var(--c-1) var(--s-start-1), transparent var(--s-end-1)),
+                      radial-gradient(circle at var(--x-2) var(--y-2), var(--c-2) var(--s-start-2), transparent var(--s-end-2)),
+                      radial-gradient(circle at var(--x-3) var(--y-3), var(--c-3) var(--s-start-3), transparent var(--s-end-3)),
+                      radial-gradient(circle at var(--x-4) var(--y-4), var(--c-4) var(--s-start-4), transparent var(--s-end-4));
+    animation: hero-gradient-animation 10s linear infinite alternate;
+    background-blend-mode: normal, normal, normal, normal, normal;
+}
+
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin: 15px 0;
+}
+
+.sidebar ul li a {
+  color: white;
+  text-decoration: none;
+  background-color: #6200ea; /* Fondo de botón */
+  padding: 10px 15px; /* Espaciado interno del botón */
+  border-radius: 5px; /* Bordes redondeados */
+  display: flex; /* Usar flexbox */
+  align-items: center; /* Alinear verticalmente */
+  justify-content: start; /* Alinear ícono y texto a la izquierda */
+  text-align: left; /* Alinear el texto a la izquierda */
+  transition: background-color 0.3s ease, color 0.3s ease;
+  gap: 10px; /* Espacio entre el icono y el texto */
+  width: 100%; /* Ocupa todo el ancho */
+  box-sizing: border-box; /* Evitar que el padding afecte el ancho */
+  min-width: 150px; /* Establecer un ancho mínimo */
+}
+
+.sidebar ul li a svg {
+  margin-right: 8px; /* Ajustar el margen derecho del ícono */
+  font-size: 1.2em; /* Ajustar el tamaño del ícono */
+  flex-shrink: 0; /* Evitar que el ícono se reduzca */
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+.sidebar ul li a:hover svg {
+  transform: scale(1.3); /* Increase size by 30% */
+  color: #00c3ff; /* Change icon color on hover */
+}
+.sidebar ul li a:hover {
+  font-weight: bold;
+  background-color: #3700b3; /* Keep the background color */
+  color: #00c3ff; /* Change text color on hover */
+}
+
+
+.sidebar ul li a:hover {
+    background-color: #3700b3; /* Cambiar color al pasar el ratón */
+}
+
+.sidebar ul li a.active { /* Estilo del botón seleccionado */
+    background-color: white;
+    color: #0d0142; /* Color del texto en azul */
+    font-weight: bold;
+}
+
+/* Estilo del botón de cierre */
+.close-btn {
+    position: fixed; /* Cambia a fixed */
+    top: 15px; /* Ajusta la posición vertical */
+    right: 15px; /* Posiciona el botón fuera de la barra lateral, alineado con su borde */
+    background-color: white;
+    color: #0d0142;
+    border: none;
+    border-radius: 50%; /* Hace el botón circular */
+    width: 20px; /* Ajusta el tamaño del círculo */
+    height: 20px;
+    display: none; /* Oculta el botón por defecto */
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    z-index: 2001; /* Para que el botón esté sobre el contenido de la barra lateral */
+}
+
+.close-btn:hover {
+    background-color: #6200ea; /* Cambiar color al pasar el ratón */
+    color: white; /* Cambiar el color del icono al pasar el ratón */
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+    .sidebar {
+        position: fixed;
+        left: -250px;
+        z-index: 1000;
+        background-color: #0d0142;
+
+    }
+
+    .sidebar.open {
+        left: 0;
+    }
+
+    .close-btn {
+        display: flex; /* Muestra el botón en pantallas pequeñas */
+    }
+}

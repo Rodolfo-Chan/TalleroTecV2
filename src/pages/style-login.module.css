@@ -1,0 +1,248 @@
+/* Contenedor principal */
+.contenedor {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    position: relative;
+}
+
+@media (min-width: 768px) {
+    .contenedor {
+        flex-direction: row; /* En pantallas más grandes, será en fila */
+    }
+}
+
+/* Imagen */
+.imagen {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+
+/* Oculta la imagen en pantallas pequeñas */
+@media (max-width: 767px) {
+    .imagen {
+        display: none;
+    }
+}
+
+.imagen img {
+    width: 100%;
+    height: auto; /* Para que la imagen mantenga proporciones */
+    object-fit: cover;
+}
+
+/* Eliminando curvatura */
+.imagen::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 15%; /* Ajusta el tamaño según el dispositivo */
+    background-color: #ffffff;
+    z-index: 2;
+    border-radius: 40% 0% 0% 40%; /* Añadir la curvatura nuevamente */
+}
+
+
+/* Cuadro login */
+.cuadro-login {
+    flex: 1;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px;
+    z-index: 5; /* Más alto que los cubos */
+    position: relative; /* Asegura que z-index funcione */
+}
+
+/* Logo */
+.logo-tec {
+    width: 100px;
+    height: auto;
+    filter: drop-shadow(1px 1px 10px #05000e);
+}
+
+/* Formulario */
+.formulario {
+    margin-top: 20px;
+    width: 90%;
+}
+
+@media (min-width: 768px) {
+    .formulario {
+        width: 50%;
+    }
+}
+
+/* Campo */
+.campo {
+    margin-bottom: 15px;
+    color: #058AFF;
+    width: 100%;
+}
+
+/* Inputs */
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 2px solid #0A76EB;
+    box-sizing: border-box;
+}
+
+.button-login {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 3px solid #7eb1df;
+    background-color: #11325A;
+    color: white;
+    cursor: pointer;
+    margin-top: 15px;
+}
+
+button:hover {
+    background-color: #0D47A1;
+}
+
+button:active {
+    background-color: #0A276C;
+}
+
+.title {
+    color: #00193a;
+    font-size: 1.5rem;
+}
+
+/* Password container */
+.password-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-container input {
+    width: 100%;
+    padding-right: 30px;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 10px;
+    cursor: pointer;
+    color: #1150ff;
+}
+
+/* Cubos */
+/* Cubos */
+.cube {
+    position: absolute;
+    top: 80vh;
+    left: 45vw;
+    width: 10px;
+    height: 10px;
+    border: solid 1px #7896d1;
+    transform-origin: top left;
+    transform: scale(0) rotate(0deg) translate(-50%, -50%);
+    animation: cube 12s ease-in forwards infinite;
+    z-index: 1; /* Los cubos detrás de los demás elementos */
+}
+
+.cube:nth-child(2) {
+    animation-delay: 0.5s; /* Entran después de 0.5 segundos */
+    left: 25vw;
+    top: 40vh;
+    border-color: #8bcbff; /* Azul claro */
+}
+
+.cube:nth-child(3) {
+    animation-delay: 1s; /* Entran después de 1 segundo */
+    left: 75vw;
+    top: 50vh;
+    border-color: #5683ff; /* Azul más oscuro */
+}
+
+.cube:nth-child(4) {
+    animation-delay: 1.5s; /* Entran después de 1.5 segundos */
+    left: 90vw;
+    top: 10vh;
+    border-color: #bed0ff; /* Azul muy claro */
+}
+
+.cube:nth-child(5) {
+    animation-delay: 2s; /* Entran después de 2 segundos */
+    left: 10vw;
+    top: 85vh;
+    border-color: #2a4280; /* Azul oscuro */
+}
+
+.cube:nth-child(6) {
+    animation-delay: 2.5s; /* Entran después de 2.5 segundos */
+    left: 50vw;
+    top: 10vh;
+    border-color: #08eb4c; /* Verde */
+}
+
+/* Nuevos cubos */
+.cube:nth-child(7) {
+    animation-delay: 3s; /* Entran después de 3 segundos */
+    left: 40vw;
+    top: 30vh;
+    border-color: #ff5722; /* Naranja */
+}
+
+.cube:nth-child(8) {
+    animation-delay: 3.5s; /* Entran después de 3.5 segundos */
+    left: 15vw;
+    top: 70vh;
+    border-color: #ffc107; /* Amarillo */
+}
+
+.cube:nth-child(9) {
+    animation-delay: 4s; /* Entran después de 4 segundos */
+    left: 80vw;
+    top: 20vh;
+    border-color: #673ab7; /* Morado */
+}
+
+.cube:nth-child(10) {
+    animation-delay: 4.5s; /* Entran después de 4.5 segundos */
+    left: 5vw;
+    top: 50vh;
+    border-color: #e91e63; /* Rosa */
+}
+
+.cube:nth-child(11) {
+    animation-delay: 5s; /* Entran después de 5 segundos */
+    left: 90vw;
+    top: 80vh;
+    border-color: #3f51b5; /* Azul oscuro */
+}
+
+.cube:nth-child(12) {
+    animation-delay: 5.5s; /* Entran después de 5.5 segundos */
+    left: 50vw;
+    top: 60vh;
+    border-color: #4caf50; /* Verde claro */
+}
+
+@keyframes cube {
+  from {
+    transform: scale(0) rotate(0deg) translate(-50%, -50%);
+    opacity: 1;
+  }
+  to {
+    transform: scale(20) rotate(960deg) translate(-50%, -50%);
+    opacity: 0;
+  }
+}

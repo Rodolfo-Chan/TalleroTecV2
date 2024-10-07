@@ -1,0 +1,60 @@
+.div-container-input {
+  display: flex;
+  flex-direction: column;
+ /*background-color: #6cff8a;*/
+}
+
+.h6-label {
+  padding: 0;
+  margin: 0;
+  color: rgb(255, 255, 255);
+  font-weight: 700;
+  font-size: 18px;
+  padding-left: 11px;
+}
+
+.input-properties {
+  margin: 0;
+  padding: 0;
+  font-size: 14px;
+  height: 34px;
+  border-radius: 4px;
+  outline: none;
+  border: 2px solid #88DEFF;
+  text-indent: 15px; 
+  cursor: pointer; 
+}
+
+.input-properties:disabled {
+  background-color: #ffffff; 
+  color: #000000;
+  opacity: 1; 
+  cursor: not-allowed; 
+  border: 2px solid #88DEFF;
+}
+
+.placeholder-style::placeholder {
+  color: #000000;
+ /*  font-style: italic;*/
+  font-size: 14px;
+}
+
+/*Tamaños de los inputs */
+.xsmall-input {
+  width: 175px; 
+}
+
+.small-input {
+  width: 200px; 
+}
+.xmedium-input {
+  width: 235px; 
+}
+
+.medium-input {
+  width: 300px; 
+}
+
+.large-input {
+  width: 300px; 
+}

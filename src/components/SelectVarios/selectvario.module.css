@@ -1,0 +1,47 @@
+/* SelectProfesor.module.css */
+.div-container-select {
+background: #b3dc12;
+width: 250px;
+display: flex;
+flex-direction: column;
+margin-left: 30px; 
+
+  }
+  
+  .h6-label {
+    padding: 0;
+    margin: 0;
+    display: flex;
+    font-size: 18px;
+    flex-direction: column;
+    color: rgb(255, 255, 255);
+    user-select: none;
+
+  
+  }
+  
+  .select-properties {
+    width: 100%;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 2px solid #88DEFF;
+    border-radius: 4px;
+  }
+  
+  .placeholder-option {
+    color: #183559;
+    font-style: italic;
+  }
+  
+  .small-select {
+    width: 200px;
+  }
+  
+  .medium-select {
+    width: 75%;
+  }
+  
+  .large-select {
+    width: 100%;
+  }
+

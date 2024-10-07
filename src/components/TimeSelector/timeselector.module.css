@@ -1,0 +1,41 @@
+.div-container-timepicker {
+  display: flex;
+  flex-direction: column;
+}
+
+.h6-label {
+  margin-bottom: 0.2rem;
+  color: rgb(255, 255, 255);
+  font-size: 0.7rem;
+  font-weight: bold;
+}
+
+.timepicker-wrapper {
+  display: flex;
+  gap: 0.3rem;
+}
+
+.select-properties {
+  padding: 0.2rem;
+  border-radius: 0.25rem;
+  border: 2px solid #88DEFF;
+  font-size: 0rem;
+  cursor: pointer; 
+}
+
+.small-select {
+  font-size: 0.875rem;
+}
+
+.medium-select {
+  font-size: 0.8rem;
+  height: 25px;
+}
+
+.large-select {
+  font-size: 1.25rem;
+}
+
+.placeholder-option {
+  color: #888;
+}

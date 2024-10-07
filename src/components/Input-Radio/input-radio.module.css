@@ -1,0 +1,19 @@
+.div-container-input {
+ /*background-color: aqua;*/
+ height: 60px;
+ width: 200px;
+}
+
+.h6-label {
+ padding: 0;
+ margin: 0;
+ color: rgb(255, 255, 255);
+ font-weight: 700;
+ font-size: 20px;
+ padding-left: 11px;
+}
+
+.name-value{
+ color: rgb(255, 255, 255); 
+ font-size: 14px; 
+}

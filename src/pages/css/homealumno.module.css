@@ -1,0 +1,180 @@
+.home-container {
+ /* background: #007bff; */
+ padding: 20px;
+}
+  
+  .header {
+    /* background: #ffffff; */
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+    
+  .header-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  
+  .main-content {
+    /* background: #73ff00; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    padding: 20px;
+
+  }
+  
+  .cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 20px; /* Espacio entre las cajas */
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  
+  .card {
+    background-color: rgb(255, 255, 255);
+    border: 1px solid #dee2e6;
+    border-radius: 10px;
+    padding: 20px;
+    width: 45%; /* Ajusta el tamaño para que se acomoden 2 cajas en una fila */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Alinea el texto y el icono */
+    border-left: 5px solid #4e73df; /* Azul */
+
+  }
+  
+  /* Colores de la línea vertical para cada card */
+  /* .card:nth-child(1) {
+    border-left: 5px solid #4e73df; /* Azul */
+  /*} */
+  
+  /* .card:nth-child(2) {
+    border-left: 5px solid #4602a0; /* Verde */
+ /* }
+  
+  .card:nth-child(3) {
+    border-left: 5px solid #0d057e; /* Amarillo */
+ /* }
+  
+  .card:nth-child(4) {
+    border-left: 5px solid #6c6eff; /* Rojo */
+ /* } */
+  
+  .card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .card-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .card-text {
+    text-align: left;
+  }
+  
+  .card-text h2 {
+    /* background: #dcf900; */
+    font-size: 18px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #4e73df;
+  }
+  
+  .nota{
+    color: rgb(255, 0, 0);
+    margin-top: 5px;
+  }
+  .card-text p {
+    /* background: #73ff00; */
+    font-size: 15px;
+    font-weight: bold;
+    color: #858796;
+  }
+  
+  .card-icon {
+    /* background: #00ffd5; */
+    font-size: 40px;
+    color: rgba(0, 0, 0, 0.15);
+  }
+  
+  .table-section {
+    height: 100%;
+    width: 100%;
+    /* background: #ff0000; */
+    /* width: 100%; */
+    /* max-width: 800px; */
+    /* margin-top: 20px; */
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  /* th, td {
+    border: 1px solid #dee2e6;
+    padding: 8px;
+    text-align: left;
+  } */
+  
+  th {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  tbody tr:hover {
+    background-color: #f1f1f1;
+  
+  }
+  
+  /* Estilos responsivos para dispositivos móviles */
+  @media (max-width: 768px) {
+    .cards {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .card {
+      width: 80%; /* Las cajas ocupan más espacio en pantallas pequeñas */
+      margin-bottom: 1px;
+    }
+  
+    .table-section {
+      max-width: 100%;
+    }
+  }
+
+  
+  .current-date {
+    font-size: 1.2em;
+    color: #6c757d;
+  }
+  
+  .logo-container {
+    margin-top: auto;
+    padding: 20px;
+    display: flex;
+    justify-content: center; /* Centra el logo horizontalmente */
+  }
+  
+  /* Ajusta la imagen del logo para que no se salga del contenedor */
+  .sidebar-logo {
+    width: 100%; /* Ajusta el tamaño al 100% del contenedor */
+    max-width: 150px; /* Máximo ancho permitido */
+    height: auto; /* Mantiene la proporción de la imagen */
+    object-fit: contain; /* Asegura que la imagen no se deforme ni se corte */
+    max-height: 100px; /* Evita que la imagen sea demasiado alta */
+  }

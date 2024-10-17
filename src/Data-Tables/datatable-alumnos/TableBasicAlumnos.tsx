@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import MUIDataTable, { FilterType } from "mui-datatables";
+import { useState } from "react";
+import MUIDataTable, { FilterType, Responsive } from "mui-datatables";
 import style from "../datatable-alumnos/tablebasic-alumnos.module.css";
 import { Link } from "react-router-dom";
 import ButtonUpdate from "../../components/Button-Options-CRUD/Button-Update/ButtonUpdate";
@@ -81,23 +81,22 @@ const TableBasicAlumnos = () => {
         customBodyRenderLite: (dataIndex: number) => {
           const userId = data[dataIndex].id;
           return (
-            <div style={{ textAlign: 'center' }}>
-              <Link to={`/Alumnos/FromAlumnosActualizar/${userId}`}>
-                <ButtonUpdate
-                  onClick={() => {
-                    console.log("presionado para editar");
-                  }}
-                  icon={<Edit />}
-                  tooltip="Editar"
-                />
-              </Link>
-              <span style={{ margin: "0 5px" }}></span>
-              <ButtonDelete
-                onClick={() => handleDelete(userId)}
-                icon={<Delete />}
-                tooltip="Eliminar"
-              />
-            </div>
+<div className ={`${style['buton-crud']}`}>
+  <Link to={`/Alumnos/FromAlumnosActualizar/${userId}`}>
+    <ButtonUpdate
+      onClick={() => {
+        console.log("presionado para editar");
+      }}
+      icon={<Edit />}
+      tooltip="Editar"
+    />
+  </Link>
+  <ButtonDelete
+    onClick={() => handleDelete(userId)}
+    icon={<Delete />}
+    tooltip="Eliminar"
+  />
+</div>
           );
         },
       },
@@ -190,6 +189,7 @@ const TableBasicAlumnos = () => {
 
   const options = {
     filterType: "checkbox" as FilterType,
+    responsive: "standard" as Responsive, // Usar la enumeración Responsive en lugar de cadena
     sort: false,
     print:false,
     filter:true,

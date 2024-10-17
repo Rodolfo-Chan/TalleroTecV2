@@ -1,35 +1,58 @@
 .table {
-  background-color: #135195;
+  background-color: #100871;
   padding: 10px; 
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px; 
+  border-bottom-left-radius: 10px; 
+  border-bottom-right-radius: 10px;
+  overflow-x: auto; /* Agregar desplazamiento horizontal */
 }
 
 .border {
-  background-color: #88DEFF;
-  padding: 4px;
+  background-color: #ffffffaf;
+  padding: 2px;
   border-radius: 6px;
+  overflow-x: auto; /* Agregar desplazamiento horizontal */
 }
 
 .center-table table {
-  margin: 0 auto;
+  width: 100%; /* Hacer que la tabla ocupe el 100% del ancho */
+  table-layout: auto; /* Ajustar automáticamente las celdas */
 }
 
-.info-modal{
- /*background: #88DEFF;*/
- height: 90px;
- width: 300px;
- display: flex;
- flex-direction: column;
- align-items: center;
- justify-content: center;
+.info-modal {
+  height: 90px;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
-.button-modal{
-  /*background: #135195;*/
+.button-modal {
   height: 50px;
   width: 200px;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+/* Media queries para ajustar estilos en pantallas pequeñas */
+@media (max-width: 600px) {
+  .table {
+    padding: 5px; /* Menos padding en pantallas pequeñas */
+  }
+
+  .border {
+    padding: 2px; /* Menos padding en pantallas pequeñas */
+  }
+
+  .info-modal {
+    width: 90%; /* Hacer la modal más amplia en pantallas pequeñas */
+  }
+}
+
+.buton-crud{
+  /* background: #00ff00; */
+  display: flex;
+  justify-content: center;
+  gap: 8px;
 }

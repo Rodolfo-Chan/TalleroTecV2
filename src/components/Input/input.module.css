@@ -20,7 +20,7 @@
   height: 34px;
   border-radius: 4px;
   outline: none;
-  border: 2px solid #88DEFF;
+  border: 2px solid #4a4dff;
   text-indent: 15px; 
   cursor: pointer; 
 }
@@ -30,16 +30,20 @@
   color: #000000;
   opacity: 1; 
   cursor: not-allowed; 
-  border: 2px solid #88DEFF;
+  border: 2px solid #4a4dff;
 }
 
 .placeholder-style::placeholder {
-  color: #000000;
+  color: #0000007e;
  /*  font-style: italic;*/
   font-size: 14px;
 }
 
 /*Tamaños de los inputs */
+.xxsmall-input {
+  width: 155px; 
+}
+
 .xsmall-input {
   width: 175px; 
 }

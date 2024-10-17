@@ -1,13 +1,13 @@
-import React, { useState } from "react";
-import MUIDataTable, { FilterType } from "mui-datatables";
+import { useState } from "react";
+import MUIDataTable, { FilterType, Responsive } from "mui-datatables";
 import style from "../datatable-profesores/tablebasic-profesores.module.css";
 import { Link } from "react-router-dom";
 //import ButtonCrud from "../button-options-CRUD/ButtonCrud";
-import ButtonDelete from "../../components/button-options-CRUD/button-delete/ButtonDelete";
-import ButtonUpdate from "../../components/button-options-CRUD/button-update/ButtonUpdate";
+import ButtonDelete from "../../components/Button-Options-CRUD/Button-Delete/ButtonDelete";
+import ButtonUpdate from "../../components/Button-Options-CRUD/Button-Update/ButtonUpdate";
 import { Edit, Delete } from '@mui/icons-material'; 
-import ModalHOC from "../../components/modal/Modal"; 
-import ButtonModal from "../../components/button-modal/ButtonModal";
+import ModalHOC from "../../components/Modal/Modal";
+import ButtonModal from "../../components/ButtonModal/ButtonModal";
 
 const TableBasicProfesores = () => {
   const [showModal, setShowModal] = useState(false); 
@@ -69,8 +69,8 @@ const TableBasicProfesores = () => {
         customBodyRenderLite: (dataIndex: number) => {
           const userId = data[dataIndex].id;
           return (
-            <div>
-           <Link to={`/Profesores/FromProfesoresActualizar/${userId}`}>
+<div className ={`${style['buton-crud']}`}>
+<Link to={`/Profesores/FromProfesoresActualizar/${userId}`}>
            <ButtonUpdate
                   onClick={() => {
                     console.log("presionado para editar");
@@ -81,7 +81,6 @@ const TableBasicProfesores = () => {
                   tooltip="Editar"
                 />
               </Link>
-              <span style={{ margin: "0 5px" }}></span>
               <ButtonDelete
                 onClick={() => handleDelete(userId)}
                // label="Eliminar"
@@ -205,6 +204,7 @@ const TableBasicProfesores = () => {
 
   const options = {
     filterType: "checkbox" as FilterType,
+    responsive: "standard" as Responsive, // Usar la enumeración Responsive en lugar de cadena
     sort: false,
     print:false,
     filter:true,

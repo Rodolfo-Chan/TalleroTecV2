@@ -1,0 +1,105 @@
+.home-container {
+  /* background: #49873b; */
+  padding: 10px;
+} 
+
+.main-content {
+  /* background: #ff0000; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: auto;
+}
+
+.table-section {
+  height: 100%;
+  width: 100%;
+  /* background: #000000; */
+  /* width: 100%; */
+  /* max-width: 800px; */
+  /* margin-top: 20px; */
+}
+
+/* Estilos responsivos para dispositivos móviles */
+@media (max-width: 768px) {
+  .table-section {
+    max-width: 100%;
+  }
+}
+
+/* Contenedor principal */
+.header-data {
+  background: #00087ae4;
+  height: auto; 
+  width: 100%; 
+  border-top-left-radius: 10px; 
+  border-top-right-radius: 10px; 
+  display: flex;
+  align-items: center; 
+  justify-content: center; 
+  padding: 10px 0; 
+  box-sizing: border-box; 
+}
+
+/* Contenedor del título y el botón */
+.name-and-name {
+  /* background: #8df100; */
+  height: 60px;
+  width: 1000px; 
+  display: flex;
+  align-items: center;
+  justify-content: space-between; 
+  padding: 0px 20px; 
+  box-sizing: border-box;
+  gap: 10px; 
+  flex-wrap: wrap; 
+}
+
+/* Texto del título */
+.name {
+  /* background: #49873b; */
+  color: #ffffff;
+  margin: 0;
+  padding: 0;
+  font-size: 30px; 
+  white-space: nowrap;
+}
+
+/* Contenedor del botón */
+.button-container {
+  /* background: #0080ff; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0; 
+  padding: 0px 0;
+}
+
+/* Media query para dispositivos con pantallas pequeñas (móviles) */
+@media (max-width: 768px) {
+
+  .name-and-name {
+    /* background: #4602a0; */
+    flex-direction: row; 
+    align-items: center;
+    justify-content: space-between;
+    width: 100%; 
+    padding: 15px; 
+    gap: 5px; 
+    flex-wrap: nowrap; 
+  }
+
+  .name {
+    /* background: #333; */
+    font-size: 20px; 
+  }
+
+  .button-container {
+    /* background: #007bff; */
+    width: auto; 
+    flex-shrink: 0; 
+    padding: 0px 0;
+  }
+}
+/* ********************************/

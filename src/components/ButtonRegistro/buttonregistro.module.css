@@ -11,7 +11,7 @@
     border-width: 3px;
     cursor: pointer;
     position: relative; 
-    left: 30px; 
+    /* left: 30px;  */
   }
   
   .container-button-registro:hover {

@@ -1,7 +1,9 @@
-import React from "react";
-import styles from "../TimeSelector/timeselector.module.css"; 
 
-interface TimeSelectProps {
+/********************************** */
+import React from "react";
+import styles from "../../components/TimeSelector/timeselector.module.css";
+
+interface TimeSelectorProps {
   label?: string;
   hour: string;
   minute: string;
@@ -14,7 +16,7 @@ interface TimeSelectProps {
   customClassName?: string;
 }
 
-const TimeSelect: React.FC<TimeSelectProps> = ({
+const TimeSelector: React.FC<TimeSelectorProps> = ({
   label,
   hour,
   minute,
@@ -30,12 +32,17 @@ const TimeSelect: React.FC<TimeSelectProps> = ({
   const minutes = Array.from({ length: 12 }, (_, i) => String(i * 5).padStart(2, "0")); // Incremento de 5 minutos
   const periods = ["AM", "PM"];
 
+  // Función para determinar el color basado en la selección
+  const getSelectClassName = (value: string) => {
+    return value ? styles["strong-color"] : styles["light-color"];
+  };
+
   return (
     <div className={`${styles["div-container-timepicker"]} ${customClassName}`} style={customStyles}>
       {label && <h6 className={`${styles["h6-label"]}`}>{label}</h6>}
       <div className={styles["timepicker-wrapper"]}>
         <select
-          className={`${styles["select-properties"]} ${styles[size + "-select"]}`}
+          className={`${styles["select-properties"]} ${styles[size + "-select"]} ${getSelectClassName(hour)}`}
           value={hour}
           onChange={(e) => onHourChange(e.target.value)}
         >
@@ -49,7 +56,7 @@ const TimeSelect: React.FC<TimeSelectProps> = ({
           ))}
         </select>
         <select
-          className={`${styles["select-properties"]} ${styles[size + "-select"]}`}
+          className={`${styles["select-properties"]} ${styles[size + "-select"]} ${getSelectClassName(minute)}`}
           value={minute}
           onChange={(e) => onMinuteChange(e.target.value)}
         >
@@ -63,7 +70,7 @@ const TimeSelect: React.FC<TimeSelectProps> = ({
           ))}
         </select>
         <select
-          className={`${styles["select-properties"]} ${styles[size + "-select"]}`}
+          className={`${styles["select-properties"]} ${styles[size + "-select"]} ${getSelectClassName(period)}`}
           value={period}
           onChange={(e) => onPeriodChange(e.target.value)}
         >
@@ -81,4 +88,4 @@ const TimeSelect: React.FC<TimeSelectProps> = ({
   );
 };
 
-export default TimeSelect;
+export default TimeSelector;

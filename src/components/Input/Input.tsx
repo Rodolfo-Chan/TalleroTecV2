@@ -14,7 +14,7 @@ const Input = ({
   value?: any;
   onChange?: (dat: string) => void;
   placeHolder?: string;
-  size?: "xsmall" | "small" | "xmedium" | "medium" | "large";
+  size?: "xxsmall" | "xsmall" | "small" | "xmedium" | "medium" | "large";
   disabled?: boolean; 
 
 }) => {

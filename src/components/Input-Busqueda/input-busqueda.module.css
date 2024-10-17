@@ -1,7 +1,6 @@
 .div-container-input {
   display: flex;
   flex-direction: column;
- /*background-color: #6cff8a;*/
 }
 
 .h6-label {
@@ -20,27 +19,44 @@
   height: 34px;
   border-radius: 4px;
   outline: none;
-  border: 2px solid #88DEFF;
-  text-indent: 15px; 
+  border: 2px solid #4a4dff;
+  text-indent: 15px;
 }
 
-.placeholder-style::placeholder {
-  color: #000000;
- /*  font-style: italic;*/
+/* Placeholder de estilo inicial */
+.input-properties::placeholder {
+  color: #888; /* Placeholder con color tenue */
   font-size: 14px;
 }
+
+/* Placeholder cuando el input está en foco */
+.focused-input::placeholder {
+  color: #555; /* Placeholder con color más fuerte */
+}
+
+/* Estilo del texto cuando el input no está enfocado */
+.blurred-input {
+  color: #000;
+}
+
+/* Estilo del texto cuando el input está enfocado */
+.focused-input {
+  color: #333;
+}
+
+/* Tamaños de los inputs */
 .xsmall-input {
-  width: 175px; 
+  width: 175px;
 }
 
 .small-input {
-  width: 235px; 
+  width: 235px;
 }
 
 .medium-input {
-  width: 300px; 
+  width: 300px;
 }
 
 .large-input {
-  width: 300px; 
+  width: 300px;
 }

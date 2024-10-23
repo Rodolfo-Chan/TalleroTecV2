@@ -1,0 +1,106 @@
+.div-container-timepicker {
+  display: flex;
+  flex-direction: column;
+}
+
+.h6-label {
+  margin-bottom: 0.2rem;
+  color: rgb(255, 255, 255);
+  font-size: 0.7rem;
+  font-weight: bold;
+}
+
+.timepicker-wrapper {
+  display: flex;
+  gap: 0.3rem;
+}
+
+.select-properties {
+  padding: 0.2rem;
+  border-radius: 0.25rem;
+  border: 2px solid #88DEFF;
+  font-size: 0rem;
+  cursor: pointer; 
+}
+
+.small-select {
+  font-size: 0.875rem;
+}
+
+.medium-select {
+  font-size: 0.8rem;
+  height: 25px;
+}
+
+.large-select {
+  font-size: 1.25rem;
+}
+
+.placeholder-option {
+  color: #888;
+}
+/***************************/
+
+.div-container-timepicker {
+  display: flex;
+  flex-direction: column;
+}
+
+.h6-label {
+  margin-bottom: 0.2rem;
+  color: rgb(255, 255, 255);
+  font-size: 0.7rem;
+  font-weight: bold;
+}
+
+.timepicker-wrapper {
+  display: flex;
+  gap: 0.3rem;
+}
+
+.select-properties {
+  padding: 0.2rem;
+  border-radius: 0.25rem;
+  border: 2px solid #4a4dff; /* Color inicial del borde */
+  font-size: 0rem;
+  cursor: pointer; 
+  outline: none; /* Remueve el contorno predeterminado */
+}
+
+/* Evitar que cambie el color del borde en el enfoque */
+.select-properties:focus {
+  border: 2px solid #88DEFF; /* Mantener el mismo color del borde al recibir enfoque */
+}
+
+
+
+.small-select {
+  font-size: 0.875rem;
+}
+
+.medium-select {
+  font-size: 0.8rem;
+  height: 25px;
+}
+
+.large-select {
+  font-size: 1.25rem;
+}
+
+.placeholder-option {
+  color: #888; /* Color para la opción de placeholder */
+}
+
+/* Nuevas clases para colores */
+.light-color {
+  color: #888; /* Color bajo para el select vacío */
+}
+
+.strong-color {
+  color: #000; /* Color fuerte para el select con opción seleccionada */
+}
+
+/* Nuevas reglas para las opciones */
+.select-properties option {
+  color: #000; /* Color fuerte para las opciones */
+}

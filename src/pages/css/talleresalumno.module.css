@@ -1,0 +1,248 @@
+.home-container {
+  /* background: #49873b; */
+  padding: 10px;
+} 
+
+.main-content {
+  /* background: #ff0000; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: auto;
+}
+
+.table-section {
+  height: 100%;
+  width: 100%;
+  /* background: #000000; */
+  /* width: 100%; */
+  /* max-width: 800px; */
+  /* margin-top: 20px; */
+}
+
+.datos{
+  font-size: 1px;
+  background: #22ff00;
+  color: #ff0000;
+ }
+
+/* Estilos responsivos para dispositivos móviles */
+@media (max-width: 768px) {
+  .table-section {
+    max-width: 100%;
+  }
+}
+
+/* Contenedor principal */
+.header-data {
+  background: #00087ae4;
+  height: auto; 
+  width: 100%; 
+  border-top-left-radius: 10px; 
+  border-top-right-radius: 10px; 
+  display: flex;
+  align-items: center; 
+  justify-content: center; 
+  padding: 10px 0; 
+  box-sizing: border-box; 
+}
+
+/* Contenedor del título y el botón */
+.name-and-name {
+  /* background: #8df100; */
+  height: 60px;
+  width: 1000px; 
+  display: flex;
+  align-items: center;
+  justify-content: space-between; 
+  padding: 0px 20px; 
+  box-sizing: border-box;
+  gap: 10px; 
+  flex-wrap: wrap; 
+}
+
+/* Texto del título */
+.name {
+  /* background: #49873b; */
+  color: #ffffff;
+  margin: 0;
+  padding: 0;
+  font-size: 30px; 
+  white-space: nowrap;
+}
+
+/* Contenedor del botón */
+.button-container {
+  /* background: #0080ff; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0; 
+  padding: 0px 0;
+}
+
+
+
+
+.cards {
+  /* background: #22ff00; */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 20px; /* Espacio entre las cajas */
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.card {
+  background-color: rgb(255, 255, 255);
+  border: 1px solid #dee2e6;
+  border-radius: 10px;
+  padding: 20px;
+  width: 50%; /* Ajusta el tamaño para que se acomoden 2 cajas en una fila */
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Alinea el texto y el icono */
+  border-left: 5px solid #4e73df; /* Azul */
+
+}
+
+/* Colores de la línea vertical para cada card */
+/* .card:nth-child(1) {
+  border-left: 5px solid #4e73df; /* Azul */
+/*} */
+
+/* .card:nth-child(2) {
+  border-left: 5px solid #4602a0; /* Verde */
+/* }
+
+.card:nth-child(3) {
+  border-left: 5px solid #0d057e; /* Amarillo */
+/* }
+
+.card:nth-child(4) {
+  border-left: 5px solid #6c6eff; /* Rojo */
+/* } */
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card-content {
+  /* background: #4e73df; */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.card-text {
+  /* background: #d4ff00; */
+  text-align: left;
+}
+
+.card-text h2 {
+  /* background: #dcf900; */
+  font-size: 16px;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #4e73df;
+}
+
+.nota{
+  color: rgb(255, 0, 0);
+  margin-top: 5px;
+}
+
+.no-disponible{
+  color: rgba(246, 1, 1, 0.538);
+  margin-top: 5px;
+}
+
+
+
+.card-text p {
+  /* background: #73ff00; */
+  font-size: 14px;
+  font-weight: bold;
+  color: #968585;
+}
+
+.card-icon {
+  /* background: #00ffd5; */
+  font-size: 40px;
+  color: rgba(0, 0, 0, 0.15);
+}
+
+/* Media query para dispositivos con pantallas pequeñas (móviles) */
+@media (max-width: 768px) {
+
+  .name-and-name {
+    /* background: #4602a0; */
+    flex-direction: row; 
+    align-items: center;
+    justify-content: space-between;
+    width: 100%; 
+    padding: 15px; 
+    gap: 5px; 
+    flex-wrap: nowrap; 
+  }
+
+  .name {
+    /* background: #333; */
+    font-size: 15px; 
+  }
+
+  /* Contenedor del botón */
+.button-container {
+  /* background: #cc00ff; */
+  display: flex;
+  max-width: 100px;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0; 
+  padding: 0px 0;
+}
+
+  .card {
+    background-color: rgb(255, 255, 255);
+    border: 1px solid #dee2e6;
+    border-radius: 10px;
+    padding: 20px;
+    width: 90%; /* Ajusta el tamaño para que se acomoden 2 cajas en una fila */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Alinea el texto y el icono */
+    border-left: 5px solid #4e73df; /* Azul */
+  
+  }
+
+  .cards {
+    /* background: #ff0000; */
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .card {
+    /* background: #22ff00; */
+    width: 75%; /* Las cajas ocupan más espacio en pantallas pequeñas */
+    margin-bottom: 1px;
+  }
+  .card-content {
+    /* background: #d4ff00; */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+}
+/* ********************************/
+
+

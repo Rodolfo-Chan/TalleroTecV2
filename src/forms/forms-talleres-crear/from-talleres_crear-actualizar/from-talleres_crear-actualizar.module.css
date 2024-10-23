@@ -1,0 +1,134 @@
+.div-container { /* div padre de todo */
+  display: flex;
+ /* background: #e2eb26; */
+  max-width: 1010px;
+  height: 460px;
+  margin: 0 auto;
+  flex-direction: column;
+}
+
+.name-module {
+  /*background: #4B4747;*/
+  height: 60px;
+  display: flex;
+  align-items: center;
+}
+
+.name {
+  /* background: #f0f0f0;  */
+  color: #11325A; 
+  position: relative; 
+  left: 20px;
+}
+
+.alert-name{
+  display: flex;
+  width: 320px;
+  align-items: center;
+  justify-content: center;
+  position: relative; 
+  left: 50px; 
+}
+
+.header-data {
+  background: #201193;
+  height: 51px;
+  width: 1010px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px; 
+  display: flex;
+  align-items: center;
+  justify-content: space-between;     
+}
+
+.register {
+  /* background: #ffffff;*/
+  height: 30px;
+  width: 400px;
+  position: relative; 
+  left: 20px; 
+}
+
+.list {
+  /* background: #f20000; */
+  display: flex;
+  align-items: center;
+  color: #ffffff;
+  font-size: 21px;
+  width: 290px;
+}
+
+.padre-contenedor {
+  display: flex;
+  flex-direction: column;
+  width: 1010px;
+  /*row-gap: 20px;*/
+  background: #100871;
+  /*padding-bottom: 19px;
+  padding-top: 19px;
+  padding-inline: 19px;*/
+  margin-bottom: 15px; 
+  border-bottom-right-radius: 10px; 
+  border-bottom-left-radius: 10px; 
+}
+
+.datos_seccion1{
+  /* background: #ff00bf;  */
+  display: flex;
+  margin-top: 10px;
+  margin-bottom: 3px;
+}
+
+
+.nombre-taller{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  /* background: #e6ff05; */
+  margin-left: 40px;
+}
+
+
+.tipo_taller{
+ display: flex;
+ align-items: center;
+ flex-direction: column;
+ /* background: #8aff23; */
+ margin-left: 30px; 
+ width: 225px;
+}
+
+.estatus_taller{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  /* background: #004cff; */
+  margin-left: 30px; 
+  width: 225px;
+ }
+
+
+
+
+
+.button{
+  /*background: #f70000;*/
+  height: 50px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.buttons {
+  /*background: #0015ff;*/
+  height: 45px;
+  width: 450px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  justify-content: space-around;
+}
+
+
+/* ----------------------------------- */

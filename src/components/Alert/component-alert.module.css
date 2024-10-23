@@ -1,0 +1,10 @@
+.alert{
+    /*background: #11325A;*/
+    display: flex;
+    /* width: 285px;*/
+    align-items: center;
+    justify-content: center;
+    margin: 2px; 
+    /* position: relative;  Se necesita para usar left/right */
+    /*left: 50px; Mueve el elemento 100px hacia la derecha */
+   }  

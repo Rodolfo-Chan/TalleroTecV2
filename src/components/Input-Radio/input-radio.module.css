@@ -1,0 +1,33 @@
+.div-container-input {
+    /* background-color: rgb(255, 0, 0); */
+    padding: 3px; /* Espacio interno */
+    width: auto;
+  }
+  
+  .h6-label {
+    padding: 0;
+    margin: 0;
+    color: rgb(255, 255, 255);
+    font-weight: 700;
+    font-size: 20px;
+    padding-left: 11px;
+    margin-bottom: 10px; /* Espacio entre el label y las opciones */
+  }
+  
+  .options-container {
+    display: flex; /* Alinea las opciones en fila */
+    gap: 20px; /* Espacio entre las opciones */
+  }
+  
+  .name-value {
+    display: flex;
+    align-items: center; /* Alinea el texto y el input verticalmente */
+    margin: 0;
+    font-size: 14px;
+    color: rgb(255, 255, 255); 
+    cursor: pointer;
+    gap: 3px; /* Espacio entre el radio button y el texto */
+    font-weight: 550;
+
+  }
+  

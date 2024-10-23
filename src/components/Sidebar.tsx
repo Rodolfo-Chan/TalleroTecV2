@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { MdLogout, MdOutlineSportsKabaddi, MdAppRegistration, MdOutlineSports, MdExpandMore, MdExpandLess } from 'react-icons/md';
 import { IoIosArrowBack } from 'react-icons/io';
-import { FaInfoCircle, FaEnvelope } from 'react-icons/fa';
 import { SiHomeassistant } from 'react-icons/si';
+import { GiSportMedal } from "react-icons/gi";
+import { FaListCheck } from "react-icons/fa6";
+import { CiViewList } from "react-icons/ci";
+import { IoCreateOutline } from "react-icons/io5";
+
 import '../components/Sidebar.css';
-import { MdDateRange, MdLogout, MdOutlineSportsKabaddi } from 'react-icons/md';
 import { IoPersonAddSharp } from 'react-icons/io5';
 
 interface SidebarProps {
@@ -15,6 +19,17 @@ interface SidebarProps {
 const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
   const location = useLocation();
   const currentPath = location.pathname;
+
+  // Estado para manejar el submenú de Talleres
+  const [isTalleresOpen, setIsTalleresOpen] = useState(false);
+
+  // Alternar submenú de Talleres
+  const toggleTalleresSubMenu = () => {
+    setIsTalleresOpen(!isTalleresOpen);
+  };
+
+  // Verificar si el path es de alguna opción de Talleres o submenú de Talleres
+  const isTalleresActive = currentPath.startsWith('/Talleres');
 
   return (
     <aside className={`sidebar ${isOpen ? 'open' : ''}`}>
@@ -32,55 +47,116 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
               <SiHomeassistant /> Home
             </Link>
           </li>
-          
+
           <li>
             <Link
               to="/Alumnos"
-              className={currentPath === '/Alumnos' ? 'active' : ''}
+              className={currentPath.startsWith('/Alumnos') ? 'active' : ''}
               onClick={toggleSidebar}
             >
               <IoPersonAddSharp /> Alumnos
             </Link>
           </li>
+
           <li>
             <Link
-              to="/Instruct"
-              className={currentPath === '/Instruct' ? 'active' : ''}
+              to="/Profesores"
+              className={currentPath.startsWith('/Profesores') ? 'active' : ''}
               onClick={toggleSidebar}
             >
-              <MdOutlineSportsKabaddi /> Intructores
+              <MdOutlineSportsKabaddi /> Profesores
             </Link>
           </li>
+
+          {/* Menú de Talleres con Submenú */}
           <li>
             <Link
-              to="/Periodos"
-              className={currentPath === '/Periodos' ? 'active' : ''}
+              to="#"
+              className={isTalleresActive ? 'active' : ''}
+              onClick={toggleTalleresSubMenu}
+            >
+              <MdOutlineSports /> Talleres {isTalleresOpen ? <MdExpandLess /> : <MdExpandMore />}
+            </Link>
+            {isTalleresOpen && (
+              <ul>
+                <li>
+                  <Link
+                    to="/Talleres"
+                    className={currentPath === '/Talleres' ? 'active' : ''}
+                    onClick={toggleSidebar}
+                  >
+                  <CiViewList /> Registros
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/TalleresCrear"
+                    className={currentPath === '/TalleresCrear' ? 'active' : ''}
+                    onClick={toggleSidebar}
+                  >
+                   <IoCreateOutline />  Crear taller
+                  </Link>
+                </li>
+              </ul>
+            )}
+          </li>
+
+          <li>
+            <Link
+              to="/Inscripciones"
+              className={currentPath.startsWith('/Inscripciones') ? 'active' : ''}
               onClick={toggleSidebar}
             >
-              <MdDateRange /> Periodos
+              <MdAppRegistration /> Inscripciones
             </Link>
           </li>
 
           <hr />
+
+          <li>
+            <Link
+              to="/HomeAlumno"
+              className={currentPath === '/HomeAlumno' ? 'active' : ''}
+              onClick={toggleSidebar}
+            >
+              <SiHomeassistant /> Home Alum
+            </Link>
+          </li>
+
+          <li>
+            <Link
+              to="/TallerAlumno"
+              className={currentPath.startsWith('/TallerAlumno') ? 'active' : ''}
+              onClick={toggleSidebar}
+            >
+              <GiSportMedal /> Talleres Alu
+            </Link>
+          </li>
+
+          <hr />
+
           <li>
             <Link
               to="/contact"
               className={currentPath === '/contact' ? 'active' : ''}
               onClick={toggleSidebar}
             >
-              <FaEnvelope /> Contact
+              <SiHomeassistant /> Home Prof
             </Link>
           </li>
+
           <li>
             <Link
               to="/about"
               className={currentPath === '/about' ? 'active' : ''}
               onClick={toggleSidebar}
             >
-              <FaInfoCircle /> About
+              <FaListCheck /> Lista Alum
             </Link>
           </li>
+
           <hr />
+
           <li>
             <Link
               to="/"

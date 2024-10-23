@@ -211,7 +211,7 @@
 
 
   .sidebar {
-    width: 200px;
+    width: 225px;
     background-color: #0d0142;
     color: white;
     padding: 20px;
@@ -257,7 +257,7 @@
 }
 
 .sidebar ul li a {
-  color: white;
+  color: rgb(255, 255, 255);
   text-decoration: none;
   background-color: #6200ea; /* Fondo de botón */
   padding: 10px 15px; /* Espaciado interno del botón */
@@ -267,14 +267,14 @@
   justify-content: start; /* Alinear ícono y texto a la izquierda */
   text-align: left; /* Alinear el texto a la izquierda */
   transition: background-color 0.3s ease, color 0.3s ease;
-  gap: 10px; /* Espacio entre el icono y el texto */
+  gap: 5px; /* Espacio entre el icono y el texto */
   width: 100%; /* Ocupa todo el ancho */
   box-sizing: border-box; /* Evitar que el padding afecte el ancho */
-  min-width: 150px; /* Establecer un ancho mínimo */
+  min-width: 175px; /* Establecer un ancho mínimo */
 }
 
 .sidebar ul li a svg {
-  margin-right: 8px; /* Ajustar el margen derecho del ícono */
+  margin-right: 5px; /* Ajustar el margen derecho del ícono */
   font-size: 1.2em; /* Ajustar el tamaño del ícono */
   flex-shrink: 0; /* Evitar que el ícono se reduzca */
   transition: transform 0.3s ease, color 0.3s ease;

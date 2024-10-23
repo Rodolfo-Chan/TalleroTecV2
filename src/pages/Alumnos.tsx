@@ -1,66 +1,34 @@
-import React from 'react';
-import { CgMail } from 'react-icons/cg';
-import '../components/styles.css'; // Asegúrate de que la ruta sea correcta
-import { FcGoogle } from 'react-icons/fc';
+// import React from 'react';
+//import '../components/styles.css'; // Asegúrate de que la ruta sea correcta
+import TableBasicAlumnos from '../Data-Tables/datatable-alumnos/TableBasicAlumnos';
+import style from "../pages/css/alumnos.module.css"
+ import Button from '../components/Button/Button';
+import { useNavigate } from "react-router-dom";
 
-const Contact: React.FC = () => {
+const   Alumnos = () => {
+  const navigate = useNavigate();
   return (
-    <div className="home-container">
-      <header className="header">
-        <div className="header-content">
-          <h1>ALUMNOS</h1>
-        </div>
-        <div>
-          <p>
-          <FcGoogle />rodolfochan2910@gmail.com
-          </p>
-        </div>
-      </header>
-      <main className="main-content">
-        <section className="cards">
-          <div className="card">
-            <div className="card-content">
-              <div className="card-text">
-                <h2>Total Alumnos</h2>
-                <p>200</p>
-              </div>
-              {/* Puedes agregar un ícono aquí si lo deseas */}
-            </div>
-          </div>
-          {/* Agrega más tarjetas según sea necesario */}
-        </section>
-        <section className="table-section">
-          <h2>Tabla de Alumnos</h2>
-          <table>
-            <thead>
-              <tr>
-                <th>Nombre</th>
-                <th>Edad</th>
-                <th>Ciudad</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Juan</td>
-                <td>28</td>
-                <td>Ciudad de México</td>
-              </tr>
-              <tr>
-                <td>María</td>
-                <td>34</td>
-                <td>Guadalajara</td>
-              </tr>
-              <tr>
-                <td>Carlos</td>
-                <td>22</td>
-                <td>Monterrey</td>
-              </tr>
-            </tbody>
-          </table>
+    <div className ={`${style['home-container']}`}>
+      <main className ={`${style['main-content']}`}>
+        <section className ={`${style['table-section']}`}>
+<div className ={`${style['header-data']}`}>
+    <div className={`${style['name-and-name']}`}>
+      <h1 className={`${style['name']}`}>ALUMNOS</h1> 
+      <div className={`${style['button-container']}`}>
+        <Button 
+          onClick={() => { navigate("FromAlumnosRegistro"); console.log("presionado"); }}
+          label="Registrar alumno"
+        />
+      </div>
+    </div>
+  </div>
+                <div>
+                    <TableBasicAlumnos /> 
+                </div>
         </section>
       </main>
     </div>
   );
 };
 
-export default Contact;
+export default Alumnos

@@ -1,0 +1,194 @@
+.div-container { /* div padre de todo */
+  display: flex;
+  /*background: #e2eb26;*/
+  max-width: 1010px;
+  height: 460px;
+  margin: 0 auto;
+  flex-direction: column;
+}
+
+.name-module {
+ /* background: #4B4747;*/
+  height: 60px;
+  display: flex;
+  align-items: center;
+}
+
+.name {
+  /*background: #100e0e; */
+  color: #11325A;
+  position: relative; 
+  left: 20px;
+}
+
+.alert-name{
+  display: flex;
+  width: auto;
+  height: 50px;
+  position: relative; 
+  left: 40px; 
+  /*background-color: #48ff05;*/
+}
+
+
+.header-data {
+  background: #201193;
+  height: 51px;
+  width: 1010px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px; 
+  display: flex;
+  align-items: center;
+  justify-content: space-between;     
+}
+
+.register {
+/*  background: #ffffff;*/
+  height: 30px;
+  width: 600px;
+  position: relative; 
+  left: 20px; 
+}
+
+.list {
+  /* background: #f20000; */
+  display: flex;
+  align-items: center;
+  color: #ffffff;
+  font-size: 21px;
+  width: 350px;
+}
+
+.padre-contenedor {
+  display: flex;
+  flex-direction: column;
+  width: 1010px;
+  /*row-gap: 20px;*/
+  background: #100871;
+  /*padding-bottom: 19px;
+  padding-top: 19px;
+  padding-inline: 19px;*/
+  margin-bottom: 15px; 
+  border-bottom-right-radius: 10px; 
+  border-bottom-left-radius: 10px; 
+}
+
+.datos_seccion1{
+ /* background: #004954; */
+ margin-top: 15px;
+ margin-bottom: 15px;
+ display: flex;
+}
+
+.data-matricula{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  /* background: #f70dff; */
+  margin-left: 30px; 
+  width: 185px;
+}
+
+.datos_seccion2{
+  /* background: #f70000; */
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.nombre{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  /* background: #0015ff; */
+  width: 220px;
+  margin-left: 25px; 
+}
+
+.apellido_paterno{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  /* background: #ff0505; */
+  margin-left: 22px;
+  width: 220px;
+}
+
+.apellido_materno{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  /* background: #48ff05; */
+  margin-left: 22px; 
+  width: 220px;
+}
+
+.telefono{
+ /*  background: #2b1b29;*/
+  width: 245px;
+  margin-left: 15px;
+}
+
+.taller{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  /* background: #ef00ef; */
+  margin-left: 20px; 
+  width: 220px;
+}
+
+.estatus{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  /* background: #bef6ff; */
+  margin-left: 20px; 
+  width: auto;
+}
+
+.periodo-escolar{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  /* background: #a3b9c4; */
+  margin-left: 30px;
+  width: 215px;
+}
+
+.radio-container{
+ /*background: #04b8ff;*/
+  margin-left: 30px; 
+}
+   
+.radio-container label {
+  margin-right: 25px;
+}
+
+.button{
+ /* background: #f70000;*/
+  height: 50px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.buttons {
+ /* background: #0015ff;*/
+  height: 45px;
+  width: 450px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  justify-content: space-around;
+}
+
+.turno{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  /* background: #c0d4d0;    */
+  width: 190px;
+  margin-left: 25px; 
+}
+/* ----------------------------------- */

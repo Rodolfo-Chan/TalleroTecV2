@@ -1,0 +1,74 @@
+.carousel {
+    position: relative;
+    width: 100%; /* Ancho completo */
+    max-width: 100vw; /* Máximo ancho del viewport */
+    margin: auto;
+    overflow: hidden;
+    height: 60vh; /* La altura se ajustará al 60% del alto de la pantalla */
+  }
+  
+  /* Ajuste de las imágenes dentro del carrusel */
+  .carousel-item {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+    z-index: 0;
+  }
+  
+  .carousel-item.active {
+    opacity: 1;
+    z-index: 0;
+  }
+  
+  .carousel-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Las imágenes se ajustarán manteniendo el aspecto */
+  }
+  
+  .indicators {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+  }
+  
+  .indicator {
+    width: 15px;
+    height: 15px;
+    margin: 0 5px;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  
+  .indicator.active {
+    background-color: rgb(255, 255, 255);
+  }
+  
+  /* Media Queries para dispositivos móviles */
+  @media (max-width: 768px) {
+    .carousel {
+      height: 70vh; /* La altura del carrusel será el 50% del viewport en pantallas más pequeñas */
+    }
+  
+    .indicator {
+      width: 12px;
+      height: 12px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .carousel {
+      height: 20vh; /* Ajustamos la altura para pantallas aún más pequeñas */
+    }
+  
+    .indicator {
+      width: 10px;
+      height: 10px;
+    }
+  }
+  

@@ -91,8 +91,8 @@
   align-items: center;
   flex-direction: column;
  /* background: #000000; */
-  margin-left: 15px;
-  width: 315px;
+  margin-left: 18px;
+  width: auto;
 }
 
 .nombre_taller{
@@ -100,18 +100,28 @@
  align-items: center;
  flex-direction: column;
  /* background: #8aff23; */
- margin-left: 30px; 
- width: 225px;
+ margin-left: 20px; 
+ width: 220px;
 }
+
+.tipo_taller{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  /* background: #8aff23; */
+  margin-left: 4px; 
+  width: 160px;
+ }
 
 .puntos-taller{
   display: flex;
   align-items: center;
   flex-direction: column;
   /* background: #8bad56; */
-  margin-left: 18px; 
+  margin-left: 25px; 
   width: 190px;
 }
+
 .cupos-taller{
   display: flex;
   align-items: center;
@@ -128,14 +138,15 @@
   /* background: #e6ff05; */
   margin-left: 40px;
 }
+
 .contenedor-horarios{
-  background-color: #4B4747;
+  /* background-color: #4B4747; */
   width: auto;
   margin-left: 20px; 
 }
 
 .horarios{
-  background: #00ff26; 
+  /* background: #00ff26;  */
   width: auto;
   height: auto;
   display: flex;
@@ -151,7 +162,7 @@
 .name-horario{
   padding: 0;
   margin: 0;
-  background: #00ff26;
+  /* background: #00ff26; */
   /* width: 160px;*/
   color: rgb(255, 255, 255);
   font-weight: 700;
@@ -160,7 +171,7 @@
 }
 
 .horario-tallerinicio{
-background: #8930c8;
+/* background: #8930c8; */
   width: auto;
   /*margin-left: 30px;  */
   display: flex;
@@ -168,7 +179,7 @@ background: #8930c8;
 }
 
 .horario-tallerfin{
- background: #0dbeff;
+ /* background: #0dbeff; */
   width: auto;
   margin-left: 5px; 
   display: flex;
@@ -180,8 +191,8 @@ background: #8930c8;
   align-items: center;
   flex-direction: column;
   /* background: #caff0c; */
-  width: 310px;
-  margin-left: 18px;
+  width: auto;
+  margin-left: 27px;
 }
 
 .turno{
@@ -189,8 +200,17 @@ background: #8930c8;
   align-items: center;
   flex-direction: column;
   /* background: #c0d4d0; */
-  width: 190px;
-  margin-left: 20px; 
+  width: auto;
+  margin-left: 22px; 
+}
+
+.card{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  /* background: #00ffcc; */
+  width: auto;
+  margin-left: 22px; 
 }
 
 .button{

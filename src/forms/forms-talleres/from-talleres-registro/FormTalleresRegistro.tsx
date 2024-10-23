@@ -11,6 +11,7 @@ import MultipleDaySelector from "../../../components/Days-Selector/MultipleDaySe
 const FormTalleresRegistro = () => {
   const [nombre, setNombre] = useState("");
   const [turno, setTurno] = useState("");
+  const [card, setCard] = useState("");
   const [profesorseleccionado, setProfesorSeleccionado] = useState("");
   const [periodoescolar, setPeriodoEscolar] = useState("");
   const [horarioinicio, setHorarioinicio] = useState<{ hour: string; minute: string; period: string } | null>(null);
@@ -19,15 +20,18 @@ const FormTalleresRegistro = () => {
   const [puntos, setPuntos] = useState("");
   const [cupos, setCupos] = useState("");
   const [diasSeleccionados, setDiasSeleccionados] = useState<string[]>([]);
+  const [tipo, setTipo] = useState("");
 
   const [showAlert, setShowAlert] = useState(false);
   const [alertSeverity, setAlertSeverity] = useState<"error" | "warning" | "info" | "success">("success"); // Tipado más estricto
   const [alertMessage, setAlertMessage] = useState("");
   const [nombreError, setNombreError] = useState("");
   const [turnoError, setTurnoError] = useState("");
+  const [cardError, setCardError] = useState("");
   const [profesorseleccionadoError, setProfesorSeleccionadoError] = useState("");
   const [periodoescolarError, setPeriodoEscolarError] = useState("");
   const [diasError, setDiasError] = useState("");
+  const [tipoError, setTipoError] = useState("");
 
   const [horarioinicioError, setHorarioinicioError] = useState("");
   const [horariofinError, setHorariofinError] = useState("");
@@ -44,9 +48,11 @@ const FormTalleresRegistro = () => {
     // Reset error messages
     setNombreError("");
     setTurnoError("");
+    setCardError("");
     setProfesorSeleccionadoError("");
     setPeriodoEscolarError("");
-   
+    setTipoError("");
+
     setHorarioinicioError("");
     setHorariofinError("");
     setUbicacionError("");
@@ -62,7 +68,10 @@ const FormTalleresRegistro = () => {
       setTurnoError("Seleccione turno.");
       isValid = false;
     }
-
+    if (!card) {
+      setCardError("Seleccione estatus.");
+      isValid = false;
+    }
     if (!profesorseleccionado) {
       setProfesorSeleccionadoError("Seleccione profesor.");
       isValid = false;
@@ -84,7 +93,10 @@ const FormTalleresRegistro = () => {
     }
 
     if (!ubicacion) {
-      setUbicacionError("Seleccione una ubicación.");
+      setUbicacionError("Ingrese la ubicación.");
+      isValid = false;
+    } else if (!ubicacion.match(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/)) {
+      setUbicacionError("No se aceptan dígitos numéricos.");
       isValid = false;
     }
 
@@ -106,8 +118,12 @@ const FormTalleresRegistro = () => {
       setDiasError("Seleccione al menos dos días.");
       isValid = false;
     }
+    if (!tipo) {
+      setTipoError("Seleccione tipo.");
+      isValid = false;
+    }
 
-    if (!nombre || !turno || !profesorseleccionado || !periodoescolar || !ubicacion || !puntos || !cupos || !diasSeleccionados) {
+    if (!nombre || !turno || !card || !profesorseleccionado || !periodoescolar || !ubicacion || !puntos || !cupos || !diasSeleccionados || !tipo) {
       setAlertSeverity("error");
       setAlertMessage("Por favor complete todos los campos.");
       setShowAlert(true);
@@ -128,8 +144,10 @@ const FormTalleresRegistro = () => {
       setHorariofin(null);
       setUbicacion("");
       setPuntos("");
+      setCard("");
       setCupos("");
       setDiasSeleccionados([]);
+      setTipo("");
 
     }
   };
@@ -139,6 +157,7 @@ const FormTalleresRegistro = () => {
       <div className={style["name-module"]}>
         <h1 className={style["name"]}>TALLERES</h1>
         <div className={style['alert-name']}>
+          
           <ComponentAlert
             open={showAlert}
             severity={alertSeverity} 
@@ -163,11 +182,26 @@ const FormTalleresRegistro = () => {
                   onChange={setNombre}
                   options={["Voleibol Varonil", "Voleibol Femanil","Futbol Varonil", "Basquetbol Mixto", "Basquetbol Varonil", "Basquetbol Femenil", "Beisbol Varonil", "Beisbol Femenil", "Esport", "Lectura", "Folklore", "Batucada", "Reforestación", "Cuidado Ambiental"]}
                   placeholder="seleccione un taller"
-                  size="small"
+                  size="xsmall"
                 />
                 
                 {nombreError && (
                   <ComponentAlert open={!!nombreError} severity="error" message={nombreError} sx={{ width: 'auto', height: 'auto', fontSize: '13px' }} />
+                )}
+              </div>
+
+              <div className={`${style['tipo_taller']}`}>
+                <Select
+                  label="Tipo taller"
+                  value={tipo}
+                  onChange={setTipo}
+                  options={["Femenil", "Varonil", "Mixto"]}
+                  placeholder="seleccione tipo"
+                  size="xxxsmall"
+                />
+                
+                {tipoError && (
+                  <ComponentAlert open={!!tipoError} severity="error" message={tipoError} sx={{ width: 'auto', height: 'auto', fontSize: '12px' }} />
                 )}
               </div>
 
@@ -191,25 +225,19 @@ const FormTalleresRegistro = () => {
                   <ComponentAlert open={!!profesorseleccionadoError} severity="error" message={profesorseleccionadoError} sx={{ width: 'auto', height: 'auto', fontSize: '13px' }} />
                 )}
               </div>
-              
-            <div className={style['ubicacion']}>
-              <Select
+              <div className={style['ubicacion']}>
+              <Input
                 label="Ubicación"
                 value={ubicacion}
                 onChange={setUbicacion}
-                options={[
-                  "Cancha principal del tecnológico",
-                  "Polifuncional",
-                  "Campo del tecnológico",
-                  "Biblioteca"
-                ]}
-                placeholder="Seleccione la ubicación"
-                size="medium"
+                placeHolder="Ingrese la ubicación"
+                size="xmedium"
               />
               {ubicacionError && (
-                <ComponentAlert open={!!ubicacionError} severity="error" message={ubicacionError} sx={{ width: 'auto', height: 'auto', fontSize: '13px' }}/>
+                <ComponentAlert open={!!ubicacionError} severity="error" message={ubicacionError} sx={{ width: 'auto', height: 'auto', fontSize: '13px' }} />
               )}
             </div>
+
             
 
 
@@ -252,6 +280,20 @@ const FormTalleresRegistro = () => {
               )}
             </div>
 
+            
+            <div className={style['cupos-taller']}>
+              <Input
+                label="Cupos del Taller"
+                value={cupos}
+                onChange={setCupos}
+                placeHolder="Ingrese la capacidad"
+                size="xsmall"
+              />
+              {cuposError && (
+                <ComponentAlert open={!!cuposError} severity="error" message={cuposError} sx={{ width: 'auto', height: 'auto', fontSize: '13px' }} />
+              )}
+            </div>
+
             <div className ={`${style['contenedor-horarios']}`}>
           <div className ={`${style['titulo-horario']}`}>
           <h1 className={style["name-horario"]}>Horario del taller</h1>
@@ -280,7 +322,7 @@ const FormTalleresRegistro = () => {
                     }))}
                   />
                   {horarioinicioError && (
-                    <ComponentAlert open={!!horarioinicioError} severity="error" message={horarioinicioError} sx={{ width: 'auto', height: 'auto', fontSize: '13px' }} />
+                    <ComponentAlert open={!!horarioinicioError} severity="error" message={horarioinicioError} sx={{ width: 'auto', height: 'auto', fontSize: '12px' }} />
                   )}
                 </div>
                 <div className ={`${style['horario-tallerfin']}`}>
@@ -306,33 +348,12 @@ const FormTalleresRegistro = () => {
                     }))}
                   />
                   {horariofinError && (
-                    <ComponentAlert open={!!horariofinError} severity="error" message={horariofinError} sx={{ width: 'auto', height: 'auto', fontSize: '13px' }} />
+                    <ComponentAlert open={!!horariofinError} severity="error" message={horariofinError} sx={{ width: 'auto', height: 'auto', fontSize: '12px' }} />
                   )}
                 </div>
           </div>
          </div>
   
-
-         <div className={style['card']}>
-              <Select
-                label="Estatus Card"
-                value={turno}
-                onChange={setTurno}
-                options={[
-                  "Activo",
-                  "Inactivo"
-                ]}
-                placeholder="Seleccione card"
-                size="xxxsmall"
-              />
-              {turnoError && (
-                <ComponentAlert open={!!turnoError} severity="error" message={turnoError} sx={{ width: 'auto', height: 'auto', fontSize: '13px' }}/>
-              )}
-            </div>
-
-          
-
-
           </div>
 
           <div className={style["datos_seccion3"]}>
@@ -362,17 +383,22 @@ const FormTalleresRegistro = () => {
               )}
             </div>
 
-            <div className={style['cupos-taller']}>
-              <Input
-                label="Cupos del Taller"
-                value={cupos}
-                onChange={setCupos}
-                placeHolder="Ingrese la capacidad"
-                size="xsmall"
+            <div className={style['card']}>
+              <Select
+                label="Estatus Card"
+                value={card}
+                onChange={setCard}
+                options={[
+                  "Activo",
+                  "Inactivo"
+                ]}
+                placeholder="Seleccione estatus"
+                size="xxsmall"
               />
-              {cuposError && (
-                <ComponentAlert open={!!cuposError} severity="error" message={cuposError} sx={{ width: 'auto', height: 'auto', fontSize: '13px' }} />
+              {cardError && (
+                <ComponentAlert open={!!cardError} severity="error" message={cardError} sx={{ width: 'auto', height: 'auto', fontSize: '13px' }}/>
               )}
+              
             </div>
         
 </div>

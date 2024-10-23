@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import style from "../from-alumnos-registro/from-alumnos-registro.module.css";
 import ButtonRegistro from "../../../components/ButtonRegistro/ButtonRegistro";
 import Input from "../../../components/Input/Input";

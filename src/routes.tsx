@@ -19,6 +19,7 @@ import Inscripciones from './pages/Inscripciones';
 import FormInscripcionesRegistro from './forms/froms-inscrripciones/from-inscripciones-registro/FormInscripcionesRegistro';
 import FormInscripcionesActualizar from './forms/froms-inscrripciones/from-inscripciones-actualizar/FormInscripcionesActualizar';
 import HomeAlumno from './pages/HomeAlumno';
+import FormInscripcionAlumno from './forms/form-registro-talleres-alumnos/FormInscripcionAlumno';
 import TallerAlumno from './pages/TallerAlumno';
 
 import Login from './pages/Login';
@@ -71,6 +72,7 @@ const RoutesComponent: React.FC<RoutesComponentProps> = ({ toggleSidebar, isSide
         <Route path="/about" element={<MainLayout toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen}><About /></MainLayout>} />
         <Route path="/contact" element={<MainLayout toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen}><Contact /></MainLayout>} />
         <Route path="/HomeAlumno" element={<MainLayout toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen}><HomeAlumno /></MainLayout>} />
+        <Route path='/HomeAlumno/FormInscripcionAlumno/:userId' element={<MainLayout toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen}><FormInscripcionAlumno/></MainLayout>} />
         <Route path="/TallerAlumno" element={<MainLayout toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen}><TallerAlumno /></MainLayout>} />
 
       </Routes>

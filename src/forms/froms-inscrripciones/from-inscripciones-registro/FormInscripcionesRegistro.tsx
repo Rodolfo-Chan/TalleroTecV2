@@ -24,6 +24,7 @@ const obtenerDatosAlumno = (matricula: string): AlumnoData | null => {
 };
 
 const FormInscripcionesRegistro = () => {
+  
   const [matricula, setMatricula] = useState("");
   const [turno, setTurno] = useState("");
 

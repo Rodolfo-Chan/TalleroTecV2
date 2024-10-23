@@ -1,6 +1,6 @@
 import React from 'react';
 import '../components/styles.css'; // Asegúrate de que la ruta sea correcta
-import style from "../pages/css/talleres.module.css"
+import style from "../pages/css/tallerescrear.module.css"
 import Button from '../components/Button/Button';
 import { useNavigate } from "react-router-dom";
 import TableBasicTalleresCrear from '../Data-Tables/datatable-talleres-crear/TableBasicTalleresCrear';

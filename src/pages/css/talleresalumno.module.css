@@ -194,14 +194,14 @@
 
   .name {
     /* background: #333; */
-    font-size: 20px; 
+    font-size: 15px; 
   }
 
   /* Contenedor del botón */
 .button-container {
   /* background: #cc00ff; */
   display: flex;
-  max-width: 120px;
+  max-width: 100px;
   align-items: center;
   justify-content: center;
   flex-shrink: 0; 
@@ -244,4 +244,5 @@
   }
 }
 /* ********************************/
+
 

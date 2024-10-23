@@ -95,11 +95,15 @@
     font-size: 20px; 
   }
 
-  .button-container {
-    /* background: #007bff; */
-    width: auto; 
-    flex-shrink: 0; 
-    padding: 0px 0;
-  }
+  /* Contenedor del botón */
+.button-container {
+  /* background: #cc00ff; */
+  display: flex;
+  max-width: 120px;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0; 
+  padding: 0px 0;
+}
 }
 /* ********************************/

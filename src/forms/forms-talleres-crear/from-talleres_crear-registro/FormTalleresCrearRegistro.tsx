@@ -110,8 +110,8 @@ const FormTalleresCrearRegistro = () => {
                   value={tipo}
                   onChange={setTipo}
                   options={["Femenil", "Varonil", "Mixto"]}
-                  placeholder="seleccione un tipo"
-                  size="small"
+                  placeholder="seleccione tipo"
+                  size="xxxsmall"
                 />
                 
                 {tipoError && (

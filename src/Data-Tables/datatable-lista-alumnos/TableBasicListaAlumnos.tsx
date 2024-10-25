@@ -1,27 +1,27 @@
 import { useState } from "react";
 import MUIDataTable, { FilterType, Responsive } from "mui-datatables";
-import style from "../datatable-alumnos/tablebasic-alumnos.module.css";
-import { Link } from "react-router-dom";
-import ButtonUpdate from "../../components/Button-Options-CRUD/Button-Update/ButtonUpdate";
-import ButtonDelete from "../../components/Button-Options-CRUD/Button-Delete/ButtonDelete";
-import ModalHOC from "../../components/Modal/Modal";
-import ButtonModal from "../../components/ButtonModal/ButtonModal";
-import { Edit, Delete } from '@mui/icons-material';
+import style from "../datatable-lista-alumnos/tablebasic-lista-alumnos.module.css";
+// import { Link } from "react-router-dom";
+// import ButtonUpdate from "../../components/Button-Options-CRUD/Button-Update/ButtonUpdate";
+// import ButtonDelete from "../../components/Button-Options-CRUD/Button-Delete/ButtonDelete";
+// import ModalHOC from "../../components/Modal/Modal";
+// import ButtonModal from "../../components/ButtonModal/ButtonModal";
+// import { Edit, Delete } from '@mui/icons-material';
 
-const TableBasicAlumnos = () => {
-  const [showModal, setShowModal] = useState(false);
-  const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
+const TableBasicListaAlumnos = () => {
+  // const [showModal, setShowModal] = useState(false);
+  // const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
 
-  const handleDelete = (userId: number) => {
-    setSelectedUserId(userId);
-    setShowModal(true);
-  };
+  // const handleDelete = (userId: number) => {
+  //   setSelectedUserId(userId);
+  //   setShowModal(true);
+  // };
 
-  const handleConfirmDelete = () => {
-    const updatedData = data.filter(user => user.id !== selectedUserId);
-    setData(updatedData);
-    setShowModal(false);
-  };
+  // const handleConfirmDelete = () => {
+  //   const updatedData = data.filter(user => user.id !== selectedUserId);
+  //   setData(updatedData);
+  //   setShowModal(false);
+  // };
 
   const columns = [
     {
@@ -66,53 +66,53 @@ const TableBasicAlumnos = () => {
         setCellHeaderProps: () => ({ style: { textAlign: 'center', fontWeight: 'bold' } }),
       },
     },
-    {
-      name: "Puntos",
-      options: {
-        setCellProps: () => ({ style: { textAlign: 'center' } }),
-        setCellHeaderProps: () => ({ style: { textAlign: 'center', fontWeight: 'bold' } }),
-      },
-    },
-    {
-      name: "Opciones",
-      options: {
-        setCellProps: () => ({ style: { textAlign: 'center' } }),
-        setCellHeaderProps: () => ({ style: { textAlign: 'center', fontWeight: 'bold' } }),
-        customBodyRenderLite: (dataIndex: number) => {
-          const userId = data[dataIndex].id;
-          return (
-<div className ={`${style['buton-crud']}`}>
-  <Link to={`/Alumnos/FromAlumnosActualizar/${userId}`}>
-    <ButtonUpdate
-      onClick={() => {
-        console.log("presionado para editar");
-      }}
-      icon={<Edit />}
-      tooltip="Editar"
-    />
-  </Link>
-  <ButtonDelete
-    onClick={() => handleDelete(userId)}
-    icon={<Delete />}
-    tooltip="Eliminar"
-  />
-    <Link to={`/Alumnos/FromAlumnosActualizar/${userId}`}>
-    <ButtonUpdate
-      onClick={() => {
-        console.log("presionado para editar");
-      }}
-      icon={<Edit />}
-      tooltip="Constancia"
-    />
-  </Link>
-</div>
-          );
-        },
-      },
-    },
+    // {
+    //   name: "Puntos",
+    //   options: {
+    //     setCellProps: () => ({ style: { textAlign: 'center' } }),
+    //     setCellHeaderProps: () => ({ style: { textAlign: 'center', fontWeight: 'bold' } }),
+    //   },
+    // },
+//     {
+//       name: "Opciones",
+//       options: {
+//         setCellProps: () => ({ style: { textAlign: 'center' } }),
+//         setCellHeaderProps: () => ({ style: { textAlign: 'center', fontWeight: 'bold' } }),
+//         customBodyRenderLite: (dataIndex: number) => {
+//           const userId = data[dataIndex].id;
+//           return (
+// <div className ={`${style['buton-crud']}`}>
+//   <Link to={`/Alumnos/FromAlumnosActualizar/${userId}`}>
+//     <ButtonUpdate
+//       onClick={() => {
+//         console.log("presionado para editar");
+//       }}
+//       icon={<Edit />}
+//       tooltip="Editar"
+//     />
+//   </Link>
+//   <ButtonDelete
+//     onClick={() => handleDelete(userId)}
+//     icon={<Delete />}
+//     tooltip="Eliminar"
+//   />
+//     <Link to={`/Alumnos/FromAlumnosActualizar/${userId}`}>
+//     <ButtonUpdate
+//       onClick={() => {
+//         console.log("presionado para editar");
+//       }}
+//       icon={<Edit />}
+//       tooltip="Constancia"
+//     />
+//   </Link>
+// </div>
+//           );
+//         },
+//       },
+//     },
   ];
 
-  const [data, setData] = useState([
+  const [data] = useState([
     /* Datos de los alumnos */
     {
       id:1,
@@ -202,7 +202,7 @@ const TableBasicAlumnos = () => {
     sort: false,
     print:false,
     filter:true,
-    download:true,
+    download:false,
     viewColumns:false,
     
     textLabels: {
@@ -236,8 +236,8 @@ const TableBasicAlumnos = () => {
     },
     selectableRows: "none" as const,
     pagination: true,
-    rowsPerPage: 5,
-    rowsPerPageOptions: [5, 10, 15],
+    rowsPerPage: 35,
+    rowsPerPageOptions: [15, 20, 25],
   };
 
   return (
@@ -250,7 +250,7 @@ const TableBasicAlumnos = () => {
           options={options}
         />
         {/* Modal para confirmar la eliminación */}
-        <ModalHOC
+        {/* <ModalHOC
           show={showModal}
           hide={() => setShowModal(false)}
           activeHide={false}
@@ -273,10 +273,10 @@ const TableBasicAlumnos = () => {
               />
             </div>
           </div>
-        </ModalHOC>
+        </ModalHOC> */}
       </div>
     </div>
   );
 };
 
-export default TableBasicAlumnos;
+export default TableBasicListaAlumnos;

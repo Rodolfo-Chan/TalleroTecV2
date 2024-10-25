@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import Home from './pages/Home';
-import About from './pages/About';
-import Contact from './pages/Contact';
+import Documentos from './pages/Documentos';
+import HomeProfesor from './pages/HomeProfesor';
 import Alumnos from './pages/Alumnos';
 import FromAlumnosRegistro from './forms/forms-alumnos/from-alumnos-registro/FormAlumnosRegistro';
 import FromAlumnosActualizar from './forms/forms-alumnos/from-alumnos-actualizar/FormAlumnosActualizar';
@@ -69,8 +69,8 @@ const RoutesComponent: React.FC<RoutesComponentProps> = ({ toggleSidebar, isSide
         <Route path='/Inscripciones/FormInscripcionesRegistro' element={<MainLayout toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen}><FormInscripcionesRegistro/></MainLayout>} />
         <Route path='/Inscripciones/FormInscripcionesActualizar/:userId' element={<MainLayout toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen}><FormInscripcionesActualizar/></MainLayout>} />
         <Route path='/Talleres/FormTalleresCrearActualizar/:userId' element={<MainLayout toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen}><FormTalleresCrearActualizar/></MainLayout>} />
-        <Route path="/about" element={<MainLayout toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen}><About /></MainLayout>} />
-        <Route path="/contact" element={<MainLayout toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen}><Contact /></MainLayout>} />
+        <Route path="/Documentos" element={<MainLayout toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen}><Documentos /></MainLayout>} />
+        <Route path="/HomeProfesor" element={<MainLayout toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen}><HomeProfesor /></MainLayout>} />
         <Route path="/HomeAlumno" element={<MainLayout toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen}><HomeAlumno /></MainLayout>} />
         <Route path='/HomeAlumno/FormInscripcionAlumno/:userId' element={<MainLayout toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen}><FormInscripcionAlumno/></MainLayout>} />
         <Route path="/TallerAlumno" element={<MainLayout toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen}><TallerAlumno /></MainLayout>} />

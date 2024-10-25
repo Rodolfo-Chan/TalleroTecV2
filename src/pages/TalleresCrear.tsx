@@ -16,13 +16,13 @@ const TalleresCrear: React.FC = () => {
         <div className ={`${style['name-and-name']}`} >    
         <h1 className ={`${style['name']}`}>CATALOGO TALLERES</h1>
           
-       
+        
         <div className ={`${style['button-container']}`} >    
        
             <Button onClick={() => {  navigate("FormTalleresCrearRegistro")
                 console.log("presionado");
                 }}
-                label="Crear taller"
+                label="Crear taller" 
             />
         </div>
         </div>

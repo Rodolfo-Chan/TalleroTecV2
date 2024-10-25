@@ -188,7 +188,7 @@ const TableBasicTalleresRegistro = () => {
     sort: false,
     print:false,
     filter:true,
-    download:true,
+    download:false,
     viewColumns:false,
     textLabels: {
       pagination: {

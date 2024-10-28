@@ -1,0 +1,92 @@
+.div-container-select {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Estilo del label dentro del componente */
+.h6-label {
+  padding: 0;
+  margin: 0;
+  color: rgb(255, 255, 255); /* Color blanco */
+  font-weight: 700;
+  font-size: 18px;
+  padding-left: 11px;
+}
+
+/* Estilo general del select */
+.select-properties {
+  margin: 0;
+  padding: 0;
+  font-size: 14px;
+  cursor: pointer;
+  height: 34px;
+  border-radius: 4px;
+  border: 2px solid #4a4dff; /* Borde del select */
+  text-indent: 15px;
+  background-color: #ffffff; /* Fondo del select */
+  color: #000000; /* Color del texto por defecto */
+}
+
+/* Cambiar el color del placeholder */
+.select-properties option:disabled {
+  color: #999999; /* Cambia este color para el placeholder */
+}
+
+/* Modificar color de los options disponibles */
+.select-properties option {
+  color: #000000; /* Cambia este color para los options */
+}
+
+/* Estilo del placeholder cuando está seleccionado */
+.placeholder-option {
+  font-style: italic; /* Puedes agregar más estilos si lo prefieres */
+  font-size: 14px;
+}
+
+/* Tamaños de los selectores */
+
+.xxxsmall-select {
+  width: 145px;
+}
+
+.xxsmall-select {
+  width: 165px;
+}
+
+.xsmall-select {
+  width: 180px;
+}
+
+.small-select {
+  width: 210px;
+}
+
+.xmedium-select {
+  width: 280px;
+}
+
+.medium-select {
+  width: 300px;
+}
+
+.large-select {
+  width: 100%;
+}
+
+/* Estilos adicionales para estados de focus y hover */
+.select-properties:focus {
+  outline: none; /* Eliminar el borde predeterminado de focus */
+  border: 2px solid #4a4dff; /* Cambiar el borde al hacer focus */
+}
+
+/* .select-properties:hover {
+  border: 2px solid #000000; /* Cambiar el borde al pasar el mouse */
+/*} */
+
+/* Estilo personalizado para el contenedor del select */
+/* .div-container-select.custom-container {
+  background-color: #2d3a5f; /* Fondo del contenedor */
+ /* border-radius: 116px; /* Bordes redondeados */
+ /* padding: 1000px; /* Espaciado interno */
+/*} */
+

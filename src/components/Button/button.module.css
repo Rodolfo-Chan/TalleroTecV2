@@ -1,0 +1,23 @@
+.container-button {
+    font-weight: 300;
+    width: 150px;
+    font-size: 12px;
+    line-height: 15px;
+    background: #11325A;
+    height: 50px;
+    color: white;
+    border-radius: 40px;
+    border-color: #C3E7F2;
+    border-width: 3px;
+    cursor: pointer;
+    position: relative; 
+    /* left: 30px;   por este espacio los botones de registro se desbordan de su contenedor */
+  }
+  
+  .container-button:hover {
+    background: #71a1e5;
+  }
+  
+  .container-button:active {
+    background: rgb(6, 81, 121);
+  }

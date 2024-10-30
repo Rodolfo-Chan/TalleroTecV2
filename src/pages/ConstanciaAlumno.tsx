@@ -1,9 +1,12 @@
 
-import style from './css/documentos.module.css';
+import style from './css/constancia-alumno.module.css';
 import SubirArchivo from '../components/Documentos/Subirarchivo/SubirArchivo';
 import DescargarArchivo from '../components/Documentos/Descargararchivo/DescargarArchivo';
+import ButtonRegistro from '../components/ButtonRegistro/ButtonRegistro';
+import { useNavigate } from "react-router-dom";
 
-const Documentos = () => {
+const ConstanciaAlumno = () => {
+  const navigate = useNavigate();
 
   // Solo para simular la subida exitosa del archivo
   // const onUpload = async (): Promise<boolean> => {
@@ -44,7 +47,7 @@ const Documentos = () => {
     <div className={style['home-container']}>
       <header className={style['header']}>
         <div className={style['header-content']}>
-          <h1 className={style['titulo']}>ENTREGA DE DOCUMENTACIÓN</h1>
+          <h1 className={style['titulo']}>ENTREGA DE CONSTANCIA</h1>
         </div>
       </header>
 
@@ -54,37 +57,33 @@ const Documentos = () => {
             <div className={style['card-content']}>
               <div className={style['card-text']}>
                 <div className ={`${style['contenedor-text']}`}>
-                <h2>Registro de participantes</h2>
+                <h2>Constancia de cumplimiento</h2>
                 </div>
-              <p className ={`${style['text']}`}>Importante subir el documento en formato PDF</p>
+              <p className ={`${style['text']}`}>Solo se aceptan documentos en formato PDF</p>
                 <SubirArchivo onUpload={onUpload} />
-                <p className ={`${style['text']}`}>Descarga la rúbrica</p>
-                <DescargarArchivo 
-        fileName="REGISTRO_DE_PARTICIPANTES.docx" 
-        downloadUrl="/download-informe" 
-        downloadText="Descargar Informe" // Otro texto para otro uso
-        showFileName={true}  showDownloadText={false}
-      />              </div>
-            </div>
-          </div>
-
-          <div className={style['card']}>
-            <div className={style['card-content']}>
-              <div className={style['card-text']}>
-                <div className ={`${style['contenedor-text']}`}>
-                <h2>Evaluación al desempeño</h2>
-                </div>
-              <p className ={`${style['text']}`}>Importante subir el documento en formato PDF</p>
-                <SubirArchivo onUpload={onUpload} />
-                <p className ={`${style['text']}`}>Descarga la rúbrica</p>
-                <DescargarArchivo fileName="EVALUACION_AL_DESEMPEÑO.docx" downloadUrl="/ruta/al/archivo/participantes.pdf"         downloadText="Descargar Informe" showFileName={true}  showDownloadText={false}/>
+                <p className ={`${style['text']}`}>Descargar la constancia</p>
+                <DescargarArchivo fileName="constancia_de_cumplimiento.pdf" downloadUrl="/ruta/al/archivo/participantes.pdf"   showFileName={true}  showDownloadText={false}  />
               </div>
             </div>
           </div>
+
+ 
         </section>
       </main>
+      <header className={style['header']}>
+        <div className={style['header-content']}>
+        <ButtonRegistro
+                onClick={() => {
+                  navigate("/AlumnosLiberados");
+                  console.log("presionado");
+                }}
+                label="Atrás"
+              />
+        </div>
+      </header>
+
     </div>
   );
 };
 
-export default Documentos;
+export default ConstanciaAlumno;

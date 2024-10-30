@@ -7,9 +7,10 @@ import { GiSportMedal } from "react-icons/gi";
 import { FaListCheck } from "react-icons/fa6";
 import { CiViewList } from "react-icons/ci";
 import { IoCreateOutline } from "react-icons/io5";
-
+import { FaUsers } from "react-icons/fa";
+import { FaUserClock } from "react-icons/fa";
+import { FaUserCheck } from "react-icons/fa6";
 import '../components/Sidebar.css';
-import { IoPersonAddSharp } from 'react-icons/io5';
 
 interface SidebarProps {
   isOpen: boolean;
@@ -22,14 +23,22 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
 
   // Estado para manejar el submenú de Talleres
   const [isTalleresOpen, setIsTalleresOpen] = useState(false);
+  const [isAlumnosOpen, setIsAlumnosOpen] = useState(false);
+
 
   // Alternar submenú de Talleres
   const toggleTalleresSubMenu = () => {
     setIsTalleresOpen(!isTalleresOpen);
   };
 
+  const toggleAlumnosSubMenu = () => {
+    setIsAlumnosOpen(!isAlumnosOpen);
+  };
+
   // Verificar si el path es de alguna opción de Talleres o submenú de Talleres
   const isTalleresActive = currentPath.startsWith('/Talleres');
+  const isAlumnosActive = currentPath.startsWith('/Alumnos');
+
 
   return (
     <aside className={`sidebar ${isOpen ? 'open' : ''}`}>
@@ -48,7 +57,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
             </Link>
           </li>
 
-          <li>
+          {/* <li>
             <Link
               to="/Alumnos"
               className={currentPath.startsWith('/Alumnos') ? 'active' : ''}
@@ -56,6 +65,39 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
             >
               <IoPersonAddSharp /> Alumnos
             </Link>
+          </li> */}
+
+                    {/* Menú de Talleres con Submenú */}
+                    <li>
+            <Link
+              to="#"
+              className={isAlumnosActive ? 'active' : ''}
+              onClick={toggleAlumnosSubMenu}
+            >
+              <FaUsers  /> Alumnos {isAlumnosOpen ? <MdExpandLess /> : <MdExpandMore />}
+            </Link>
+            {isAlumnosOpen && (
+              <ul>
+                <li>
+                  <Link
+                    to="/Alumnos"
+                    className={currentPath === '/Alumnos' ? 'active' : ''}
+                    onClick={toggleSidebar}
+                  >
+                  <FaUserClock /> En proceso
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/AlumnosLiberados"
+                    className={currentPath === '/AlumnosLiberados' ? 'active' : ''}
+                    onClick={toggleSidebar}
+                  >
+                   <FaUserCheck />  Liberados
+                  </Link>
+                </li>
+              </ul>
+            )}
           </li>
 
           <li>
@@ -111,6 +153,16 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
             </Link>
           </li>
 
+          <li>
+            <Link
+              to="/DocumentosMaster"
+              className={currentPath === '/DocumentosMaster' ? 'active' : ''}
+              onClick={toggleSidebar}
+            >
+              <FaListCheck /> Documentos
+            </Link>
+          </li>
+
           <hr />
 
           <li>
@@ -119,7 +171,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
               className={currentPath === '/HomeAlumno' ? 'active' : ''}
               onClick={toggleSidebar}
             >
-              <SiHomeassistant /> Home Alum
+              <SiHomeassistant /> Home
             </Link>
           </li>
 
@@ -129,7 +181,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
               className={currentPath.startsWith('/TallerAlumno') ? 'active' : ''}
               onClick={toggleSidebar}
             >
-              <GiSportMedal /> Talleres Alu
+              <GiSportMedal /> Historial
             </Link>
           </li>
 
@@ -141,7 +193,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
               className={currentPath === '/HomeProfesor' ? 'active' : ''}
               onClick={toggleSidebar}
             >
-              <SiHomeassistant /> Home Prof
+              <SiHomeassistant /> Home
             </Link>
           </li>
 

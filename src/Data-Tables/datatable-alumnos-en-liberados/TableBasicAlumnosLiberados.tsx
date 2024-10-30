@@ -1,27 +1,19 @@
 import { useState } from "react";
 import MUIDataTable, { FilterType, Responsive } from "mui-datatables";
-import style from "../datatable-alumnos/tablebasic-alumnos.module.css";
+import style from "./tablebasic-alumnos-liberados.module.css";
 import { Link } from "react-router-dom";
-import ButtonUpdate from "../../components/Button-Options-CRUD/Button-Update/ButtonUpdate";
-import ButtonDelete from "../../components/Button-Options-CRUD/Button-Delete/ButtonDelete";
-import ModalHOC from "../../components/Modal/Modal";
-import ButtonModal from "../../components/ButtonModal/ButtonModal";
-import { Edit, Delete } from '@mui/icons-material';
 
-const TableBasicAlumnos = () => {
-  const [showModal, setShowModal] = useState(false);
-  const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
+import ButtonConstancia from "../../components/Documentos/Constancia/ButtonConstancia";
 
-  const handleDelete = (userId: number) => {
-    setSelectedUserId(userId);
-    setShowModal(true);
-  };
 
-  const handleConfirmDelete = () => {
-    const updatedData = data.filter(user => user.id !== selectedUserId);
-    setData(updatedData);
-    setShowModal(false);
-  };
+
+import FileOpenIcon from '@mui/icons-material/FileOpen';
+
+const TableBasicAlumnosLiberados = () => {
+
+
+
+
 
   const columns = [
     {
@@ -74,7 +66,7 @@ const TableBasicAlumnos = () => {
       },
     },
     {
-      name: "Opciones",
+      name: "Constancia",
       options: {
         setCellProps: () => ({ style: { textAlign: 'center' } }),
         setCellHeaderProps: () => ({ style: { textAlign: 'center', fontWeight: 'bold' } }),
@@ -82,26 +74,15 @@ const TableBasicAlumnos = () => {
           const userId = data[dataIndex].id;
           return (
 <div className ={`${style['buton-crud']}`}>
-  <Link to={`/Alumnos/FromAlumnosActualizar/${userId}`}>
-    <ButtonUpdate
+
+
+
+      <Link to={`/AlumnosLiberados/ConstanciaAlumno/${userId}`}>
+    <ButtonConstancia
       onClick={() => {
-        console.log("presionado para editar");
+        console.log("presionado para la constancia");
       }}
-      icon={<Edit />}
-      tooltip="Editar"
-    />
-  </Link>
-  <ButtonDelete
-    onClick={() => handleDelete(userId)}
-    icon={<Delete />}
-    tooltip="Eliminar"
-  />
-    <Link to={`/Alumnos/FromAlumnosActualizar/${userId}`}>
-    <ButtonUpdate
-      onClick={() => {
-        console.log("presionado para editar");
-      }}
-      icon={<Edit />}
+      icon={<FileOpenIcon />}
       tooltip="Constancia"
     />
   </Link>
@@ -112,7 +93,7 @@ const TableBasicAlumnos = () => {
     },
   ];
 
-  const [data, setData] = useState([
+  const [data] = useState([
     /* Datos de los alumnos */
     {
       id:1,
@@ -122,7 +103,7 @@ const TableBasicAlumnos = () => {
       Telefono: "1234567890",
       Genero: "Masculino",
       Carrera: "ING. Informatica",
-      Puntos:"60/200",
+      Puntos:"200/200",
     },
     {
       id:2,
@@ -132,7 +113,7 @@ const TableBasicAlumnos = () => {
       Telefono: "9872561528",
       Genero: "Masculino",
       Carrera: "LIC. Administracion",
-      Puntos:"0/200",
+      Puntos:"200/200",
     },
     {
       id:3,
@@ -142,7 +123,7 @@ const TableBasicAlumnos = () => {
       Telefono: "1234567890",
       Genero: "Masculino",
       Carrera: "ING. Informatica",
-      Puntos:"90/200",
+      Puntos:"200/200",
     },
     {
       id:4,
@@ -152,7 +133,7 @@ const TableBasicAlumnos = () => {
       Telefono: "8972628910",
       Genero: "Masculino",
       Carrera: "ING. Informatica",
-      Puntos:"40/200",
+      Puntos:"200/200",
     },
     {
       id:5,
@@ -162,7 +143,7 @@ const TableBasicAlumnos = () => {
       Telefono: "1234567890",
       Genero: "Femenino",
       Carrera: "ING. Informatica",
-      Puntos:"155/200",
+      Puntos:"200/200",
     },
     {
       id:6,
@@ -172,7 +153,7 @@ const TableBasicAlumnos = () => {
       Telefono: "1123098160",
       Genero: "Femenino",
       Carrera: "ING. Agronomia",
-      Puntos:"20/200",
+      Puntos:"200/200",
     },
     {
       id:7,
@@ -182,7 +163,7 @@ const TableBasicAlumnos = () => {
       Telefono: "1234234509",
       Genero: "Masculino",
       Carrera: "ING. Informatica",
-      Puntos:"40/200",
+      Puntos:"200/200",
     },
     {
       id:8,
@@ -202,7 +183,7 @@ const TableBasicAlumnos = () => {
     sort: false,
     print:false,
     filter:true,
-    download:true,
+    download:false,
     viewColumns:false,
     
     textLabels: {
@@ -244,39 +225,15 @@ const TableBasicAlumnos = () => {
     <div className={`${style["table"]}`}>
       <div className={`${style["border"]}`}>
         <MUIDataTable
-          title={"Lista de Alumnos"}
+          title={"Lista de alumnos liberados"}
           data={data}
           columns={columns}
           options={options}
         />
-        {/* Modal para confirmar la eliminación */}
-        <ModalHOC
-          show={showModal}
-          hide={() => setShowModal(false)}
-          activeHide={false}
-        >
-          <div className ={`${style['info-modal']}`}>
-            <p>
-              ¿Estás seguro de eliminar este alumno?
-            </p>
-            <div className ={`${style['button-modal']}`}>
-              <ButtonModal
-                onClick={() => {
-                  handleConfirmDelete();
-                }}
-                label="Si, eliminar"
-              />
-              <span style={{ margin: "0 5px" }}></span>
-              <ButtonModal
-                onClick={() => setShowModal(false)}
-                label="Cancelar"
-              />
-            </div>
-          </div>
-        </ModalHOC>
+
       </div>
     </div>
   );
 };
 
-export default TableBasicAlumnos;
+export default TableBasicAlumnosLiberados;

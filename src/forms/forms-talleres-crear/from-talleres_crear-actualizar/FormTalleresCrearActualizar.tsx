@@ -58,13 +58,11 @@ const usuarios = [
 const FormTalleresCrearActualizar = () => {
   const { userId } = useParams();
   const [nombre, setNombre] = useState("");
-  const [tipo, setTipo] = useState("");
   const [estatus, setEstatus] = useState("");
   const [showAlert, setShowAlert] = useState(false);
   const [alertSeverity, setAlertSeverity] = useState<"error" | "warning" | "info" | "success">("success"); // Tipado más estricto
   const [alertMessage, setAlertMessage] = useState("");
   const [nombreError, setNombreError] = useState("");
-  const [tipoError, setTipoError] = useState("");
   const [estatusError, setEstatusError] = useState("");
 
 
@@ -75,7 +73,6 @@ const FormTalleresCrearActualizar = () => {
     const usuario = usuarios.find(user => user.id === parseInt(userId as string));
     if (usuario) {
       setNombre(usuario.Nombre);
-      setTipo(usuario.Tipo);
       setEstatus(usuario.Estatus);
 
 
@@ -89,7 +86,6 @@ const FormTalleresCrearActualizar = () => {
 
     // Reset error messages
     setNombreError("");
-    setTipoError("");
     setEstatusError("");
 
     if (!nombre) {
@@ -97,10 +93,6 @@ const FormTalleresCrearActualizar = () => {
       isValid = false;
     } else if (!nombre.match(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/)) {
       setNombreError("No se aceptan dígitos numéricos.");
-      isValid = false;
-    }
-    if (!tipo) {
-      setTipoError("Seleccione un tipo.");
       isValid = false;
     }
 
@@ -121,7 +113,6 @@ const FormTalleresCrearActualizar = () => {
       // Solo resetea los valores si es un nuevo registro, no en actualización
       if (!userId) {
         setNombre("");
-        setTipo("");
         setEstatus("");
       }
     }
@@ -163,20 +154,7 @@ const FormTalleresCrearActualizar = () => {
               )}
             </div>
 
-          <div className={`${style['tipo_taller']}`}>
-                <Select
-                  label="Tipo taller"
-                  value={tipo}
-                  onChange={setTipo}
-                  options={["Femenil", "Varonil", "Mixto"]}
-                  placeholder="seleccione un tipo"
-                  size="small"
-                />
-                
-                {tipoError && (
-                  <ComponentAlert open={!!tipoError} severity="error" message={tipoError} sx={{ width: 'auto', height: 'auto', fontSize: '13px' }} />
-                )}
-              </div>
+
 
               <div className={`${style['estatus_taller']}`}>
                 <Select

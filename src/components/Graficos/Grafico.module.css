@@ -1,0 +1,25 @@
+/* BarChartStyles.module.css */
+
+.chartContainer {
+  /* background: #333; */
+  width: 100%; /* Ancho completo del contenedor */
+  max-width: 800px; /* Ancho máximo para la gráfica */
+  margin: 0 auto; /* Centrar el contenedor */
+  padding: 20px; /* Espaciado interno */
+}
+
+.chartTitle {
+  text-align: center; /* Centrar el título de la gráfica */
+  font-size: 1.5rem; /* Tamaño del texto */
+  color: #333; /* Color del texto */
+  margin-bottom: 10px; /* Espaciado debajo del título */
+}
+
+/* Estilos para los colores de la gráfica */
+.barColor {
+  background-color: rgba(75, 192, 192, 0.6); /* Color de las barras */
+}
+
+.barColorAlternative {
+  background-color: rgba(255, 99, 132, 0.6); /* Color alternativo para barras */
+}

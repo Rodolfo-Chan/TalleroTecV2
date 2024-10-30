@@ -15,7 +15,6 @@ const FormTalleresCrearRegistro = () => {
   const [alertSeverity, setAlertSeverity] = useState<"error" | "warning" | "info" | "success">("success"); // Tipado más estricto
   const [alertMessage, setAlertMessage] = useState("");
   const [nombreError, setNombreError] = useState("");
-  const [tipoError, setTipoError] = useState("");
   const [estatusError, setEstatusError] = useState("");
 
   const navigate = useNavigate();
@@ -25,7 +24,6 @@ const FormTalleresCrearRegistro = () => {
 
     // Reset error messages
     setNombreError("");
-    setTipoError("");
     setEstatusError("");
 
 
@@ -36,10 +34,7 @@ const FormTalleresCrearRegistro = () => {
       setNombreError("No se aceptan dígitos numéricos.");
       isValid = false;
     }
-    if (!tipo) {
-      setTipoError("Seleccione un tipo.");
-      isValid = false;
-    }
+
 
     if (!estatus) {
       setEstatusError("Seleccione un estatus.");
@@ -104,20 +99,6 @@ const FormTalleresCrearRegistro = () => {
               )}
             </div>
 
-          <div className={`${style['tipo_taller']}`}>
-                <Select
-                  label="Tipo taller"
-                  value={tipo}
-                  onChange={setTipo}
-                  options={["Femenil", "Varonil", "Mixto"]}
-                  placeholder="seleccione tipo"
-                  size="xxxsmall"
-                />
-                
-                {tipoError && (
-                  <ComponentAlert open={!!tipoError} severity="error" message={tipoError} sx={{ width: 'auto', height: 'auto', fontSize: '13px' }} />
-                )}
-              </div>
 
               <div className={`${style['estatus_taller']}`}>
                 <Select

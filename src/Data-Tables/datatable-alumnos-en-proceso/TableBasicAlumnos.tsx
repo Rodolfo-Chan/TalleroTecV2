@@ -1,15 +1,14 @@
 import { useState } from "react";
 import MUIDataTable, { FilterType, Responsive } from "mui-datatables";
-import style from "../datatable-inscripciones/tablebasic-inscripciones.module.css";
+import style from "./tablebasic-alumnos.module.css";
 import { Link } from "react-router-dom";
-//import ButtonCrud from "../../components/button-options-CRUD/ButtonCrud";
 import ButtonUpdate from "../../components/Button-Options-CRUD/Button-Update/ButtonUpdate";
 import ButtonDelete from "../../components/Button-Options-CRUD/Button-Delete/ButtonDelete";
 import ModalHOC from "../../components/Modal/Modal";
 import ButtonModal from "../../components/ButtonModal/ButtonModal";
-import { Edit, Delete } from '@mui/icons-material'; // Importa los iconos Edit y Delete
+import { Edit, Delete } from '@mui/icons-material';
 
-const TableBasicInscripciones = () => {
+const TableBasicAlumnos = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
 
@@ -26,42 +25,49 @@ const TableBasicInscripciones = () => {
 
   const columns = [
     {
-      name: "Matricula Alumno",
+      name: "Matricula",
       options: {
         setCellProps: () => ({ style: { textAlign: 'center' } }),
         setCellHeaderProps: () => ({ style: { textAlign: 'center', fontWeight: 'bold' } }),
       },
     },
     {
-      name: "Nombre Alumno",
+      name: "Nombre",
       options: {
         setCellProps: () => ({ style: { textAlign: 'center' } }),
         setCellHeaderProps: () => ({ style: { textAlign: 'center', fontWeight: 'bold' } }),
       },
     },
     {
-      name: "Apellidos Alumno",
+      name: "Apellidos",
       options: {
         setCellProps: () => ({ style: { textAlign: 'center' } }),
         setCellHeaderProps: () => ({ style: { textAlign: 'center', fontWeight: 'bold' } }),
       },
     },
     {
-      name: "Taller",
+      name: "Telefono",
       options: {
         setCellProps: () => ({ style: { textAlign: 'center' } }),
         setCellHeaderProps: () => ({ style: { textAlign: 'center', fontWeight: 'bold' } }),
       },
     },
     {
-      name: "Periodo Escolar",
+      name: "Genero",
       options: {
         setCellProps: () => ({ style: { textAlign: 'center' } }),
         setCellHeaderProps: () => ({ style: { textAlign: 'center', fontWeight: 'bold' } }),
       },
     },
     {
-      name: "Estatus",
+      name: "Carrera",
+      options: {
+        setCellProps: () => ({ style: { textAlign: 'center' } }),
+        setCellHeaderProps: () => ({ style: { textAlign: 'center', fontWeight: 'bold' } }),
+      },
+    },
+    {
+      name: "Puntos",
       options: {
         setCellProps: () => ({ style: { textAlign: 'center' } }),
         setCellHeaderProps: () => ({ style: { textAlign: 'center', fontWeight: 'bold' } }),
@@ -72,31 +78,25 @@ const TableBasicInscripciones = () => {
       options: {
         setCellProps: () => ({ style: { textAlign: 'center' } }),
         setCellHeaderProps: () => ({ style: { textAlign: 'center', fontWeight: 'bold' } }),
-        
         customBodyRenderLite: (dataIndex: number) => {
           const userId = data[dataIndex].id;
           return (
 <div className ={`${style['buton-crud']}`}>
-<Link to={`/Inscripciones/FormInscripcionesActualizar/${userId}`}>
-                <ButtonUpdate
-                  onClick={() => {
-                    console.log("presionado para editar");
-                  }}
-                  //label="Editar"
-                 // color="#C1D00D"
-                  icon={<Edit />}
-                  tooltip="Editar"
-                />
-              </Link>
-              <ButtonDelete
-                onClick={() => handleDelete(userId)}
-               // label="Eliminar"
-               // color="#F14307"
-                icon={<Delete />}
-                tooltip="Eliminar"
-
-              />
-            </div>
+  <Link to={`/Alumnos/FromAlumnosActualizar/${userId}`}>
+    <ButtonUpdate
+      onClick={() => {
+        console.log("presionado para editar");
+      }}
+      icon={<Edit />}
+      tooltip="Editar"
+    />
+  </Link>
+  <ButtonDelete
+    onClick={() => handleDelete(userId)}
+    icon={<Delete />}
+    tooltip="Eliminar"
+  />
+</div>
           );
         },
       },
@@ -106,78 +106,84 @@ const TableBasicInscripciones = () => {
   const [data, setData] = useState([
     /* Datos de los alumnos */
     {
-     id:1,
-      "Matricula Alumno": "20890344",
-      "Nombre Alumno": "Juan Sanchez",
-      "Apellidos Alumno": "Perez Ancona",
-      Taller: "Softball varonil",
-      "Periodo Escolar": "AGO-DIC/2024",
-      Estatus: "En progreso",
+      id:1,
+      Matricula: "20890344",
+      Nombre: "Juan Sanchez",
+      Apellidos: "Perez Ancona",
+      Telefono: "1234567890",
+      Genero: "Masculino",
+      Carrera: "ING. Informatica",
+      Puntos:"60/200",
     },
     {
       id:2,
-      "Matricula Alumno": "67836325",
-      "Nombre Alumno": "Alberto Antonio",
-      "Apellidos Alumno": "Puc Santos",
-      Taller: "Ajedrez",
-      "Periodo Escolar": "AGO-DIC/2022",
-      Estatus: "Completado",
+      Matricula: "67836325",
+      Nombre: "Alberto Antonio",
+      Apellidos: "Puc Santos",
+      Telefono: "9872561528",
+      Genero: "Masculino",
+      Carrera: "LIC. Administracion",
+      Puntos:"0/200",
     },
     {
-     id:3,
-     "Matricula Alumno": "22367534",
-     "Nombre Alumno":  "Juan Sanchez",
-      "Apellidos Alumno": "Perez Ancona",
-      Taller: "Hanal-Pixan",
-      "Periodo Escolar": "AGO-DIC/2019",
-      Estatus: "Incompleto",
+      id:3,
+      Matricula: "22367534",
+      Nombre: "Juan Sanchez",
+      Apellidos: "Perez Ancona",
+      Telefono: "1234567890",
+      Genero: "Masculino",
+      Carrera: "ING. Informatica",
+      Puntos:"90/200",
     },
     {
       id:4,
-      "Matricula Alumno": "45678976",
-     "Nombre Alumno":  "Saul Antonio",
-      "Apellidos Alumno": "Ake Baas",
-      Taller: "Basquetball",
-      "Periodo Escolar": "AGO-DIC/2024",
-      Estatus: "En progreso",
+      Matricula: "45678976",
+      Nombre: "Saul Antonio",
+      Apellidos: "Ake Baas",
+      Telefono: "8972628910",
+      Genero: "Masculino",
+      Carrera: "ING. Informatica",
+      Puntos:"40/200",
     },
     {
       id:5,
-      "Matricula Alumno":"91452678",
-     "Nombre Alumno":  "Andrea Cecilia",
-      "Apellidos Alumno": "Ramirez Nauat",
-      Taller: "Beisball",
-      "Periodo Escolar": "AGO-DIC/2024",
-      Estatus: "En progreso",
-
+      Matricula: "91452678",
+      Nombre: "Andrea Cecilia",
+      Apellidos: "Ramirez Nauat",
+      Telefono: "1234567890",
+      Genero: "Femenino",
+      Carrera: "ING. Informatica",
+      Puntos:"155/200",
     },
-    {id:6,
-     "Matricula Alumno": "81035276",
-     "Nombre Alumno":  "Maria Jose",
-      "Apellidos Alumno": "Cime Pech",
-      Taller: "Futball Femenil",
-      "Periodo Escolar": "AGO-DIC/2024",
-      Estatus: "En progreso",
-
+    {
+      id:6,
+      Matricula: "81035276",
+      Nombre: "Maria Jose",
+      Apellidos: "Cime Pech",
+      Telefono: "1123098160",
+      Genero: "Femenino",
+      Carrera: "ING. Agronomia",
+      Puntos:"20/200",
     },
     {
       id:7,
-      "Matricula Alumno":"09362784",
-     "Nombre Alumno":  "Cesar Guzman",
-      "Apellidos Alumno": "Noh Sanchez",
-      Taller: "Ajedrez",
-      "Periodo Escolar": "AGO-DIC/2024",
-      Estatus: "En progreso",
-
+      Matricula: "09362784",
+      Nombre: "Cesar Guzman",
+      Apellidos: "Noh Sanchez",
+      Telefono: "1234234509",
+      Genero: "Masculino",
+      Carrera: "ING. Informatica",
+      Puntos:"40/200",
     },
     {
       id:8,
-      "Matricula Alumno": "262541628",
-     "Nombre Alumno":  "Dalia Rosario",
-      "Apellidos Alumno": "May Cupul",
-      Taller: "Basqueball Femenil",
-      "Periodo Escolar": "AGO-DIC/2024",
-      Estatus: "En progreso",
+      Matricula: "262541628",
+      Nombre: "Dalia Rosario",
+      Apellidos: "May Cupul",
+      Telefono: "1715431098",
+      Genero: "Femenino",
+      Carrera: "ING. Informatica",
+      Puntos:"200/200",
     }
   ]);
 
@@ -198,7 +204,7 @@ const TableBasicInscripciones = () => {
         displayRows: "de",
       },
       toolbar: {
-        search: "Buscar Inscripción",
+        search: "Buscar alumno",
         downloadCsv: "Descargar  lista en formato CSV",
         print: "Imprimir",
         viewColumns: "Ver columnas",
@@ -229,7 +235,7 @@ const TableBasicInscripciones = () => {
     <div className={`${style["table"]}`}>
       <div className={`${style["border"]}`}>
         <MUIDataTable
-          title={"Lista de inscripciones"}
+          title={"Lista de alumnos"}
           data={data}
           columns={columns}
           options={options}
@@ -264,4 +270,4 @@ const TableBasicInscripciones = () => {
   );
 };
 
-export default TableBasicInscripciones;
+export default TableBasicAlumnos;

@@ -1,9 +1,6 @@
 // import React from "react";
 import { useNavigate } from "react-router-dom";
 import style from "../pages/css/homealumno.module.css";
-import { MdSportsVolleyball, MdOutlineSportsEsports, MdOutlineSportsMartialArts, MdOutlineEmojiNature } from "react-icons/md";
-import { BiRun } from "react-icons/bi";
-import { GiPaintBrush, GiDrum } from "react-icons/gi";
 import ImageCarrusel from "../components/Carrusel/ImageCarrusel";
 
 // Define la interfaz para los talleres
@@ -13,43 +10,43 @@ interface Taller {
   inscritos: number; // Número de alumnos inscritos
   cupoMaximo: number; // Número máximo de cupos
   periodo: string;
-  icono: JSX.Element;
   activo: boolean;
   visible: boolean;
   id: number;
 }
 
 const talleres: Taller[] = [
-  { id: 1, nombre: "Atletismo", turno: "Matutino", inscritos: 30, cupoMaximo: 30, periodo: "ENE-JUN/2024", icono: <BiRun />, activo: true, visible: true },
-  { id: 2, nombre: "Atletismo", turno: "Vespertino",  inscritos: 0, cupoMaximo: 30, periodo: "ENE-JUN/2024", icono: <BiRun />, activo: false, visible: false },
-  { id: 3, nombre: "Voleibol varonil", turno: "Matutino",  inscritos: 0, cupoMaximo: 30, periodo: "ENE-JUN/2024", icono: <MdSportsVolleyball />, activo: true, visible: true },
-  { id: 4, nombre: "Voleibol femenil", turno: "Matutino",  inscritos: 0, cupoMaximo: 30, periodo: "ENE-JUN/2024", icono: <MdSportsVolleyball />, activo: true, visible: true },
-  { id: 5, nombre: "Voleibol Mixto", turno: "Matutino", inscritos: 0, cupoMaximo: 30, periodo: "ENE-JUN/2024", icono: <MdSportsVolleyball />, activo: true, visible: true },
-  { id: 6, nombre: "Voleibol varonil", turno: "Vespertino",  inscritos: 28, cupoMaximo: 30, periodo: "ENE-JUN/2024", icono: <MdSportsVolleyball />, activo: true, visible: true },
-  { id: 7, nombre: "Voleibol femenil", turno: "Vespetino",  inscritos: 0, cupoMaximo: 30, periodo: "ENE-JUN/2024", icono: <MdSportsVolleyball />, activo: true, visible: true },
-  { id: 8, nombre: "Voleibol Mixto", turno: "Vespertino",  inscritos: 0, cupoMaximo: 30, periodo: "ENE-JUN/2024", icono: <MdSportsVolleyball />, activo: true, visible: true },
-  { id: 9, nombre: "Ajedrez Mixto", turno: "Matutino",  inscritos: 0, cupoMaximo: 30, periodo: "ENE-JUN/2024", icono: <MdSportsVolleyball />, activo: true, visible: true },
-  { id: 10, nombre: "Ajedrez Mixto", turno: "Vespertino",  inscritos: 0, cupoMaximo: 30, periodo: "ENE-JUN/2024", icono: <MdSportsVolleyball />, activo: true, visible: true },
-  { id: 11, nombre: "Esport", turno: "Vespertino",  inscritos: 0, cupoMaximo: 30, periodo: "ENE-JUN/2024", icono: <MdOutlineSportsEsports />, activo: true, visible: true },
-  { id: 12, nombre: "Esport", turno: "Matutino",  inscritos: 0, cupoMaximo: 30, periodo: "ENE-JUN/2024", icono: <MdOutlineSportsEsports />, activo: true, visible: true },
-  { id: 13, nombre: "Taekwondo", turno: "Matutino",  inscritos: 0, cupoMaximo: 30, periodo: "ENE-JUN/2024", icono: <MdOutlineSportsMartialArts />, activo: true, visible: true },
-  { id: 14, nombre: "Taekwondo", turno: "Vespertino",  inscritos: 0, cupoMaximo: 30, periodo: "ENE-JUN/2024", icono: <MdOutlineSportsMartialArts />, activo: true, visible: true },
-  { id: 15, nombre: "Futbol varonil", turno: "Matutino",  inscritos: 0, cupoMaximo: 30, periodo: "ENE-JUN/2024", icono: <MdSportsVolleyball />, activo: true, visible: true },
-  { id: 16, nombre: "Futbol femenil", turno: "Matutino",  inscritos: 0, cupoMaximo: 30, periodo: "ENE-JUN/2024", icono: <MdSportsVolleyball />, activo: true, visible: true },
-  { id: 17, nombre: "Futbol mixto", turno: "Matutino",  inscritos: 0, cupoMaximo: 30, periodo: "ENE-JUN/2024", icono: <MdSportsVolleyball />, activo: true, visible: true },
-  { id: 18, nombre: "Futbol varonil", turno: "Vespertino", inscritos: 0, cupoMaximo: 30, periodo: "ENE-JUN/2024", icono: <MdSportsVolleyball />, activo: true, visible: true },
-  { id: 19, nombre: "Futbol femenil", turno: "Vespertino", inscritos: 0, cupoMaximo: 30, periodo: "ENE-JUN/2024", icono: <MdSportsVolleyball />, activo: true, visible: true },
-  { id: 20, nombre: "Futbol mixto", turno: "Vespertino",  inscritos: 0, cupoMaximo: 30, periodo: "ENE-JUN/2024", icono: <MdSportsVolleyball />, activo: true, visible: true },
-  { id: 21, nombre: "Beisbol varonil", turno: "Matutino",  inscritos: 0, cupoMaximo: 30, periodo: "ENE-JUN/2024", icono: <MdSportsVolleyball />, activo: true, visible: true },
-  { id: 22, nombre: "Basquetbol varonil", turno: "Matutino",  inscritos: 0, cupoMaximo: 30, periodo: "ENE-JUN/2024", icono: <MdSportsVolleyball />, activo: true, visible: true },
-  { id: 23, nombre: "Basquetbol femenil", turno: "Matutino",  inscritos: 0, cupoMaximo: 30, periodo: "ENE-JUN/2024", icono: <MdSportsVolleyball />, activo: true, visible: true },
-  { id: 24, nombre: "Basquetbol mixto", turno: "Matutino",  inscritos: 0, cupoMaximo: 30, periodo: "ENE-JUN/2024", icono: <MdSportsVolleyball />, activo: true, visible: true },
-  { id: 25, nombre: "Basquetbol varonil", turno: "Vespertino",  inscritos: 0, cupoMaximo: 30, periodo: "ENE-JUN/2024", icono: <MdSportsVolleyball />, activo: true, visible: true },
-  { id: 26, nombre: "Basquetbol femenil", turno: "Vespertino", inscritos: 0, cupoMaximo: 30, periodo: "ENE-JUN/2024", icono: <MdSportsVolleyball />, activo: true, visible: true },
-  { id: 27, nombre: "Basquetbol mixto", turno: "Vespertino", inscritos: 0, cupoMaximo: 30, periodo: "ENE-JUN/2024", icono: <MdSportsVolleyball />, activo: true, visible: true },
-  { id: 28, nombre: "Cuidado ambiental", turno: "Matutino",  inscritos: 0, cupoMaximo: 30, periodo: "ENE-JUN/2024", icono: <MdOutlineEmojiNature />, activo: true, visible: true },
-  { id: 29, nombre: "Pintura", turno: "Matutino",  inscritos: 0, cupoMaximo: 30, periodo: "ENE-JUN/2024", icono: <GiPaintBrush />, activo: false, visible: true },
-  { id: 30, nombre: "Grupo de batucada", turno: "Matutino", inscritos: 30, cupoMaximo: 30, periodo: "ENE-JUN/2024", icono: <GiDrum />, activo: true, visible: true }
+  { id: 1, nombre: "Atletismo", turno: "Matutino", inscritos: 30, cupoMaximo: 30, periodo: "ENE-JUN/2024", activo: true, visible: true },
+  { id: 2, nombre: "Atletismo", turno: "Vespertino",  inscritos: 0, cupoMaximo: 30, periodo: "ENE-JUN/2024",  activo: false, visible: false },
+  { id: 3, nombre: "Voleibol varonil", turno: "Matutino",  inscritos: 0, cupoMaximo: 30, periodo: "ENE-JUN/2024", activo: true, visible: true },
+  { id: 4, nombre: "Voleibol femenil", turno: "Matutino",  inscritos: 0, cupoMaximo: 30, periodo: "ENE-JUN/2024",  activo: true, visible: true },
+  { id: 5, nombre: "Voleibol Mixto", turno: "Matutino", inscritos: 0, cupoMaximo: 30, periodo: "ENE-JUN/2024",  activo: true, visible: true },
+  { id: 6, nombre: "Voleibol varonil", turno: "Vespertino",  inscritos: 28, cupoMaximo: 30, periodo: "ENE-JUN/2024",  activo: true, visible: true },
+  { id: 7, nombre: "Voleibol femenil", turno: "Vespetino",  inscritos: 0, cupoMaximo: 30, periodo: "ENE-JUN/2024",  activo: true, visible: true },
+  { id: 8, nombre: "Voleibol Mixto", turno: "Vespertino",  inscritos: 0, cupoMaximo: 30, periodo: "ENE-JUN/2024", activo: true, visible: true },
+  { id: 9, nombre: "Ajedrez Mixto", turno: "Matutino",  inscritos: 0, cupoMaximo: 30, periodo: "ENE-JUN/2024",  activo: true, visible: true },
+  { id: 10, nombre: "Ajedrez Mixto", turno: "Vespertino",  inscritos: 0, cupoMaximo: 30, periodo: "ENE-JUN/2024",  activo: true, visible: true },
+  { id: 11, nombre: "Esport", turno: "Vespertino",  inscritos: 0, cupoMaximo: 30, periodo: "ENE-JUN/2024", activo: true, visible: true },
+  { id: 12, nombre: "Esport", turno: "Matutino",  inscritos: 0, cupoMaximo: 30, periodo: "ENE-JUN/2024", activo: true, visible: true },
+  { id: 13, nombre: "Taekwondo", turno: "Matutino",  inscritos: 0, cupoMaximo: 30, periodo: "ENE-JUN/2024",  activo: true, visible: true },
+  { id: 14, nombre: "Taekwondo", turno: "Vespertino",  inscritos: 0, cupoMaximo: 30, periodo: "ENE-JUN/2024", activo: true, visible: true },
+  { id: 15, nombre: "Futbol varonil", turno: "Matutino",  inscritos: 0, cupoMaximo: 30, periodo: "ENE-JUN/2024",activo: true, visible: true },
+  { id: 16, nombre: "Futbol femenil", turno: "Matutino",  inscritos: 0, cupoMaximo: 30, periodo: "ENE-JUN/2024",  activo: true, visible: true },
+  { id: 17, nombre: "Futbol mixto", turno: "Matutino",  inscritos: 0, cupoMaximo: 30, periodo: "ENE-JUN/2024",  activo: true, visible: true },
+  { id: 18, nombre: "Futbol varonil", turno: "Vespertino", inscritos: 0, cupoMaximo: 30, periodo: "ENE-JUN/2024",  activo: true, visible: true },
+  { id: 19, nombre: "Futbol femenil", turno: "Vespertino", inscritos: 0, cupoMaximo: 30, periodo: "ENE-JUN/2024", activo: true, visible: true },
+  { id: 20, nombre: "Futbol mixto", turno: "Vespertino",  inscritos: 0, cupoMaximo: 30, periodo: "ENE-JUN/2024",  activo: true, visible: true },
+  { id: 21, nombre: "Beisbol varonil", turno: "Matutino",  inscritos: 0, cupoMaximo: 30, periodo: "ENE-JUN/2024",  activo: true, visible: true },
+  { id: 22, nombre: "Basquetbol varonil", turno: "Matutino",  inscritos: 0, cupoMaximo: 30, periodo: "ENE-JUN/2024",  activo: true, visible: true },
+  { id: 23, nombre: "Basquetbol femenil", turno: "Matutino",  inscritos: 0, cupoMaximo: 30, periodo: "ENE-JUN/2024",  activo: true, visible: true },
+  { id: 24, nombre: "Basquetbol mixto", turno: "Matutino",  inscritos: 0, cupoMaximo: 30, periodo: "ENE-JUN/2024",  activo: true, visible: true },
+  { id: 25, nombre: "Basquetbol varonil", turno: "Vespertino",  inscritos: 0, cupoMaximo: 30, periodo: "ENE-JUN/2024",  activo: true, visible: true },
+  { id: 26, nombre: "Basquetbol femenil", turno: "Vespertino", inscritos: 0, cupoMaximo: 30, periodo: "ENE-JUN/2024",  activo: true, visible: true },
+  { id: 27, nombre: "Basquetbol mixto", turno: "Vespertino", inscritos: 0, cupoMaximo: 30, periodo: "ENE-JUN/2024",  activo: true, visible: true },
+  { id: 28, nombre: "Cuidado ambiental", turno: "Matutino",  inscritos: 0, cupoMaximo: 30, periodo: "ENE-JUN/2024", activo: true, visible: true },
+  { id: 29, nombre: "Pintura", turno: "Matutino",  inscritos: 0, cupoMaximo: 30, periodo: "ENE-JUN/2024", activo: false, visible: true },
+  { id: 30, nombre: "Grupo de batucada", turno: "Matutino", inscritos: 30, cupoMaximo: 30, periodo: "ENE-JUN/2024", activo: true, visible: true }
+  
 
 ];
 
@@ -105,9 +102,6 @@ const HomeAlumno = () => {
                     ) : (
                       <p className={`${style['no-disponible']}`}>No disponible</p>
                     )}
-                  </div>
-                  <div className={`${style['card-icon']}`}>
-                    {taller.icono}
                   </div>
                 </div>
               </div>

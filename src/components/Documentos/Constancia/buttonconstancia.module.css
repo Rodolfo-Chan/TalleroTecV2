@@ -1,0 +1,24 @@
+.container-buttonupdate {
+  font-weight: 300;
+  width: 40px;
+  font-size: 12px;
+  line-height: 15px;
+  background: hsl(203, 89%, 43%);
+  height: 40px;
+  color: rgb(247, 239, 239);
+  border-radius: 50%;
+  border: none;  
+  cursor: pointer;
+}
+
+.container-buttonupdate:hover {
+  background: #00bef35d;
+}
+
+.container-buttonupdate:active {
+  background: rgb(5, 109, 100);
+}
+
+.button-icon {
+  margin-right: 0px;
+}

@@ -36,13 +36,6 @@ const TableBasicTalleresCrear = () => {
     },
 
     {
-      name: "Tipo",
-      options: {
-        setCellProps: () => ({ style: { textAlign: 'center' } }),
-        setCellHeaderProps: () => ({ style: { textAlign: 'center', fontWeight: 'bold' } }),
-      },
-    },
-    {
       name: "Estatus",
       options: {
         setCellProps: () => ({ style: { textAlign: 'center' } }),
@@ -92,49 +85,41 @@ const TableBasicTalleresCrear = () => {
   {
     id:1,
     Taller: "Banda de guerra",
-    Tipo:"Mixto",
     Estatus:"Activo"
   },
   {
     id:2,
     Taller: "Escolta",
-    Tipo:"Mixto",
     Estatus:"Activo"
   },
   {
     id:3,
     Taller: "Atletismo",
-    Tipo:"Mixto",
     Estatus:"Inactivo"
   },
   {
     id:4,
     Taller: "Beisbol Varonil",
-    Tipo:"Varonil",
     Estatus:"Activo"
   },
   {
     id:5,
     Taller: "Basquetbal Femenil",
-    Tipo:"Femenil",
     Estatus:"Activo"
   },
   {
     id:6,
     Taller: "Ajedrez",
-    Tipo:"Mixto",
     Estatus:"Activo"
   },
   {
     id:7,
     Taller: "Futbol varonil",
-    Tipo:"Varonil",
     Estatus:"Activo"
   },
   {
     id:8,
     Taller: "Softbol Varonil",
-    Tipo:"Varonil",
     Estatus:"Activo"
   }
  
@@ -146,7 +131,7 @@ const TableBasicTalleresCrear = () => {
     sort: false,
     print:false,
     filter:true,
-    download:true,
+    download:false,
     viewColumns:false,
     textLabels: {
       pagination: {

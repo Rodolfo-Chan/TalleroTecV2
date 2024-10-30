@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import Documentos from './pages/Documentos';
 import HomeProfesor from './pages/HomeProfesor';
 import Alumnos from './pages/Alumnos';
+import AlumnosLiberados from './pages/AlumnosLiberados';
 import FromAlumnosRegistro from './forms/forms-alumnos/from-alumnos-registro/FormAlumnosRegistro';
 import FromAlumnosActualizar from './forms/forms-alumnos/from-alumnos-actualizar/FormAlumnosActualizar';
 import Profesores from './pages/Profesores';
@@ -21,7 +22,8 @@ import FormInscripcionesActualizar from './forms/froms-inscrripciones/from-inscr
 import HomeAlumno from './pages/HomeAlumno';
 import FormInscripcionAlumno from './forms/form-registro-talleres-alumnos/FormInscripcionAlumno';
 import TallerAlumno from './pages/TallerAlumno';
-
+import ConstanciaAlumno from './pages/ConstanciaAlumno';
+import DocumentosMaster from './pages/DocumentosMaster';
 import Login from './pages/Login';
 import MainLayout from './components/HOC/MainLayout';
 import './routes.css';
@@ -57,6 +59,10 @@ const RoutesComponent: React.FC<RoutesComponentProps> = ({ toggleSidebar, isSide
         <Route path="/Alumnos" element={<MainLayout toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen}><Alumnos /></MainLayout>} />
         <Route path='/Alumnos/FromAlumnosRegistro' element={<MainLayout toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen}><FromAlumnosRegistro/></MainLayout>} />
         <Route path='/Alumnos/FromAlumnosActualizar/:userId' element={<MainLayout toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen}><FromAlumnosActualizar/></MainLayout>} />
+        {/* <Route path='/Alumnos/ConstanciaAlumno/:userId' element={<MainLayout toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen}><ConstanciaAlumno/></MainLayout>} /> */}
+        <Route path="/AlumnosLiberados" element={<MainLayout toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen}><AlumnosLiberados /></MainLayout>} />
+        <Route path='/AlumnosLiberados/ConstanciaAlumno/:userId' element={<MainLayout toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen}><ConstanciaAlumno/></MainLayout>} />
+
         <Route path="/Profesores" element={<MainLayout toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen}><Profesores /></MainLayout>} />
         <Route path='/Profesores/FromProfesoresRegistro' element={<MainLayout toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen}><FromProfesoresRegistro/></MainLayout>} />
         <Route path='/Profesores/FromProfesoresActualizar/:userId' element={<MainLayout toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen}><FromProfesoresActualizar/></MainLayout>} />
@@ -70,6 +76,7 @@ const RoutesComponent: React.FC<RoutesComponentProps> = ({ toggleSidebar, isSide
         <Route path='/Inscripciones/FormInscripcionesActualizar/:userId' element={<MainLayout toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen}><FormInscripcionesActualizar/></MainLayout>} />
         <Route path='/Talleres/FormTalleresCrearActualizar/:userId' element={<MainLayout toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen}><FormTalleresCrearActualizar/></MainLayout>} />
         <Route path="/Documentos" element={<MainLayout toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen}><Documentos /></MainLayout>} />
+        <Route path="/DocumentosMaster" element={<MainLayout toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen}><DocumentosMaster /></MainLayout>} />
         <Route path="/HomeProfesor" element={<MainLayout toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen}><HomeProfesor /></MainLayout>} />
         <Route path="/HomeAlumno" element={<MainLayout toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen}><HomeAlumno /></MainLayout>} />
         <Route path='/HomeAlumno/FormInscripcionAlumno/:userId' element={<MainLayout toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen}><FormInscripcionAlumno/></MainLayout>} />

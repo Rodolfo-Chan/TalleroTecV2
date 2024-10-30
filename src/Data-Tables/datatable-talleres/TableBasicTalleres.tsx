@@ -206,7 +206,7 @@ const TableBasicTalleres = () => {
     sort: false,
     print:false,
     filter:true,
-    download:true,
+    download:false,
     viewColumns:false,
     textLabels: {
       pagination: {
@@ -247,7 +247,7 @@ const TableBasicTalleres = () => {
     <div className={`${style["table"]}`}>
       <div className={`${style["border"]}`}>
         <MUIDataTable
-          title={"Lista de talleres"}
+          title={"Lista de talleres registrados"}
           data={data}
           columns={columns}
           options={options}

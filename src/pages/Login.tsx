@@ -1,9 +1,15 @@
+
 import React, { useState, useEffect } from 'react';
 import style from "../pages/style-login.module.css";
 import img from '../assets/img/botarga.svg';
 import Modal from '../components/Modals/Modals';
 import alerta from '../assets/audio/alert.mp3'; 
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
+
+interface User {
+  email: string;
+  contraseña: string;
+}
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -13,13 +19,40 @@ const Login = () => {
   const [audio] = useState(new Audio(alerta)); 
   const [showPassword, setShowPassword] = useState(false); 
 
-  const handleLogin = (event: React.FormEvent) => {
+  const handleLogin = async (event: React.FormEvent) => {
     event.preventDefault();
-    
+
     if (email && password) {
-      localStorage.setItem('isAuthenticated', 'true');
-      localStorage.setItem('userEmail', email);
-      window.location.href = '/Home'; // Redirect to home page after login
+      try {
+        const urls = [
+          'https://drftallerotecdj.onrender.com/talleres/api/alumnos/',
+        ];
+
+        const requests = urls.map(url =>
+          fetch(url)
+            .then(response => response.json())
+            .then((data: User[]) => {
+              console.log(data); // Para revisar la respuesta
+              return data.find(user => user.email === email && user.contraseña === password);
+            })
+        );
+
+        const results = await Promise.all(requests);
+        const validUser = results.find(user => user !== undefined);
+
+        if (validUser) {
+          localStorage.setItem('isAuthenticated', 'true');
+          localStorage.setItem('userEmail', email);
+          window.location.href = '/Home';
+        } else {
+          setModalMessage('Credenciales incorrectas.Por favor, intente de nuevo.');
+          setShowModal(true);
+        }
+      } catch (error) {
+        console.error('Error al verificar credenciales:', error);
+        setModalMessage('Ocurrió un error. Por favor, intente más tarde.');
+        setShowModal(true);
+      }
     } else {
       setModalMessage('Por favor, ingrese un correo y contraseña válidos');
       setShowModal(true);
@@ -38,7 +71,6 @@ const Login = () => {
 
   return (
     <div className={style['contenedor']}>
-      {/* Cubes for background animation */}
       <div className={style['cube']}></div>
       <div className={style['cube']}></div>
       <div className={style['cube']}></div>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import MUIDataTable, { FilterType, Responsive } from "mui-datatables";
 import style from "../datatable-alumnos/tablebasic-alumnos.module.css";
 import { Link } from "react-router-dom";
@@ -7,195 +7,169 @@ import ButtonDelete from "../../components/Button-Options-CRUD/Button-Delete/But
 import ModalHOC from "../../components/Modal/Modal";
 import ButtonModal from "../../components/ButtonModal/ButtonModal";
 import { Edit, Delete } from '@mui/icons-material';
+import axios from "axios";
+
+// Define the type for a student (Alumno)
+type Alumno = {
+  matricula_alumno: string;
+  nombre: string;
+  apellido_paterno: string;
+  apellido_materno: string;
+  telefono: string;
+  genero: string;
+  carrera: string;
+  semestre: number;
+  email: string;
+  nivel_acceso: string; // Assuming nivel_acceso will be stored as a string label for display
+};
 
 const TableBasicAlumnos = () => {
+  const [data, setData] = useState<Alumno[]>([]); 
   const [showModal, setShowModal] = useState(false);
-  const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
+  const [selectedMatricula, setSelectedMatricula] = useState<string | null>(null);
 
-  const handleDelete = (userId: number) => {
-    setSelectedUserId(userId);
+  // Fetch data from API
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("https://drftallerotecdj.onrender.com/talleres/api/alumnos/");
+        setData(response.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    fetchData();
+  }, []);
+
+  const handleDelete = (matricula_alumno: string) => {
+    setSelectedMatricula(matricula_alumno);
     setShowModal(true);
   };
 
-  const handleConfirmDelete = () => {
-    const updatedData = data.filter(user => user.id !== selectedUserId);
-    setData(updatedData);
-    setShowModal(false);
+  const handleConfirmDelete = async () => {
+    if (selectedMatricula === null) return;
+
+    try {
+      await axios.delete(`https://drftallerotecdj.onrender.com/talleres/api/alumnos/${selectedMatricula}/`);
+      setData((prevData) => prevData.filter((user) => user.matricula_alumno !== selectedMatricula));
+      setShowModal(false);
+    } catch (error) {
+      console.error("Error deleting user:", error);
+    }
   };
 
   const columns = [
     {
-      name: "Matricula",
+      name: "matricula_alumno",
+      label: "Matrícula",
       options: {
-        setCellProps: () => ({ style: { textAlign: 'center' } }),
-        setCellHeaderProps: () => ({ style: { textAlign: 'center', fontWeight: 'bold' } }),
+        setCellProps: () => ({ style: { textAlign: "center" } }),
+        setCellHeaderProps: () => ({ style: { textAlign: "center", fontWeight: "bold" } }),
       },
     },
     {
-      name: "Nombre",
+      name: "nombre",
+      label: "Nombre",
       options: {
-        setCellProps: () => ({ style: { textAlign: 'center' } }),
-        setCellHeaderProps: () => ({ style: { textAlign: 'center', fontWeight: 'bold' } }),
+        setCellProps: () => ({ style: { textAlign: "center" } }),
+        setCellHeaderProps: () => ({ style: { textAlign: "center", fontWeight: "bold" } }),
       },
     },
     {
-      name: "Apellidos",
+      name: "apellido_paterno",
+      label: "Apellido Paterno",
       options: {
-        setCellProps: () => ({ style: { textAlign: 'center' } }),
-        setCellHeaderProps: () => ({ style: { textAlign: 'center', fontWeight: 'bold' } }),
+        setCellProps: () => ({ style: { textAlign: "center" } }),
+        setCellHeaderProps: () => ({ style: { textAlign: "center", fontWeight: "bold" } }),
       },
     },
     {
-      name: "Telefono",
+      name: "apellido_materno",
+      label: "Apellido Materno",
       options: {
-        setCellProps: () => ({ style: { textAlign: 'center' } }),
-        setCellHeaderProps: () => ({ style: { textAlign: 'center', fontWeight: 'bold' } }),
+        setCellProps: () => ({ style: { textAlign: "center" } }),
+        setCellHeaderProps: () => ({ style: { textAlign: "center", fontWeight: "bold" } }),
       },
     },
     {
-      name: "Genero",
+      name: "telefono",
+      label: "Teléfono",
       options: {
-        setCellProps: () => ({ style: { textAlign: 'center' } }),
-        setCellHeaderProps: () => ({ style: { textAlign: 'center', fontWeight: 'bold' } }),
+        setCellProps: () => ({ style: { textAlign: "center" } }),
+        setCellHeaderProps: () => ({ style: { textAlign: "center", fontWeight: "bold" } }),
       },
     },
     {
-      name: "Carrera",
+      name: "genero",
+      label: "Género",
       options: {
-        setCellProps: () => ({ style: { textAlign: 'center' } }),
-        setCellHeaderProps: () => ({ style: { textAlign: 'center', fontWeight: 'bold' } }),
+        setCellProps: () => ({ style: { textAlign: "center" } }),
+        setCellHeaderProps: () => ({ style: { textAlign: "center", fontWeight: "bold" } }),
       },
     },
     {
-      name: "Puntos",
+      name: "carrera",
+      label: "Carrera",
       options: {
-        setCellProps: () => ({ style: { textAlign: 'center' } }),
-        setCellHeaderProps: () => ({ style: { textAlign: 'center', fontWeight: 'bold' } }),
+        setCellProps: () => ({ style: { textAlign: "center" } }),
+        setCellHeaderProps: () => ({ style: { textAlign: "center", fontWeight: "bold" } }),
+      },
+    },
+    {
+      name: "semestre",
+      label: "Semestre",
+      options: {
+        setCellProps: () => ({ style: { textAlign: "center" } }),
+        setCellHeaderProps: () => ({ style: { textAlign: "center", fontWeight: "bold" } }),
+      },
+    },
+    {
+      name: "email",
+      label: "Email",
+      options: {
+        setCellProps: () => ({ style: { textAlign: "center" } }),
+        setCellHeaderProps: () => ({ style: { textAlign: "center", fontWeight: "bold" } }),
+      },
+    },
+    {
+      name: "nivel_acceso",
+      label: "Nivel de Acceso",
+      options: {
+        setCellProps: () => ({ style: { textAlign: "center" } }),
+        setCellHeaderProps: () => ({ style: { textAlign: "center", fontWeight: "bold" } }),
       },
     },
     {
       name: "Opciones",
       options: {
-        setCellProps: () => ({ style: { textAlign: 'center' } }),
-        setCellHeaderProps: () => ({ style: { textAlign: 'center', fontWeight: 'bold' } }),
+        setCellProps: () => ({ style: { textAlign: "center" } }),
+        setCellHeaderProps: () => ({ style: { textAlign: "center", fontWeight: "bold" } }),
         customBodyRenderLite: (dataIndex: number) => {
-          const userId = data[dataIndex].id;
+          const matricula_alumno = data[dataIndex].matricula_alumno;
           return (
-<div className ={`${style['buton-crud']}`}>
-  <Link to={`/Alumnos/FromAlumnosActualizar/${userId}`}>
-    <ButtonUpdate
-      onClick={() => {
-        console.log("presionado para editar");
-      }}
-      icon={<Edit />}
-      tooltip="Editar"
-    />
-  </Link>
-  <ButtonDelete
-    onClick={() => handleDelete(userId)}
-    icon={<Delete />}
-    tooltip="Eliminar"
-  />
-</div>
+            <div className={style["buton-crud"]}>
+              <Link to={`/Alumnos/FromAlumnosActualizar/${matricula_alumno}`}>
+                <ButtonUpdate icon={<Edit />} tooltip="Editar" />
+              </Link>
+              <ButtonDelete onClick={() => handleDelete(matricula_alumno)} icon={<Delete />} tooltip="Eliminar" />
+              <Link to={`/Alumnos/FromAlumnosActualizar/${matricula_alumno}`}>
+                <ButtonUpdate icon={<Edit />} tooltip="Constancia" />
+              </Link>
+            </div>
           );
         },
       },
     },
   ];
 
-  const [data, setData] = useState([
-    /* Datos de los alumnos */
-    {
-      id:1,
-      Matricula: "20890344",
-      Nombre: "Juan Sanchez",
-      Apellidos: "Perez Ancona",
-      Telefono: "1234567890",
-      Genero: "Masculino",
-      Carrera: "ING. Informatica",
-      Puntos:"60/200",
-    },
-    {
-      id:2,
-      Matricula: "67836325",
-      Nombre: "Alberto Antonio",
-      Apellidos: "Puc Santos",
-      Telefono: "9872561528",
-      Genero: "Masculino",
-      Carrera: "LIC. Administracion",
-      Puntos:"0/200",
-    },
-    {
-      id:3,
-      Matricula: "22367534",
-      Nombre: "Juan Sanchez",
-      Apellidos: "Perez Ancona",
-      Telefono: "1234567890",
-      Genero: "Masculino",
-      Carrera: "ING. Informatica",
-      Puntos:"90/200",
-    },
-    {
-      id:4,
-      Matricula: "45678976",
-      Nombre: "Saul Antonio",
-      Apellidos: "Ake Baas",
-      Telefono: "8972628910",
-      Genero: "Masculino",
-      Carrera: "ING. Informatica",
-      Puntos:"40/200",
-    },
-    {
-      id:5,
-      Matricula: "91452678",
-      Nombre: "Andrea Cecilia",
-      Apellidos: "Ramirez Nauat",
-      Telefono: "1234567890",
-      Genero: "Femenino",
-      Carrera: "ING. Informatica",
-      Puntos:"155/200",
-    },
-    {
-      id:6,
-      Matricula: "81035276",
-      Nombre: "Maria Jose",
-      Apellidos: "Cime Pech",
-      Telefono: "1123098160",
-      Genero: "Femenino",
-      Carrera: "ING. Agronomia",
-      Puntos:"20/200",
-    },
-    {
-      id:7,
-      Matricula: "09362784",
-      Nombre: "Cesar Guzman",
-      Apellidos: "Noh Sanchez",
-      Telefono: "1234234509",
-      Genero: "Masculino",
-      Carrera: "ING. Informatica",
-      Puntos:"40/200",
-    },
-    {
-      id:8,
-      Matricula: "262541628",
-      Nombre: "Dalia Rosario",
-      Apellidos: "May Cupul",
-      Telefono: "1715431098",
-      Genero: "Femenino",
-      Carrera: "ING. Informatica",
-      Puntos:"200/200",
-    }
-  ]);
-
   const options = {
     filterType: "checkbox" as FilterType,
-    responsive: "standard" as Responsive, // Usar la enumeración Responsive en lugar de cadena
+    responsive: "standard" as Responsive,
     sort: false,
-    print:false,
-    filter:true,
-    download:true,
-    viewColumns:false,
-    
+    print: false,
+    filter: true,
+    download: true,
+    viewColumns: false,
     textLabels: {
       pagination: {
         next: "Siguiente",
@@ -205,7 +179,7 @@ const TableBasicAlumnos = () => {
       },
       toolbar: {
         search: "Buscar alumno",
-        downloadCsv: "Descargar  lista en formato CSV",
+        downloadCsv: "Descargar lista en formato CSV",
         print: "Imprimir",
         viewColumns: "Ver columnas",
         filterTable: "Filtrar tabla",
@@ -232,36 +206,16 @@ const TableBasicAlumnos = () => {
   };
 
   return (
-    <div className={`${style["table"]}`}>
-      <div className={`${style["border"]}`}>
-        <MUIDataTable
-          title={"Lista de Alumnos"}
-          data={data}
-          columns={columns}
-          options={options}
-        />
-        {/* Modal para confirmar la eliminación */}
-        <ModalHOC
-          show={showModal}
-          hide={() => setShowModal(false)}
-          activeHide={false}
-        >
-          <div className ={`${style['info-modal']}`}>
-            <p>
-              ¿Estás seguro de eliminar este alumno?
-            </p>
-            <div className ={`${style['button-modal']}`}>
-              <ButtonModal
-                onClick={() => {
-                  handleConfirmDelete();
-                }}
-                label="Si, eliminar"
-              />
+    <div className={style["table"]}>
+      <div className={style["border"]}>
+        <MUIDataTable title={"Lista de Alumnos"} data={data} columns={columns} options={options} />
+        <ModalHOC show={showModal} hide={() => setShowModal(false)} activeHide={false}>
+          <div className={style["info-modal"]}>
+            <p>¿Estás seguro de eliminar este alumno?</p>
+            <div className={style["button-modal"]}>
+              <ButtonModal onClick={handleConfirmDelete} label="Si, eliminar" />
               <span style={{ margin: "0 5px" }}></span>
-              <ButtonModal
-                onClick={() => setShowModal(false)}
-                label="Cancelar"
-              />
+              <ButtonModal onClick={() => setShowModal(false)} label="Cancelar" />
             </div>
           </div>
         </ModalHOC>

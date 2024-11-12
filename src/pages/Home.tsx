@@ -1,26 +1,33 @@
-import React from "react";
+// Home.tsx
+import React, { useEffect, useState } from "react";
 import "../components/styles.css";
 import { PiStudentFill } from "react-icons/pi";
 import { MdOutlineSportsKabaddi, MdSportsVolleyball } from "react-icons/md";
 import { TbLocationStar } from "react-icons/tb";
-import { GiMailbox } from "react-icons/gi";
 import { FcGoogle } from "react-icons/fc";
 import { BiSolidHomeHeart } from "react-icons/bi";
 import { SiHomeadvisor } from "react-icons/si";
 
 const Home = () => {
+  const [userEmail, setUserEmail] = useState('');
+
+  useEffect(() => {
+    const email = localStorage.getItem('userEmail');
+    if (email) {
+      setUserEmail(email);
+    }
+  }, []);
+
   return (
     <div className="home-container">
       <header className="header">
         <div className="header-content">
-          <h1>BASHBOARD <SiHomeadvisor />
-          </h1>
-
+          <h1>Dashboard <SiHomeadvisor /></h1>
         </div>
         <div>
           <p>
             <FcGoogle />
-            rodolfochan2910@gmail.com
+            {userEmail || "Usuario no identificado"}
           </p>
         </div>
       </header>
@@ -94,8 +101,6 @@ const Home = () => {
             </tbody>
           </table>
         </section>
-
-        
       </main>
     </div>
   );

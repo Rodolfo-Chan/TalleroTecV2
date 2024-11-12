@@ -138,8 +138,8 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
 
           <li>
             <Link
-              to="/contact"
-              className={currentPath === '/contact' ? 'active' : ''}
+              to="/HomeProfesor"
+              className={currentPath === '/HomeProfesor' ? 'active' : ''}
               onClick={toggleSidebar}
             >
               <SiHomeassistant /> Home Prof
@@ -148,11 +148,11 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
 
           <li>
             <Link
-              to="/about"
-              className={currentPath === '/about' ? 'active' : ''}
+              to="/Documentos"
+              className={currentPath === '/Documentos' ? 'active' : ''}
               onClick={toggleSidebar}
             >
-              <FaListCheck /> Lista Alum
+              <FaListCheck /> Documentos
             </Link>
           </li>
 

@@ -1,0 +1,76 @@
+.home-container {
+    padding: 00px;
+    border: 1px solid #000;
+    overflow: hidden;
+}
+
+.header {
+    text-align: center;
+}
+
+.header h2,
+.header h3 {
+    margin: 0;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+.table th, .table td {
+    border: 1px solid #000000;
+    padding: 2px;
+    text-align: center; /* Centrar el contenido de las celdas */
+}
+
+.table th {
+    background-color: transparent; /* Sin fondo en los títulos */
+    color: black; /* Títulos en color negro */
+}
+
+.input-field {
+    width: 150px;
+    text-align: center;
+    background-color: transparent; /* Fondo transparente */
+    border: none; /* Sin bordes */
+    border-bottom: 1px solid #000; /* Solo borde inferior */
+    outline: none; /* Eliminar borde de enfoque */
+    border-radius: 0;
+}
+.input-desempeño {
+    width: 150px;
+    text-align: center;
+    background-color: transparent; /* Fondo transparente */
+    border: none; /* Sin bordes */
+    outline: none; /* Eliminar borde de enfoque */
+    border-radius: 0;
+}
+
+.calificacion-input {
+    width: 60px;
+    text-align: center;
+    background-color: transparent; /* Fondo transparente */
+    border: none; /* Sin bordes */
+    outline: none; /* Eliminar borde de enfoque */
+}
+
+.generate-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.generate-button:hover {
+    background-color: #45a049;
+}
+
+.titulocolumna {
+    color: rgb(255, 0, 0);
+    background: #45a049;
+}

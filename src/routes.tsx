@@ -7,6 +7,7 @@ import Alumnos from './pages/Alumnos';
 import AlumnosLiberados from './pages/AlumnosLiberados';
 import FromAlumnosRegistro from './forms/forms-alumnos/from-alumnos-registro/FormAlumnosRegistro';
 import FromAlumnosActualizar from './forms/forms-alumnos/from-alumnos-actualizar/FormAlumnosActualizar';
+import FromAlumnosLiberadosActualizar from './forms/forms-alumnos/from-alumnosliberados-actualizar/FormAlumnosLiberadosActualizar';
 import Profesores from './pages/Profesores';
 import FromProfesoresRegistro from './forms/forms-profesores/from-profesores-registro/FormProesoresRegistro';
 import FromProfesoresActualizar from './forms/forms-profesores/from-profesores-actulizar/FormProfesoresActualizar';
@@ -59,6 +60,7 @@ const RoutesComponent: React.FC<RoutesComponentProps> = ({ toggleSidebar, isSide
         <Route path="/Alumnos" element={<MainLayout toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen}><Alumnos /></MainLayout>} />
         <Route path='/Alumnos/FromAlumnosRegistro' element={<MainLayout toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen}><FromAlumnosRegistro/></MainLayout>} />
         <Route path='/Alumnos/FromAlumnosActualizar/:userId' element={<MainLayout toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen}><FromAlumnosActualizar/></MainLayout>} />
+        <Route path='/AlumnosLiberados/FromAlumnosLiberadosActualizar/:userId' element={<MainLayout toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen}><FromAlumnosLiberadosActualizar/></MainLayout>} />
         {/* <Route path='/Alumnos/ConstanciaAlumno/:userId' element={<MainLayout toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen}><ConstanciaAlumno/></MainLayout>} /> */}
         <Route path="/AlumnosLiberados" element={<MainLayout toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen}><AlumnosLiberados /></MainLayout>} />
         <Route path='/AlumnosLiberados/ConstanciaAlumno/:userId' element={<MainLayout toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen}><ConstanciaAlumno/></MainLayout>} />

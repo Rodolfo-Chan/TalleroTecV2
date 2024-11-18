@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import style from "./from-alumnos-actualizar.module.css";
+import style from "./from-alumnos-liberados-actualizar.module.css";
 import Input from '../../../components/Input/Input';
 import Select from '../../../components/Select/Select';
 import InputRadio from '../../../components/Input-Radio/InputRadio';
 import ButtonRegistro from "../../../components/ButtonRegistro/ButtonRegistro";
 import ComponentAlert from "../../../components/Alert/ComponentAlert";
 
-const FromAlumnosActualizar = () => {
+const FromAlumnosLiberadosActualizar = () => {
     const { userId } = useParams();
     const navigate = useNavigate();
 
@@ -324,4 +324,4 @@ const FromAlumnosActualizar = () => {
     );
 };
 
-export default FromAlumnosActualizar;
+export default FromAlumnosLiberadosActualizar;

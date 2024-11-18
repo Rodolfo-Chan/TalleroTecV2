@@ -17,7 +17,7 @@ const ButtonDelete: React.FC<ButtonDeleterops> = ({
   return (
     <button
       onClick={() => onClick && onClick()}
-      className={style["container-buttondelete"]} // Usa los estilos del módulo CSS
+      className={style["container-buttondelete"]} 
       title={tooltip}
     >
       {icon && <span className={style["button-icon"]}>{icon}</span>}

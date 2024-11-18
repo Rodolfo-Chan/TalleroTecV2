@@ -1,4 +1,4 @@
-import { useState } from "react";
+import {useEffect, useState } from "react";
 import MUIDataTable, { FilterType, Responsive } from "mui-datatables";
 import style from "../datatable-talleres/tablebasic-talleres.module.css";
 import { Link } from "react-router-dom";
@@ -7,28 +7,87 @@ import ModalHOC from "../../components/Modal/Modal";
 import ButtonDelete from "../../components/Button-Options-CRUD/Button-Delete/ButtonDelete";
 import ButtonUpdate from "../../components/Button-Options-CRUD/Button-Update/ButtonUpdate";
 import { Edit, Delete } from '@mui/icons-material'; 
-
 import ButtonModal from "../../components/ButtonModal/ButtonModal";
+import axios from "axios";
+import DescargarArchivoReportes from "../../components/Documentos/Descargararchivoreportes/DescargarArchivoReportes";
+// import DescargarArchivo from "../../components/Documentos/Descargararchivo/DescargarArchivo";
+
+// Definición las interfaces para los datos
+interface Subgrupo {
+  id_taller_registro: number;
+  periodo_escolar: string;
+  hora_inicio_12h: string;
+  hora_final_12h: string;
+  tipo_taller:string;
+  ubicacion: string;
+  turno_taller: string;
+  dias_taller: string;
+  id_instructor: number;
+  id_taller_catalogo: number;
+}
+
+interface Taller {
+  id_taller_catalogo: number;
+  nombre_taller: string;
+}
+
+interface Profesor {
+  id_instructor: number;
+  nombre: string;
+  apellido_paterno:string;
+  apellido_materno:string;
+}
+
+interface TallerCrearTable {
+  id: number;
+  Taller: string;
+  Profesor: string;
+  "Periodo Escolar": string;
+  Horario: string;
+  Ubicacion: string;
+  Turno: string;
+}
+
+
 
 const TableBasicTalleres = () => {
   const [showModal, setShowModal] = useState(false); 
   const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
-
+  const [data, setData] = useState<TallerCrearTable[]>([]); // Usa la interfaz TallereCrearTable
+  
 
   const handleDelete = (userId: number) => {
     setSelectedUserId(userId)
     setShowModal(true); 
   };
 
-  const handleConfirmDelete = () => {
-    const updatedData = data.filter(user => user.id !== selectedUserId);
-    setData(updatedData);
-    setShowModal(false);
+  const handleConfirmDelete = async () => {
+    if (selectedUserId) {
+      try {
+        // Realiza la solicitud DELETE a la API
+        await axios.delete(`https://drftallerotecdj.onrender.com/talleres/api/talleres_subgrupos/${selectedUserId}/`);
+        
+        const updatedData = data.filter(user => user.id !== selectedUserId);
+        setData(updatedData);
+        setShowModal(false);
+      } catch (error) {
+        console.error("Error al eliminar el taller", error);
+      }
+    }
   };
+
+
 
   const columns = [
     {
       name: "Taller",
+      options: {
+        setCellProps: () => ({ style: { textAlign: 'center' } }),
+        setCellHeaderProps: () => ({ style: { textAlign: 'center', fontWeight: 'bold' } }),
+      },
+    },
+    {
+      name: "Tipo",
       options: {
         setCellProps: () => ({ style: { textAlign: 'center' } }),
         setCellHeaderProps: () => ({ style: { textAlign: 'center', fontWeight: 'bold' } }),
@@ -55,20 +114,55 @@ const TableBasicTalleres = () => {
         setCellHeaderProps: () => ({ style: { textAlign: 'center', fontWeight: 'bold' } }),
       },
     },
+    // {
+    //   name: "Ubicacion",
+    //   options: {
+    //     setCellProps: () => ({ style: { textAlign: 'center' } }),
+    //     setCellHeaderProps: () => ({ style: { textAlign: 'center', fontWeight: 'bold' } }),
+    //   },
+    // },
+    // {
+    //   name: "Turno",
+    //   options: {
+    //     setCellProps: () => ({ style: { textAlign: 'center' } }),
+    //     setCellHeaderProps: () => ({ style: { textAlign: 'center', fontWeight: 'bold' } }),
+    //   },
+    // },
+
     {
-      name: "Ubicación",
+      name: "Registro de participantes",
       options: {
         setCellProps: () => ({ style: { textAlign: 'center' } }),
         setCellHeaderProps: () => ({ style: { textAlign: 'center', fontWeight: 'bold' } }),
+        customBodyRenderLite: (dataIndex: number) => {
+          const fileId = data[dataIndex].id;
+          return (
+            <DescargarArchivoReportes
+              fileId={fileId}
+              fileType="registro_participantes"
+            />
+          );
+        },
       },
     },
     {
-      name: "Turno",
+      name: "Evaluación al desempeño",
       options: {
         setCellProps: () => ({ style: { textAlign: 'center' } }),
         setCellHeaderProps: () => ({ style: { textAlign: 'center', fontWeight: 'bold' } }),
+        customBodyRenderLite: (dataIndex: number) => {
+          const fileId = data[dataIndex].id;
+          return (
+            <DescargarArchivoReportes
+              fileId={fileId}
+              fileType="evaluacion_desempeno"
+            />
+          );
+        },
       },
     },
+    
+
     {
       name: "Opciones",
       options: {
@@ -84,8 +178,6 @@ const TableBasicTalleres = () => {
                   onClick={() => {
                     console.log("presionado para editar");
                   }}
-                  //label="Editar"
-                 // color="#C1D00D"
                   icon={<Edit />}
                   tooltip="Editar"
                 />
@@ -93,11 +185,8 @@ const TableBasicTalleres = () => {
             
               <ButtonDelete
                 onClick={() => handleDelete(userId)}
-               // label="Eliminar"
-               // color="#F14307"
                 icon={<Delete />}
                 tooltip="Eliminar"
-
               />
             </div>
           );
@@ -106,99 +195,45 @@ const TableBasicTalleres = () => {
     },
   ];
 
-  const [data, setData] = useState([
+  // Efecto para cargar datos de la API
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Obtener los datos de los talleres
+        const talleresResponse = await axios.get<Taller[]>("https://drftallerotecdj.onrender.com/talleres/api/talleres_supergrupo/");
+        // Obtener los datos de los instructores
+        const profesoresResponse = await axios.get<Profesor[]>("https://drftallerotecdj.onrender.com/talleres/api/instructores/");
+        // Obtener los datos de los subgrupos
+        const subgruposResponse = await axios.get<Subgrupo[]>("https://drftallerotecdj.onrender.com/talleres/api/talleres_subgrupos/");
 
-  {
-    id:1,
-    Taller: "Banda de guerra",
-    ID_Profesor: "01",
-    Profesor: "Juan Sanchez",
-    /*Apellidos: "Perez Ancona",*/
-    "Periodo Escolar": "AGO-DIC/2024",
-    Horario: "09:00 am - 10:30 am",
-    Ubicación: "Cancha principal del tec",
-    Turno: "Matutino",
-  },
-  {
-    id:2,
-    Taller: "Escolta",
-    ID_Profesor: "03",
-    Profesor: "Carlos",
-    /*Apellidos: "Perez Ancona",*/
-    "Periodo Escolar": "AGO-DIC/2024",
-    Horario: "08:00 am - 09:30 am",
-    Ubicación: "Cancha principal del tec",
-    Turno: "Matutino",
-  },
-  {
-    id:3,
-    Taller: "Atletismo",
-    ID_Profesor: "06",
-    Profesor: "Hernesto Daniel",
-    /*Apellidos: "Perez Ancona",*/
-    "Periodo Escolar": "AGO-DIC/2024",
-    Horario: "06:00 pm - 08:00 pm",
-    Ubicación: "Polifuncional",
-    Turno: "Vespertino",
-  },
-  {
-    id:4,
-    Taller: "Beisbol Varonil",
-    ID_Profesor: "07",
-    Profesor: "Carlos Ramon",
-    /*Apellidos: "Perez Ancona",*/
-    "Periodo Escolar": "AGO-DIC/2024",
+        // Combinar los datos
+        const combinedData = subgruposResponse.data.map(subgrupo => {
+          // Buscar el taller asociado con el subgrupo
+          const taller = talleresResponse.data.find(t => t.id_taller_catalogo === subgrupo.id_taller_catalogo);
+          // Buscar el profesor asociado con el subgrupo usando el id_instructor
+          const profesor = profesoresResponse.data.find(p => p.id_instructor === subgrupo.id_instructor);
 
-    Horario: "09:00 am - 10:30 am",
-    Ubicación: "Campo del tec",
-    Turno: "Matutino",
-  },
-  {
-    id:5,
-    Taller: "Basquetbal Femenil",
-    ID_Profesor: "02",
-    Profesor: "Juan Sanchez",
-    /*Apellidos: "Perez Ancona",*/
-    "Periodo Escolar": "AGO-DIC/2024",
-    Horario: "09:00 am - 10:30 am",
-    Ubicación: "Cancha principal del tec",
-    Turno: "Matutino",
-  },
-  {
-    id:6,
-    Taller: "Ajedrez",
-    ID_Profesor: "08",
-    Profesor: "Carolina Andrea",
-    /*Apellidos: "Perez Ancona",*/
-    "Periodo Escolar": "AGO-DIC/2024",
-    Horario: "11:00 am - 12:00 pm",
-    Ubicación: "Biblioteca",
-    Turno: "Matutino",
-  },
-  {
-    id:7,
-    Taller: "Futbol varonil",
-    ID_Profesor: "12",
-    Profesor: "Alan Abel",
-    /*Apellidos: "Perez Ancona",*/
-    "Periodo Escolar": "AGO-DIC/2024",
-    Horario: "09:00 am - 10:30 am",
-    Ubicación: "Campo del tecnologico",
-    Turno: "Matutino",
-  },
-  {
-    id:8,
-    Taller: "Softbol Varonil",
-    ID_Profesor: "10",
-    Profesor: "Alejandro Andres",
-    /*Apellidos: "Perez Ancona",*/
-    "Periodo Escolar": "AGO-DIC/2024",
-    Horario: "04:00 pm - 06:30 pm",
-    Ubicación: "Campo de la polifuncional",
-    Turno: "Vespertino",
-  }
- 
-   ]);
+          return {
+            id: subgrupo.id_taller_registro,
+            Taller: taller ? taller.nombre_taller : "No disponible",
+            Tipo: subgrupo.tipo_taller,
+            Profesor: profesor ? `${profesor.nombre} ${profesor.apellido_paterno} ${profesor.apellido_materno}` : "No asignado",
+            "Periodo Escolar": subgrupo.periodo_escolar,
+            Horario: `${subgrupo.hora_inicio_12h} - ${subgrupo.hora_final_12h}`,
+            Ubicacion: subgrupo.ubicacion,
+            Turno: subgrupo.turno_taller,
+          };
+        });
+
+        setData(combinedData);
+      } catch (error) {
+        console.error("Error al obtener los datos", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
 
   const options = {
     filterType: "checkbox" as FilterType,
@@ -264,18 +299,15 @@ const TableBasicTalleres = () => {
             </p>
             <div className ={`${style['button-modal']}`}>
 
-
             <ButtonModal
-                onClick={() => {
-                  handleConfirmDelete();
-                }}
+                onClick={handleConfirmDelete}
                 label="Si, eliminar"
               />
-
-            <span style={{ margin: "0 5px" }}></span>
-
-            <ButtonModal  onClick={() => setShowModal(false)}
-            label="Cancelar"/>
+              <span style={{ margin: "0 5px" }}></span>
+              <ButtonModal
+                onClick={() => setShowModal(false)}
+                label="Cancelar"
+              />
             </div>
           </div>
         </ModalHOC>

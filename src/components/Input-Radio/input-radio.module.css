@@ -1,6 +1,6 @@
 .div-container-input {
     /* background-color: rgb(255, 0, 0); */
-    padding: 3px; /* Espacio interno */
+    padding: 3px; 
     width: auto;
   }
   
@@ -11,22 +11,22 @@
     font-weight: 700;
     font-size: 20px;
     padding-left: 11px;
-    margin-bottom: 10px; /* Espacio entre el label y las opciones */
+    margin-bottom: 10px; 
   }
   
   .options-container {
-    display: flex; /* Alinea las opciones en fila */
-    gap: 20px; /* Espacio entre las opciones */
+    display: flex; 
+    gap: 20px; 
   }
   
   .name-value {
     display: flex;
-    align-items: center; /* Alinea el texto y el input verticalmente */
+    align-items: center; 
     margin: 0;
     font-size: 14px;
     color: rgb(255, 255, 255); 
     cursor: pointer;
-    gap: 3px; /* Espacio entre el radio button y el texto */
+    gap: 3px; 
     font-weight: 550;
 
   }

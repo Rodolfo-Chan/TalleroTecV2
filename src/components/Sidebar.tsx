@@ -4,12 +4,15 @@ import { MdLogout, MdOutlineSportsKabaddi, MdAppRegistration, MdOutlineSports, M
 import { IoIosArrowBack } from 'react-icons/io';
 import { SiHomeassistant } from 'react-icons/si';
 import { GiSportMedal } from "react-icons/gi";
-import { FaListCheck } from "react-icons/fa6";
+// import { FaListCheck } from "react-icons/fa6";
 import { CiViewList } from "react-icons/ci";
 import { IoCreateOutline } from "react-icons/io5";
 import { FaUsers } from "react-icons/fa";
 import { FaUserClock } from "react-icons/fa";
 import { FaUserCheck } from "react-icons/fa6";
+import { ImFilesEmpty } from "react-icons/im";
+import { LuFileSignature } from "react-icons/lu";
+
 import '../components/Sidebar.css';
 
 interface SidebarProps {
@@ -67,39 +70,38 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
             </Link>
           </li> */}
 
-                    {/* Menú de Talleres con Submenú */}
-                    <li>
-            <Link
-              to="#"
-              className={isAlumnosActive ? 'active' : ''}
-              onClick={toggleAlumnosSubMenu}
-            >
-              <FaUsers  /> Alumnos {isAlumnosOpen ? <MdExpandLess /> : <MdExpandMore />}
-            </Link>
-            {isAlumnosOpen && (
-              <ul>
-                <li>
-                  <Link
-                    to="/Alumnos"
-                    className={currentPath === '/Alumnos' ? 'active' : ''}
-                    onClick={toggleSidebar}
-                  >
-                  <FaUserClock /> En proceso
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="/AlumnosLiberados"
-                    className={currentPath === '/AlumnosLiberados' ? 'active' : ''}
-                    onClick={toggleSidebar}
-                  >
-                   <FaUserCheck />  Liberados
-                  </Link>
-                </li>
-              </ul>
-            )}
-          </li>
-
+              {/* Menú de Alumnos con Submenú */}
+<li>
+  <Link
+    to="#"
+    className={isAlumnosActive ? 'active' : ''}
+    onClick={toggleAlumnosSubMenu}
+  >
+    <FaUsers /> Alumnos {isAlumnosOpen ? <MdExpandLess /> : <MdExpandMore />}
+  </Link>
+  {isAlumnosOpen && (
+    <ul>
+      <li>
+        <Link
+          to="/Alumnos"
+          className={currentPath === '/Alumnos' ? 'active' : ''}
+          onClick={toggleSidebar}
+        >
+          <FaUserClock /> En proceso
+        </Link>
+      </li>
+      <li>
+        <Link
+          to="/AlumnosLiberados"
+          className={currentPath === '/AlumnosLiberados' ? 'active' : ''}
+          onClick={toggleSidebar}
+        >
+          <FaUserCheck /> Liberados
+        </Link>
+      </li>
+    </ul>
+  )}
+</li>
           <li>
             <Link
               to="/Profesores"
@@ -111,37 +113,37 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
           </li>
 
           {/* Menú de Talleres con Submenú */}
-          <li>
-            <Link
-              to="#"
-              className={isTalleresActive ? 'active' : ''}
-              onClick={toggleTalleresSubMenu}
-            >
-              <MdOutlineSports /> Talleres {isTalleresOpen ? <MdExpandLess /> : <MdExpandMore />}
-            </Link>
-            {isTalleresOpen && (
-              <ul>
-                <li>
-                  <Link
-                    to="/Talleres"
-                    className={currentPath === '/Talleres' ? 'active' : ''}
-                    onClick={toggleSidebar}
-                  >
-                  <CiViewList /> Registros
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="/TalleresCrear"
-                    className={currentPath === '/TalleresCrear' ? 'active' : ''}
-                    onClick={toggleSidebar}
-                  >
-                   <IoCreateOutline />  Crear taller
-                  </Link>
-                </li>
-              </ul>
-            )}
-          </li>
+<li>
+  <Link
+    to="#"
+    className={isTalleresActive ? 'active' : ''}
+    onClick={toggleTalleresSubMenu}
+  >
+    <MdOutlineSports /> Talleres {isTalleresOpen ? <MdExpandLess /> : <MdExpandMore />}
+  </Link>
+  {isTalleresOpen && (
+    <ul>
+      <li>
+        <Link
+          to="/Talleres"
+          className={currentPath === '/Talleres' ? 'active' : ''}
+          onClick={toggleSidebar}
+        >
+          <CiViewList /> Registros
+        </Link>
+      </li>
+      <li>
+        <Link
+          to="/TalleresCrear"
+          className={currentPath === '/TalleresCrear' ? 'active' : ''}
+          onClick={toggleSidebar}
+        >
+          <IoCreateOutline /> Catalogo
+        </Link>
+      </li>
+    </ul>
+  )}
+</li>
 
           <li>
             <Link
@@ -159,7 +161,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
               className={currentPath === '/DocumentosMaster' ? 'active' : ''}
               onClick={toggleSidebar}
             >
-              <FaListCheck /> Documentos
+              <ImFilesEmpty /> Rúbricas
             </Link>
           </li>
 
@@ -203,7 +205,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
               className={currentPath === '/Documentos' ? 'active' : ''}
               onClick={toggleSidebar}
             >
-              <FaListCheck /> Documentos
+              <LuFileSignature /> Documentos
             </Link>
           </li>
 

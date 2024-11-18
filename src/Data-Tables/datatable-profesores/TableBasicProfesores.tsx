@@ -1,32 +1,77 @@
-import { useState } from "react";
+import {useEffect, useState } from "react";
 import MUIDataTable, { FilterType, Responsive } from "mui-datatables";
 import style from "../datatable-profesores/tablebasic-profesores.module.css";
 import { Link } from "react-router-dom";
 //import ButtonCrud from "../button-options-CRUD/ButtonCrud";
-import ButtonDelete from "../../components/Button-Options-CRUD/Button-Delete/ButtonDelete";
+// import ButtonDelete from "../../components/Button-Options-CRUD/Button-Delete/ButtonDelete";
 import ButtonUpdate from "../../components/Button-Options-CRUD/Button-Update/ButtonUpdate";
-import { Edit, Delete } from '@mui/icons-material'; 
+import { Edit } from '@mui/icons-material'; 
 import ModalHOC from "../../components/Modal/Modal";
 import ButtonModal from "../../components/ButtonModal/ButtonModal";
-import DescargarArchivo from "../../components/Documentos/Descargararchivo/DescargarArchivo";
+// import DescargarArchivo from "../../components/Documentos/Descargararchivo/DescargarArchivo";
+import axios from 'axios';
+
+
+// Define las interfaces para los datos
+interface Profesor {
+  id_instructor: number;
+  nombre: string;
+  apellido_paterno: string;
+  apellido_materno: string;
+  telefono: string;
+  email: string;
+  genero: string;
+  estatus: string;
+
+}
+
+interface ProfesorTable {
+  id: number;
+  Nombre: string;
+  Apellidos: string;
+  Telefono: string;
+  Correo: string;
+  Genero: string;
+  Estatus: string;
+}
+
 
 const TableBasicProfesores = () => {
   const [showModal, setShowModal] = useState(false); 
-  const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
+  // const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
+  const [data, setData] = useState<ProfesorTable[]>([]); // Usa la interfaz ProfesorTable
 
 
-  const handleDelete = (userId: number) => {
-    setSelectedUserId(userId)
-    setShowModal(true); 
-  };
+  // const handleDelete = (userId: number) => {
+  //   setSelectedUserId(userId)
+  //   setShowModal(true); 
+  // };
 
-  const handleConfirmDelete = () => {
-    const updatedData = data.filter(user => user.id !== selectedUserId);
-    setData(updatedData);
-    setShowModal(false);
-  };
+  // const handleConfirmDelete = async () => {
+  //   if (selectedUserId) {
+  //     try {
+  //       // Realiza la solicitud DELETE a la API
+  //       await axios.delete(`https://drftallerotecdj.onrender.com/talleres/api/instructores/${selectedUserId}/`);
+        
+  //       // Actualiza el estado local para eliminar el profesor
+  //       const updatedData = data.filter(user => user.id !== selectedUserId);
+  //       setData(updatedData);
+  //       setShowModal(false);
+  //     } catch (error) {
+  //       console.error("Error al eliminar al profesor", error);
+  //       // Puedes mostrar un mensaje de error si lo deseas
+  //     }
+  //   }
+  // };
 
   const columns = [
+    // {
+    //   name: "ID",
+    //   options: {
+    //     setCellProps: () => ({ style: { textAlign: 'center' } }),
+    //     setCellHeaderProps: () => ({ style: { textAlign: 'center', fontWeight: 'bold' } }),
+    //   },
+    // },
     {
       name: "Nombre",
       options: {
@@ -63,46 +108,54 @@ const TableBasicProfesores = () => {
         setCellHeaderProps: () => ({ style: { textAlign: 'center', fontWeight: 'bold' } }),
       },
     },
+     
     {
-      name: "Registro de participantes",
+      name: "Estatus",
       options: {
         setCellProps: () => ({ style: { textAlign: 'center' } }),
         setCellHeaderProps: () => ({ style: { textAlign: 'center', fontWeight: 'bold' } }),
-        customBodyRenderLite: (dataIndex: number) => {
-          const fileName = "registro_participantes.pdf";
-          const downloadUrl = `/path/to/registro_${data[dataIndex].id}.pdf`;
-          return (
-            <DescargarArchivo 
-              fileName={fileName} 
-              downloadUrl={downloadUrl} 
-              showDownloadText={true} 
-              showFileName={false}
-            />
-          );
-        },
       },
     },
+    // {
+    //   name: "Registro de participantes",
+    //   options: {
+    //     setCellProps: () => ({ style: { textAlign: 'center' } }),
+    //     setCellHeaderProps: () => ({ style: { textAlign: 'center', fontWeight: 'bold' } }),
+    //     customBodyRenderLite: (dataIndex: number) => {
+    //       const fileName = "registro_participantes.pdf";
+    //       const downloadUrl = `/path/to/registro_${data[dataIndex].id}.pdf`;
+    //       return (
+    //         <DescargarArchivo 
+    //           fileName={fileName} 
+    //           downloadUrl={downloadUrl} 
+    //           showDownloadText={true} 
+    //           showFileName={false}
+    //         />
+    //       );
+    //     },
+    //   },
+    // },
+    // {
+    //   name: "Evaluación al desempeño",
+    //   options: {
+    //     setCellProps: () => ({ style: { textAlign: 'center' } }),
+    //     setCellHeaderProps: () => ({ style: { textAlign: 'center', fontWeight: 'bold' } }),
+    //     customBodyRenderLite: (dataIndex: number) => {
+    //       const fileName = "evaluacion_desempeno.pdf";
+    //       const downloadUrl = `/path/to/evaluacion_${data[dataIndex].id}.pdf`;
+    //       return (
+    //         <DescargarArchivo 
+    //           fileName={fileName} 
+    //           downloadUrl={downloadUrl} 
+    //           showDownloadText={true}
+    //           showFileName={false}
+    //         />
+    //       );
+    //     },
+    //   },
+    // },
     {
-      name: "Evaluación al desempeño",
-      options: {
-        setCellProps: () => ({ style: { textAlign: 'center' } }),
-        setCellHeaderProps: () => ({ style: { textAlign: 'center', fontWeight: 'bold' } }),
-        customBodyRenderLite: (dataIndex: number) => {
-          const fileName = "evaluacion_desempeno.pdf";
-          const downloadUrl = `/path/to/evaluacion_${data[dataIndex].id}.pdf`;
-          return (
-            <DescargarArchivo 
-              fileName={fileName} 
-              downloadUrl={downloadUrl} 
-              showDownloadText={true}
-              showFileName={false}
-            />
-          );
-        },
-      },
-    },
-    {
-      name: "Opciones",
+      name: "Opción",
       options: {
         setCellProps: () => ({ style: { textAlign: 'center' } }),
         setCellHeaderProps: () => ({ style: { textAlign: 'center', fontWeight: 'bold' } }),
@@ -121,14 +174,14 @@ const TableBasicProfesores = () => {
                   tooltip="Editar"
                 />
               </Link>
-              <ButtonDelete
+              {/* <ButtonDelete
                 onClick={() => handleDelete(userId)}
                // label="Eliminar"
                // color="#F14307"
                 icon={<Delete />}
                 tooltip="Eliminar"
 
-              />
+              /> */}
             </div>
           );
         },
@@ -138,111 +191,32 @@ const TableBasicProfesores = () => {
     
   ];
 
-  const [data, setData] = useState([
 
-  {
-    id:1,
-    Nombre: "Juan Sanchez",
-    Apellidos: "Perez Ancona",
-    Telefono: "1234567890",
-    Correo: "juan.perez@example.com",
-    Genero: "Masculino"
-  },
-  {
-    id:2,
-    Nombre: "Maria Guadalupe",
-    Apellidos: "Gonzalez Canche",
-    Telefono: "9876543210",
-    Correo: "maria.gonzalez@example.com",
-    Genero: "Femenino"
-  },
-  {
-    id:3,
-    Nombre: "Pedro",
-    Apellidos: "Martinez Castro",
-    Telefono: "5551234567",
-    Correo: "pedro.martinez@example.com",
-    Genero: "Masculino"
-  },
-  {
-    id:4,
-    Nombre: "Laura Guadalupe",
-    Apellidos: "Lopez Martin",
-    Telefono: "4445678901",
-    Correo: "laura.lopez@example.com",
-    Genero: "Femenino"
-  },
-  {id:5,
-    Nombre: "Carlos Antonio",
-    Apellidos: "Sanchez Mena",
-    Telefono: "3336789012",
-    Correo: "carlos.sanchez@example.com",
-    Genero: "Masculino"
-  },
-  {
-    id:6,
-    Nombre: "Ana",
-    Apellidos: "Rodriguez Betancurd",
-    Telefono: "2227890123",
-    Correo: "ana.rodriguez@example.com",
-    Genero: "Femenino"
-  },
-  {id:7,
-    Nombre: "David Gustavo",
-    Apellidos: "Hernandez Gamboa",
-    Telefono: "6668901234",
-    Correo: "david.hernandez@example.com",
-    Genero: "Masculino"
-  },
-  {
-    id:8,
-    Nombre: "Sofia Leticia",
-    Apellidos: "Diaz Mena",
-    Telefono: "7779012345",
-    Correo: "sofia.diaz@example.com",
-    Genero: "Femenino"
-  },
-  {
-    id:9,
-    Nombre: "Jose Eduardo",
-    Apellidos: "Gomez Cupul",
-    Telefono: "8880123456",
-    Correo: "eduardo.gomez@example.com",
-    Genero: "Masculino"
-  },
-  {
-    id:10,
-    Nombre: "Luisa Margarita",
-    Apellidos: "Martínez Noh",
-    Telefono: "9991234567",
-    Correo: "luisa.martinez@example.com",
-    Genero: "Femenino"
-  },
-  {
-    id:11,
-    Nombre: "Javier Castro",
-    Apellidos: "Fernandez Baas",
-    Telefono: "1112345678",
-    Correo: "javier.fernandez@example.com",
-    Genero: "Masculino"
-  },
-  {
-    id:12,
-    Nombre: "Paula Alejandra",
-    Apellidos: "Ruiz Estrella",
-    Telefono: "2223456789",
-    Correo: "paula.ruiz@example.com",
-    Genero: "Femenino"
-  },
-  {
-    id:13,
-    Nombre: "Diego Alberto",
-    Apellidos: "Garcia Canche",
-    Telefono: "3334567890",
-    Correo: "diego.garcia@example.com",
-    Genero: "Masculino"
-  }
-   ]);
+  // Efecto para cargar datos de la API
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get<Profesor[]>("https://drftallerotecdj.onrender.com/talleres/api/instructores/");
+        const profesoresData: ProfesorTable[] = response.data.map((profesor) => ({
+          id: profesor.id_instructor, // Asignar un ID único
+          // ID: profesor.id_instructor,
+          Nombre: profesor.nombre,
+          Apellidos: `${profesor.apellido_paterno} ${profesor.apellido_materno}`,
+          Telefono: profesor.telefono,
+          Correo: profesor.email,
+          Genero: profesor.genero.charAt(0).toUpperCase() + profesor.genero.slice(1), // Capitalizar género
+          Estatus: profesor.estatus
+        }));
+        setData(profesoresData);
+      } catch (error) {
+        console.error("Error al obtener los datos de la API", error);
+      }
+    };
+
+    fetchData();
+  }, []); // Solo se ejecuta una vez al montar el componente
+
+
 
   const options = {
     filterType: "checkbox" as FilterType,
@@ -307,19 +281,14 @@ const TableBasicProfesores = () => {
               ¿Estás seguro de eliminar este profesor?
             </p>
             <div className ={`${style['button-modal']}`}>
-
-
-            <ButtonModal
-                onClick={() => {
-                  handleConfirmDelete();
-                }}
+            {/* <ButtonModal
+                onClick={handleConfirmDelete}
                 label="Si, eliminar"
-              />
-
+              /> */}
             <span style={{ margin: "0 5px" }}></span>
-
-            <ButtonModal  onClick={() => setShowModal(false)}
-            label="Cancelar"/>
+            <ButtonModal
+              onClick={() => setShowModal(false)}
+              label="Cancelar"/>
             </div>
           </div>
         </ModalHOC>

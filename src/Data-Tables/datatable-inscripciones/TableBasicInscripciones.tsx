@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MUIDataTable, { FilterType, Responsive } from "mui-datatables";
 import style from "../datatable-inscripciones/tablebasic-inscripciones.module.css";
 import { Link } from "react-router-dom";
@@ -8,44 +8,93 @@ import ButtonDelete from "../../components/Button-Options-CRUD/Button-Delete/But
 import ModalHOC from "../../components/Modal/Modal";
 import ButtonModal from "../../components/ButtonModal/ButtonModal";
 import { Edit, Delete } from '@mui/icons-material'; // Importa los iconos Edit y Delete
+import axios from "axios";
+// Definición las interfaces para los datos
+interface Inscripcion {
+  id_inscripcion: number;
+  estatus: string;
+  id_taller_registro: number;
+  id_alumno: number;
+}
+
+interface Alumno {
+  id_alumno: number;
+  matricula_alumno: number;
+  nombre: string;
+  apellido_paterno: string;
+  apellido_materno: string;
+}
+
+interface Subgrupo {
+  id_taller_registro: number;
+  periodo_escolar: string;
+  id_taller_catalogo: number;
+  tipo_taller: string;
+}
+
+interface Supergrupo {
+  id_taller_catalogo: number;
+  nombre_taller: string;
+}
+
+interface InscripcionTable {
+  id: number;
+  "Matricula alumno": number;
+  "Nombre alumno": string;
+  Taller: string;
+  "Periodo escolar": string;
+  Estatus: string;
+}
 
 const TableBasicInscripciones = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
+  const [data, setData] = useState<InscripcionTable[]>([]); // Usa la interfaz
 
   const handleDelete = (userId: number) => {
-    setSelectedUserId(userId);
-    setShowModal(true);
+    setSelectedUserId(userId)
+    setShowModal(true); 
   };
 
-  const handleConfirmDelete = () => {
-    const updatedData = data.filter(user => user.id !== selectedUserId);
-    setData(updatedData);
-    setShowModal(false);
+  const handleConfirmDelete = async () => {
+    if (selectedUserId) {
+      try {
+        // Realiza la solicitud DELETE a la API
+        await axios.delete(`https://drftallerotecdj.onrender.com/talleres/api/inscripciones/${selectedUserId}/`);
+        
+        // Actualiza el estado local para eliminar el alumno
+        const updatedData = data.filter(user => user.id !== selectedUserId);
+        setData(updatedData);
+        setShowModal(false);
+      } catch (error) {
+        console.error("Error al eliminar la inscripción", error);
+        // Puedes mostrar un mensaje de error si lo deseas
+      }
+    }
   };
 
   const columns = [
     {
-      name: "Matricula Alumno",
+      name: "Matricula alumno",
       options: {
         setCellProps: () => ({ style: { textAlign: 'center' } }),
         setCellHeaderProps: () => ({ style: { textAlign: 'center', fontWeight: 'bold' } }),
       },
     },
     {
-      name: "Nombre Alumno",
+      name: "Nombre alumno",
       options: {
         setCellProps: () => ({ style: { textAlign: 'center' } }),
         setCellHeaderProps: () => ({ style: { textAlign: 'center', fontWeight: 'bold' } }),
       },
     },
-    {
-      name: "Apellidos Alumno",
-      options: {
-        setCellProps: () => ({ style: { textAlign: 'center' } }),
-        setCellHeaderProps: () => ({ style: { textAlign: 'center', fontWeight: 'bold' } }),
-      },
-    },
+    // {
+    //   name: "Apellidos Alumno",
+    //   options: {
+    //     setCellProps: () => ({ style: { textAlign: 'center' } }),
+    //     setCellHeaderProps: () => ({ style: { textAlign: 'center', fontWeight: 'bold' } }),
+    //   },
+    // },
     {
       name: "Taller",
       options: {
@@ -54,7 +103,7 @@ const TableBasicInscripciones = () => {
       },
     },
     {
-      name: "Periodo Escolar",
+      name: "Periodo escolar",
       options: {
         setCellProps: () => ({ style: { textAlign: 'center' } }),
         setCellHeaderProps: () => ({ style: { textAlign: 'center', fontWeight: 'bold' } }),
@@ -103,83 +152,38 @@ const TableBasicInscripciones = () => {
     },
   ];
 
-  const [data, setData] = useState([
-    /* Datos de los alumnos */
-    {
-     id:1,
-      "Matricula Alumno": "20890344",
-      "Nombre Alumno": "Juan Sanchez",
-      "Apellidos Alumno": "Perez Ancona",
-      Taller: "Softball varonil",
-      "Periodo Escolar": "AGO-DIC/2024",
-      Estatus: "En progreso",
-    },
-    {
-      id:2,
-      "Matricula Alumno": "67836325",
-      "Nombre Alumno": "Alberto Antonio",
-      "Apellidos Alumno": "Puc Santos",
-      Taller: "Ajedrez",
-      "Periodo Escolar": "AGO-DIC/2022",
-      Estatus: "Completado",
-    },
-    {
-     id:3,
-     "Matricula Alumno": "22367534",
-     "Nombre Alumno":  "Juan Sanchez",
-      "Apellidos Alumno": "Perez Ancona",
-      Taller: "Hanal-Pixan",
-      "Periodo Escolar": "AGO-DIC/2019",
-      Estatus: "Incompleto",
-    },
-    {
-      id:4,
-      "Matricula Alumno": "45678976",
-     "Nombre Alumno":  "Saul Antonio",
-      "Apellidos Alumno": "Ake Baas",
-      Taller: "Basquetball",
-      "Periodo Escolar": "AGO-DIC/2024",
-      Estatus: "En progreso",
-    },
-    {
-      id:5,
-      "Matricula Alumno":"91452678",
-     "Nombre Alumno":  "Andrea Cecilia",
-      "Apellidos Alumno": "Ramirez Nauat",
-      Taller: "Beisball",
-      "Periodo Escolar": "AGO-DIC/2024",
-      Estatus: "En progreso",
+ // Efecto para cargar datos de la API
+ useEffect(() => {
+ const fetchData = async () => {
+  try {
+    const inscripcionesResponse = await axios.get<Inscripcion[]>("https://drftallerotecdj.onrender.com/talleres/api/inscripciones/");
+    const alumnosResponse = await axios.get<Alumno[]>("https://drftallerotecdj.onrender.com/talleres/api/alumnos/");
+    const subgruposResponse = await axios.get<Subgrupo[]>("https://drftallerotecdj.onrender.com/talleres/api/talleres_subgrupos/");
+    const supergrupoResponse = await axios.get<Supergrupo[]>("https://drftallerotecdj.onrender.com/talleres/api/talleres_supergrupo/");
 
-    },
-    {id:6,
-     "Matricula Alumno": "81035276",
-     "Nombre Alumno":  "Maria Jose",
-      "Apellidos Alumno": "Cime Pech",
-      Taller: "Futball Femenil",
-      "Periodo Escolar": "AGO-DIC/2024",
-      Estatus: "En progreso",
+    const combinedData = inscripcionesResponse.data.map(inscripcion => {
+      const alumno = alumnosResponse.data.find((a: Alumno) => a.id_alumno === inscripcion.id_alumno);
+      const subgrupo = subgruposResponse.data.find((s: Subgrupo) => s.id_taller_registro === inscripcion.id_taller_registro);
+      const supergrupo = supergrupoResponse.data.find((sg: Supergrupo) => sg.id_taller_catalogo === subgrupo?.id_taller_catalogo);
 
-    },
-    {
-      id:7,
-      "Matricula Alumno":"09362784",
-     "Nombre Alumno":  "Cesar Guzman",
-      "Apellidos Alumno": "Noh Sanchez",
-      Taller: "Ajedrez",
-      "Periodo Escolar": "AGO-DIC/2024",
-      Estatus: "En progreso",
+      return {
+        id: inscripcion.id_inscripcion,
+        "Matricula alumno": alumno ? Number(alumno.matricula_alumno) : 0,
+        "Nombre alumno": alumno ? `${alumno.nombre} ${alumno.apellido_paterno} ${alumno.apellido_materno}` : "No asignado",
+        Taller: supergrupo ? `${supergrupo.nombre_taller } (${subgrupo?.tipo_taller})` : "No asignado",
+        "Periodo escolar": subgrupo ? subgrupo.periodo_escolar : "No asignado",
+        Estatus: inscripcion.estatus,
+      };
+    });
 
-    },
-    {
-      id:8,
-      "Matricula Alumno": "262541628",
-     "Nombre Alumno":  "Dalia Rosario",
-      "Apellidos Alumno": "May Cupul",
-      Taller: "Basqueball Femenil",
-      "Periodo Escolar": "AGO-DIC/2024",
-      Estatus: "En progreso",
-    }
-  ]);
+    setData(combinedData);
+  } catch (error) {
+    console.error("Error al obtener datos de las APIs", error);
+  }
+};
+
+  fetchData();
+}, []);
 
   const options = {
     filterType: "checkbox" as FilterType,
@@ -245,10 +249,8 @@ const TableBasicInscripciones = () => {
               ¿Estás seguro de eliminar este alumno?
             </p>
             <div className ={`${style['button-modal']}`}>
-              <ButtonModal
-                onClick={() => {
-                  handleConfirmDelete();
-                }}
+            <ButtonModal
+                onClick={handleConfirmDelete}
                 label="Si, eliminar"
               />
               <span style={{ margin: "0 5px" }}></span>

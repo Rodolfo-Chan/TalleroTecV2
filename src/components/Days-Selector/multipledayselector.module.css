@@ -44,3 +44,12 @@
 .checkbox-label {
   color: rgb(0, 0, 0); 
 }
+
+/* multipledayselector.module.css */
+.day-label-pale {
+  color: rgba(0, 0, 0, 0.5); /* Color pálido para los días no seleccionados */
+}
+
+.day-label-bold {
+  color: rgb(0, 0, 0); /* Color negro fuerte para los días seleccionados */
+}

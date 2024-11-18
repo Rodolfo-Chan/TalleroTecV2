@@ -1,5 +1,3 @@
-
-/********************************** */
 import React from "react";
 import styles from "../../components/TimeSelector/timeselector.module.css";
 
@@ -7,10 +5,8 @@ interface TimeSelectorProps {
   label?: string;
   hour: string;
   minute: string;
-  period: string;
   onHourChange: (hour: string) => void;
   onMinuteChange: (minute: string) => void;
-  onPeriodChange: (period: string) => void;
   size?: "xsmall" | "small" | "medium" | "large";
   customStyles?: React.CSSProperties;
   customClassName?: string;
@@ -20,17 +16,16 @@ const TimeSelector: React.FC<TimeSelectorProps> = ({
   label,
   hour,
   minute,
-  period,
   onHourChange,
   onMinuteChange,
-  onPeriodChange,
   size = "medium", // Tamaño por defecto
   customStyles = {},
   customClassName = ""
 }) => {
-  const hours = Array.from({ length: 12 }, (_, i) => String(i + 1).padStart(2, "0"));
-  const minutes = Array.from({ length: 12 }, (_, i) => String(i * 5).padStart(2, "0")); // Incremento de 5 minutos
-  const periods = ["AM", "PM"];
+  // Genera opciones de 00 a 23 para el formato de 24 horas
+  const hours = Array.from({ length: 24 }, (_, i) => String(i).padStart(2, "0"));
+  // Genera opciones de 00 a 55 en incrementos de 5 minutos
+  const minutes = Array.from({ length: 12 }, (_, i) => String(i * 5).padStart(2, "0"));
 
   // Función para determinar el color basado en la selección
   const getSelectClassName = (value: string) => {
@@ -66,20 +61,6 @@ const TimeSelector: React.FC<TimeSelectorProps> = ({
           {minutes.map((minuteOption, index) => (
             <option key={index} value={minuteOption}>
               {minuteOption}
-            </option>
-          ))}
-        </select>
-        <select
-          className={`${styles["select-properties"]} ${styles[size + "-select"]} ${getSelectClassName(period)}`}
-          value={period}
-          onChange={(e) => onPeriodChange(e.target.value)}
-        >
-          <option value="" disabled className={styles["placeholder-option"]}>
-            AM/PM
-          </option>
-          {periods.map((periodOption, index) => (
-            <option key={index} value={periodOption}>
-              {periodOption}
             </option>
           ))}
         </select>

@@ -1,4 +1,6 @@
-import { useState } from "react";
+
+import { useEffect, useState } from "react";
+import axios from 'axios';
 import ComponentAlert from "../../../components/Alert/ComponentAlert";
 import ButtonRegistro from "../../../components/ButtonRegistro/ButtonRegistro";
 import Input from "../../../components/Input/Input";
@@ -8,149 +10,250 @@ import style from "./from-talleres-registro.module.css";
 import TimeSelector from "../../../components/TimeSelector/TimeSelector";
 import MultipleDaySelector from "../../../components/Days-Selector/MultipleDaySelector";
 
-const FormTalleresRegistro = () => {
-  const [nombre, setNombre] = useState("");
-  const [turno, setTurno] = useState("");
-  const [card, setCard] = useState("");
-  const [profesorseleccionado, setProfesorSeleccionado] = useState("");
-  const [periodoescolar, setPeriodoEscolar] = useState("");
-  const [horarioinicio, setHorarioinicio] = useState<{ hour: string; minute: string; period: string } | null>(null);
-  const [horariofin, setHorariofin] = useState<{ hour: string; minute: string; period: string } | null>(null);
-  const [ubicacion, setUbicacion] = useState("");
-  const [puntos, setPuntos] = useState("");
-  const [cupos, setCupos] = useState("");
-  const [diasSeleccionados, setDiasSeleccionados] = useState<string[]>([]);
-  const [tipo, setTipo] = useState("");
+interface Taller {
+  id_taller_catalogo: number;
+  nombre_taller: string;
+  estatus_taller: boolean;
+}
 
+
+interface Horario {
+  hour: string;
+  minute: string;
+}
+
+interface Instructor {
+  id_instructor: number;
+  nombre: string;
+  apellido_paterno: string;
+  apellido_materno: string;
+  estatus: string;
+}
+
+
+const FormTalleresRegistro = () => {
+  const [nombre, setNombre] = useState<number | string>('');
+  const [nombres, setNombres] = useState<{ id_taller_catalogo: number; nombre_taller: string }[]>([]);
+
+  const [turno, setTurno] =useState<string>('');
+  const [card, setCard] =  useState<string>('');
+  const [profesorseleccionado, setProfesorSeleccionado] =  useState<number | string>('');
+  const [profesoresseleccionados, setProfesoresSeleccionados] = useState<{ id_instructor: number; nombre: string; apellido_paterno: string; apellido_materno: string  }[]>([]);
+
+  const [periodoescolar, setPeriodoEscolar] =  useState<string>('');
+  const [horarioinicio, setHorarioinicio] = useState<Horario>({ hour: "", minute: "" });
+  const [horariofin, setHorariofin] = useState<Horario>({ hour: "", minute: "" });
+  
+  const [ubicacion, setUbicacion] = useState("");
+  const [puntos, setPuntos] =  useState<string>('');
+  const [cupos, setCupos] = useState<string>('');
+  const [diasSeleccionados, setDiasSeleccionados] = useState<string>("");
+  const [tipo, setTipo] = useState<string>('');
+  
   const [showAlert, setShowAlert] = useState(false);
   const [alertSeverity, setAlertSeverity] = useState<"error" | "warning" | "info" | "success">("success"); // Tipado más estricto
   const [alertMessage, setAlertMessage] = useState("");
-  const [nombreError, setNombreError] = useState("");
-  const [turnoError, setTurnoError] = useState("");
-  const [cardError, setCardError] = useState("");
-  const [profesorseleccionadoError, setProfesorSeleccionadoError] = useState("");
-  const [periodoescolarError, setPeriodoEscolarError] = useState("");
-  const [diasError, setDiasError] = useState("");
-  const [tipoError, setTipoError] = useState("");
+  
 
-  const [horarioinicioError, setHorarioinicioError] = useState("");
-  const [horariofinError, setHorariofinError] = useState("");
-  const [ubicacionError, setUbicacionError] = useState("");
-  const [puntosError, setPuntosError] = useState("");
-  const [cuposError, setCuposError] = useState("");
-
+  
+  const [errors, setErrors] = useState<{ [key: string]: string }>({
+    nombre: '',
+    turno: '',
+    card: '',
+    profesorseleccionado: '',
+    periodoescolar: '',
+    horarioinicio: '',
+    horariofin: '',
+    ubicacion: '',
+    puntos: '',
+    cupos: '',
+    diasSeleccionados: '',
+    tipo: ''
+});
 
   const navigate = useNavigate();
+  useEffect(() => {
+    axios.get('https://drftallerotecdj.onrender.com/talleres/api/talleres_supergrupo/')
+      .then((response) => {
+        // Filtra los talleres solo con estatus_taller == true
+        const talleresActivos = response.data.filter((taller: Taller) => taller.estatus_taller === true);
+        setNombres(talleresActivos); // Almacena solo los talleres con estatus_taller == true
+      })
+      .catch((error) => console.error("Error al cargar catalogo de talleres", error));
+  }, []);
+  
+  useEffect(() => {
+    axios.get('https://drftallerotecdj.onrender.com/talleres/api/instructores/')
+      .then((response) => {
+        // Filtrar los profesores con estatus "Activo"
+        const profesoresActivos = response.data.filter((instructor: Instructor) => instructor.estatus === "Activo");
+        setProfesoresSeleccionados(profesoresActivos);
+      })
+      .catch((error) => console.error("Error al cargar profesor seleccionado", error));
+  }, []);
+  
 
-  const handleRegistrarClick = () => {
-    let isValid = true;
+const handleRegistrarClick = async () => {
+  const newErrors: { [key: string]: string } = {};
+  let isValid = true;
 
-    // Reset error messages
-    setNombreError("");
-    setTurnoError("");
-    setCardError("");
-    setProfesorSeleccionadoError("");
-    setPeriodoEscolarError("");
-    setTipoError("");
+  // Validaciones de cada campo
+  if (!nombre) {
+    newErrors.nombre = "Seleccione taller.";
+    isValid = false;
+  }
 
-    setHorarioinicioError("");
-    setHorariofinError("");
-    setUbicacionError("");
-    setPuntosError("");
-    setCuposError("");
-    setDiasError("");
+  if (!turno) {
+    newErrors.turno = "Seleccione turno."; 
+    isValid = false;
+  }
 
-    if (!nombre) {
-      setNombreError("Seleccione taller.");
-      isValid = false;
-    }
-    if (!turno) {
-      setTurnoError("Seleccione turno.");
-      isValid = false;
-    }
-    if (!card) {
-      setCardError("Seleccione estatus.");
-      isValid = false;
-    }
-    if (!profesorseleccionado) {
-      setProfesorSeleccionadoError("Seleccione profesor.");
-      isValid = false;
-    }
+  if (!card) {
+    newErrors.card = "Seleccione estatus."; 
+    isValid = false;
+  }
 
-    if (!periodoescolar) {
-      setPeriodoEscolarError("Ingrese perido.");
-      isValid = false;
-    }
+  if (!profesorseleccionado) {
+    newErrors.profesorseleccionado = "Seleccione profesor."; 
+    isValid = false;
+  }
 
-    if (!horarioinicio || !horarioinicio.hour || !horarioinicio.minute || !horarioinicio.period) {
-      setHorarioinicioError("Campo obligatorio.");
-      isValid = false;
-    }
+  if (!periodoescolar) {
+    newErrors.periodoescolar = "Ingrese periodo."; 
+    isValid = false;
+  }
 
-    if (!horariofin || !horariofin.hour || !horariofin.minute || !horariofin.period) {
-      setHorariofinError("Campo obligatorio.");
-      isValid = false;
-    }
+  if (!horarioinicio || !horarioinicio.hour || !horarioinicio.minute) {
+    newErrors.horarioinicio = "Campo obligatorio."; 
+    isValid = false;
+  }
 
-    if (!ubicacion) {
-      setUbicacionError("Ingrese la ubicación.");
-      isValid = false;
-    } else if (!ubicacion.match(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/)) {
-      setUbicacionError("No se aceptan dígitos numéricos.");
-      isValid = false;
-    }
+  if (!horariofin || !horariofin.hour || !horariofin.minute) {
+    newErrors.horariofin = "Campo obligatorio."; 
+    isValid = false;
+  }
 
-    if (!puntos) {
-      setPuntosError("Ingrese puntos.");
-      isValid = false;
-    } else if (!puntos.match(/^\d+$/)) {
-      setPuntosError("Ingrese dígitos numéricos.");
-      isValid = false;
-    }
-    if (!cupos) {
-      setCuposError("Ingrese capacidad.");
-      isValid = false;
-    } else if (!puntos.match(/^\d+$/)) {
-      setCuposError("Ingrese dígitos numéricos.");
-      isValid = false;
-    }
-    if (diasSeleccionados.length < 2) {
-      setDiasError("Seleccione al menos dos días.");
-      isValid = false;
-    }
-    if (!tipo) {
-      setTipoError("Seleccione tipo.");
-      isValid = false;
-    }
+  if (!ubicacion) {
+    newErrors.ubicacion = "Ingrese la ubicación.";
+    isValid = false;
+  } else if (!ubicacion.match(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/)) {
+    newErrors.ubicacion = "No se aceptan dígitos numéricos.";
+    isValid = false;
+  }
 
-    if (!nombre || !turno || !card || !profesorseleccionado || !periodoescolar || !ubicacion || !puntos || !cupos || !diasSeleccionados || !tipo) {
-      setAlertSeverity("error");
-      setAlertMessage("Por favor complete todos los campos.");
-      setShowAlert(true);
-    } else if (!isValid) {
-      setAlertSeverity("warning");
-      setAlertMessage("Por favor corrija los errores.");
-      setShowAlert(true);
-    } else {
-      setAlertSeverity("success");
-      setAlertMessage("Taller registrado con éxito.");
-      setShowAlert(true);
-      // Reseteo de valores
-      setNombre("");
-      setTurno("");
-      setProfesorSeleccionado("");
-      setPeriodoEscolar("");
-      setHorarioinicio(null);
-      setHorariofin(null);
-      setUbicacion("");
-      setPuntos("");
-      setCard("");
-      setCupos("");
-      setDiasSeleccionados([]);
-      setTipo("");
+  if (!puntos) {
+    newErrors.puntos = "Ingrese puntos.";
+    isValid = false;
+  } else if (!puntos.match(/^\d+$/)) {
+    newErrors.puntos = "Ingrese dígitos numéricos.";
+    isValid = false;
+  }
 
-    }
+  if (!cupos) {
+    newErrors.cupos = "Ingrese capacidad.";
+    isValid = false;
+  } else if (!cupos.match(/^\d+$/)) {
+    newErrors.cupos = "Ingrese dígitos numéricos.";
+    isValid = false;
+  }
+
+  if (diasSeleccionados.length < 2) {
+    newErrors.diasSeleccionados = "Seleccione al menos dos días.";
+    isValid = false;
+  }
+
+  if (!tipo) {
+    newErrors.tipo = "Seleccione tipo.";
+    isValid = false;
+  }
+
+  setErrors(newErrors);
+
+  if (!isValid) {
+    setAlertSeverity("error");
+    setAlertMessage("Por favor complete todos los campos.");
+    setShowAlert(true);
+    return;
+  }
+
+  // Formatear las horas a formato hh:mm
+  const formatTime = (hour: string, minute: string) => {
+    return `${hour}:${minute}`;
   };
+
+  const horaInicioFormateada = formatTime(horarioinicio?.hour || "", horarioinicio?.minute || "");
+  const horaFinFormateada = formatTime(horariofin?.hour || "", horariofin?.minute || "");
+   
+  // Convertir el estatus a un valor booleano
+    const cardBoolean = card === "Activo" ? true : false;
+  // Preparar los datos para el registro
+  const nuevoRegistrotaller = {
+    id_taller_catalogo: nombre,
+    periodo_escolar: periodoescolar,
+    ubicacion,
+    turno_taller: turno,
+    hora_inicio: horaInicioFormateada,  // Formato hh:mm
+    hora_final: horaFinFormateada,      // Formato hh:mm
+    estatus_card: cardBoolean,
+    dias_taller: diasSeleccionados,
+    puntos_taller: puntos,
+    cupo_taller: cupos,
+    tipo_taller: tipo,
+    id_instructor: profesorseleccionado,
+  };
+
+  // Realizar la solicitud POST con axios
+  axios.post('https://drftallerotecdj.onrender.com/talleres/api/talleres_subgrupos/', nuevoRegistrotaller)
+    .then(() => {
+      // Imprimir en consola los datos guardados
+      console.log("Datos guardados:", nuevoRegistrotaller);
+
+      setAlertSeverity("success");
+      setAlertMessage("Registro de taller registrado con éxito.");
+      setShowAlert(true);
+
+      // Limpiar los campos después del registro
+      setNombre('');
+      setTurno('');
+      setCard('');
+      setProfesorSeleccionado('');
+      setPeriodoEscolar('');
+      setHorarioinicio({ hour: "", minute: "" });
+      setHorariofin({ hour: "", minute: "" });
+      setUbicacion('');
+      setPuntos('');
+      setCupos('');
+      setDiasSeleccionados('');
+      setTipo('');
+      setErrors({
+        nombre: '',
+        turno: '',
+        card: '',
+        profesorseleccionado: '',
+        periodoescolar: '',
+        horarioinicio: '',
+        horariofin: '',
+        ubicacion: '',
+        puntos: '',
+        cupos: '',
+        diasSeleccionados: '',
+        tipo: '',
+      });
+    })
+    .catch((error) => {
+      if (error.response) {
+        console.error("Error al registrar taller:", error.response.data);
+        setAlertMessage(`Error: ${error.response.data.message || "Error al registrar el taller."}`);
+      } else {
+        console.error("Error:", error.message);
+        setAlertMessage("Error al registrar el taller.");
+      }
+      setAlertSeverity("error");
+      setShowAlert(true);
+    });
+};
+
+  
 
   return (
     <div className={style["div-container"]}>
@@ -176,122 +279,99 @@ const FormTalleresRegistro = () => {
         <div className={style["padre-contenedor"]}>
           <div className={style["datos_seccion1"]}>
           <div className={`${style['nombre_taller']}`}>
-                <Select
-                  label="Taller"
-                  value={nombre}
-                  onChange={setNombre}
-                  options={["Voleibol Varonil", "Voleibol Femanil","Futbol Varonil", "Basquetbol Mixto", "Basquetbol Varonil", "Basquetbol Femenil", "Beisbol Varonil", "Beisbol Femenil", "Esport", "Lectura", "Folklore", "Batucada", "Reforestación", "Cuidado Ambiental"]}
-                  placeholder="seleccione un taller"
-                  size="xsmall"
-                />
-                
-                {nombreError && (
-                  <ComponentAlert open={!!nombreError} severity="error" message={nombreError} sx={{ width: 'auto', height: 'auto', fontSize: '13px' }} />
-                )}
+            <Select
+                        label="Taller"
+                        value={nombre}
+                        onChange={(value) => setNombre(Number(value))}
+                        options={nombres.map((id_taller_catalogo) => ({ value: id_taller_catalogo.id_taller_catalogo, label: id_taller_catalogo.nombre_taller }))}
+                        placeholder="Seleccione el taller"
+                        size="small"
+                    />
+                        {errors.nombre && <ComponentAlert open={!!errors.nombre} severity="error" message={errors.nombre} sx={{ width: 'auto', height: 'auto', fontSize: '12px' }} />}
               </div>
 
               <div className={`${style['tipo_taller']}`}>
-                <Select
-                  label="Tipo taller"
-                  value={tipo}
-                  onChange={setTipo}
-                  options={["Femenil", "Varonil", "Mixto"]}
-                  placeholder="seleccione tipo"
-                  size="xxxsmall"
-                />
-                
-                {tipoError && (
-                  <ComponentAlert open={!!tipoError} severity="error" message={tipoError} sx={{ width: 'auto', height: 'auto', fontSize: '12px' }} />
-                )}
+<Select
+                            label="Tipo taller"
+                            value={tipo}
+                            onChange={(value) => setTipo(value as string)}
+                            options={[
+                                { value: "Femenil", label: "Femenil" },
+                                { value: "Varonil", label: "Varonil" },
+                                { value: "Mixto", label: "Mixto" },
+                            ]}
+                            placeholder="Seleccione tipo"
+                            size="xxxsmall"
+                        />
+                        {errors.tipo && <ComponentAlert open={!!errors.tipo} severity="error" message={errors.tipo} sx={{ width: 'auto', height: 'auto', fontSize: '12px' }} />}
+
               </div>
 
             <div className={style['nombre_profesor']}>
-                <Select
-                  label="Profesor del taller"
-                  value={profesorseleccionado}
-                  onChange={setProfesorSeleccionado}
-                  options={[
-                    "Andres Agustin Pech Canche",
-                    "Rosario Balan Dzib",
-                    "Ana Barbara Gamboa Cen",
-                    "Roger Cruz Cen May",
-                    "Abel Hernesto Hernandez de la Parra",
-                    "Emanuel Abran Chan Nahuat"
-                  ]}
-                  placeholder="Seleccione al profesor del taller"
-                  size="medium"
-                />
-                {profesorseleccionadoError && (
-                  <ComponentAlert open={!!profesorseleccionadoError} severity="error" message={profesorseleccionadoError} sx={{ width: 'auto', height: 'auto', fontSize: '13px' }} />
-                )}
+            <Select
+  label="Profesor"
+  value={profesorseleccionado}
+  onChange={(value) => setProfesorSeleccionado(Number(value))}
+  options={profesoresseleccionados.map((profesor) => ({
+    value: profesor.id_instructor,
+    label: `${profesor.nombre} ${profesor.apellido_paterno} ${profesor.apellido_materno}`,
+  }))}
+  placeholder="Seleccione el profesor"
+  size="small"
+/>
+                        {errors.profesorseleccionado && <ComponentAlert open={!!errors.profesorseleccionado} severity="error" message={errors.profesorseleccionado} sx={{ width: 'auto', height: 'auto', fontSize: '12px' }} />}
+              
               </div>
               <div className={style['ubicacion']}>
-              <Input
-                label="Ubicación"
-                value={ubicacion}
-                onChange={setUbicacion}
-                placeHolder="Ingrese la ubicación"
-                size="xmedium"
-              />
-              {ubicacionError && (
-                <ComponentAlert open={!!ubicacionError} severity="error" message={ubicacionError} sx={{ width: 'auto', height: 'auto', fontSize: '13px' }} />
-              )}
+                <Input label="Ubicación"
+                            value={ubicacion}
+                            onChange={(value) => setUbicacion(value)}
+                            placeHolder="Ingrese la ubicación"
+                            size="xmedium"
+                />
+                  {errors.ubicacion && <ComponentAlert open={!!errors.ubicacion} severity="error" message={errors.ubicacion} sx={{ width: 'auto', height: 'auto', fontSize: '12px' }} />}
+                 
             </div>
-
-            
-
 
           </div>
 
           <div className={style["datos_seccion2"]}>
         
-
-
-
-
             <div className={style['periodo-escolar']}>
-              <Input
-                label="Periodo escolar"
-                value={periodoescolar}
-                onChange={setPeriodoEscolar}
-                placeHolder="Ingrese el periodo"
-                size="xxsmall"
-              />
-              {periodoescolarError && (
-                <ComponentAlert open={!!periodoescolarError} severity="error" message={periodoescolarError} sx={{ width: 'auto', height: 'auto', fontSize: '13px' }} />
-              )}
+              <Input label="Periodo escolar"
+                            value={periodoescolar}
+                            onChange={(value) => setPeriodoEscolar(value)}
+                            placeHolder="Ingrese el periodo"
+                            size="xxsmall"
+                />
+                  {errors.periodoescolar && <ComponentAlert open={!!errors.periodoescolar} severity="error" message={errors.periodoescolar} sx={{ width: 'auto', height: 'auto', fontSize: '12px' }} />}    
             </div>
             
       
             <div className={style['turno']}>
               <Select
-                label="Turno"
-                value={turno}
-                onChange={setTurno}
-                options={[
-                  "Matutino",
-                  "Vespertino"
-                ]}
-                placeholder="Seleccione el turno"
-                size="xxsmall"
-              />
-              {turnoError && (
-                <ComponentAlert open={!!turnoError} severity="error" message={turnoError} sx={{ width: 'auto', height: 'auto', fontSize: '13px' }}/>
-              )}
+                            label="Turno"
+                            value={turno}
+                            onChange={(value) => setTurno(value as string)}
+                            options={[
+                                { value: "Matutino", label: "Matutino" },
+                                { value: "Vespertino", label: "Vespertino" },
+                            ]}
+                            placeholder="Seleccione un turno"
+                            size="xxsmall"
+                        />
+                        {errors.turno && <ComponentAlert open={!!errors.turno} severity="error" message={errors.turno} sx={{ width: 'auto', height: 'auto', fontSize: '12px' }} />}
             </div>
 
             
             <div className={style['cupos-taller']}>
-              <Input
-                label="Cupos del Taller"
-                value={cupos}
-                onChange={setCupos}
-                placeHolder="Ingrese la capacidad"
-                size="xsmall"
-              />
-              {cuposError && (
-                <ComponentAlert open={!!cuposError} severity="error" message={cuposError} sx={{ width: 'auto', height: 'auto', fontSize: '13px' }} />
-              )}
+              <Input label="Cupo del taller"
+                            value={cupos}
+                            onChange={(value) => setCupos(value)}
+                            placeHolder="Ingrese la capacidad"
+                            size="xsmall"
+                />
+                  {errors.cupos && <ComponentAlert open={!!errors.cupos} severity="error" message={errors.cupos} sx={{ width: 'auto', height: 'auto', fontSize: '12px' }} />}    
             </div>
 
             <div className ={`${style['contenedor-horarios']}`}>
@@ -300,57 +380,45 @@ const FormTalleresRegistro = () => {
           </div>
           <div className ={`${style['horarios']}`}>
           <div className={style['horario-tallerinicio']}>
-                  <TimeSelector
-                    label="Hora de inicio"
-                    hour={horarioinicio?.hour || ""}
-                    minute={horarioinicio?.minute || ""}
-                    period={horarioinicio?.period || ""}
-                    onHourChange={(hour) => setHorarioinicio(prev => ({
-                      hour: hour,
-                      minute: prev?.minute || "",
-                      period: prev?.period || ""
-                    }))}
-                    onMinuteChange={(minute) => setHorarioinicio(prev => ({
-                      hour: prev?.hour || "",
-                      minute: minute,
-                      period: prev?.period || ""
-                    }))}
-                    onPeriodChange={(period) => setHorarioinicio(prev => ({
-                      hour: prev?.hour || "",
-                      minute: prev?.minute || "",
-                      period: period
-                    }))}
-                  />
-                  {horarioinicioError && (
-                    <ComponentAlert open={!!horarioinicioError} severity="error" message={horarioinicioError} sx={{ width: 'auto', height: 'auto', fontSize: '12px' }} />
-                  )}
+          <TimeSelector
+  label="Hora de inicio"
+  hour={horarioinicio.hour || ""}
+  minute={horarioinicio.minute || ""}
+  onHourChange={(hour) =>
+    setHorarioinicio((prev) => ({
+      ...prev,
+      hour,
+    }))
+  }
+  onMinuteChange={(minute) =>
+    setHorarioinicio((prev) => ({
+      ...prev,
+      minute,
+    }))
+  }
+/>
+                    {errors.horarioinicio && <ComponentAlert open={!!errors.horarioinicio} severity="error" message={errors.horarioinicio} sx={{ width: 'auto', height: 'auto', fontSize: '12px' }} />}
                 </div>
                 <div className ={`${style['horario-tallerfin']}`}>
                 <TimeSelector
-                    label="Hora de finalización"
-                    hour={horariofin?.hour || ""}
-                    minute={horariofin?.minute || ""}
-                    period={horariofin?.period || ""}
-                    onHourChange={(hour) => setHorariofin(prev => ({
-                      hour: hour,
-                      minute: prev?.minute || "",
-                      period: prev?.period || ""
-                    }))}
-                    onMinuteChange={(minute) => setHorariofin(prev => ({
-                      hour: prev?.hour || "",
-                      minute: minute,
-                      period: prev?.period || ""
-                    }))}
-                    onPeriodChange={(period) => setHorariofin(prev => ({
-                      hour: prev?.hour || "",
-                      minute: prev?.minute || "",
-                      period: period
-                    }))}
-                  />
-                  {horariofinError && (
-                    <ComponentAlert open={!!horariofinError} severity="error" message={horariofinError} sx={{ width: 'auto', height: 'auto', fontSize: '12px' }} />
-                  )}
-                </div>
+  label="Hora de finalización"
+  hour={horariofin.hour || ""}
+  minute={horariofin.minute || ""}
+  onHourChange={(hour) =>
+    setHorariofin((prev) => ({
+      ...prev,
+      hour,
+    }))
+  }
+  onMinuteChange={(minute) =>
+    setHorariofin((prev) => ({
+      ...prev,
+      minute,
+    }))
+  }
+/>
+                    {errors.horariofin && <ComponentAlert open={!!errors.horariofin} severity="error" message={errors.horariofin} sx={{ width: 'auto', height: 'auto', fontSize: '12px' }} />}
+                    </div>
           </div>
          </div>
   
@@ -358,57 +426,51 @@ const FormTalleresRegistro = () => {
 
           <div className={style["datos_seccion3"]}>
        <div className ={`${style['dias_taller']}`}>
-{/* aqui va el selector de dias */}
 <MultipleDaySelector
       label="Días del Taller"
       selectedDays={diasSeleccionados}
       onDayChange={setDiasSeleccionados}
+    
+
     />
-    {diasError && (
-      <ComponentAlert open={!!diasError} severity="error" message={diasError} sx={{ width: 'auto', height: 'auto', fontSize: '13px' }} />
-    )}
-  
+  {errors.dias && <ComponentAlert open={!!errors.dias} severity="error" message={errors.dias} sx={{ width: 'auto', height: 'auto', fontSize: '12px' }} />}
+
         </div>  
 
         <div className={style['puntos-taller']}>
-              <Input
-                label="Puntos del Taller"
-                value={puntos}
-                onChange={setPuntos}
-                placeHolder="Ingrese los puntos"
-                size="xsmall"
-              />
-              {puntosError && (
-                <ComponentAlert open={!!puntosError} severity="error" message={puntosError} sx={{ width: 'auto', height: 'auto', fontSize: '13px' }} />
-              )}
+          <Input label="Puntos del taller"
+                            value={puntos}
+                            onChange={(value) => setPuntos(value)}
+                            placeHolder="Ingrese los puntos"
+                            size="xsmall" />
+                        {errors.puntos && <ComponentAlert open={!!errors.puntos} severity="error" message={errors.puntos} sx={{ width: 'auto', height: 'auto', fontSize: '12px' }} />}
+                 
             </div>
 
             <div className={style['card']}>
+
+
               <Select
-                label="Estatus Card"
-                value={card}
-                onChange={setCard}
-                options={[
-                  "Activo",
-                  "Inactivo"
-                ]}
-                placeholder="Seleccione estatus"
-                size="xxsmall"
-              />
-              {cardError && (
-                <ComponentAlert open={!!cardError} severity="error" message={cardError} sx={{ width: 'auto', height: 'auto', fontSize: '13px' }}/>
-              )}
-              
+                         label="Estatus Card"
+                         value={card}
+                         onChange={(value) => setCard(value as string)}
+                         options={[
+                             { value: "Activo", label: "Activo" },
+                             { value: "Inactivo", label: "Inactivo" },
+                         ]}
+                         placeholder="Seleccione estatus"
+                         size="xxsmall"
+             />
+               {errors.card && <ComponentAlert open={!!errors.card} severity="error" message={errors.card} sx={{ width: 'auto', height: 'auto', fontSize: '12px' }} />}
+           
             </div>
         
 </div>
 
           <div className={style["button"]}>
             <div className={style["buttons"]}>
-              <ButtonRegistro
-                onClick={handleRegistrarClick}
-                label="Registrar"
-              />
+            <ButtonRegistro onClick={handleRegistrarClick} label="Registrar" />
+
               <ButtonRegistro
                 onClick={() => navigate("/Talleres")}
                 label="Atrás"

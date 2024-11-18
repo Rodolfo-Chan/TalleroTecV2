@@ -9,7 +9,6 @@
 }
 
 /* .open {
-  /* Puedes agregar más estilos para cuando el sidebar esté abierto, si es necesario */
 /*} */
 
 .close-btn {
@@ -61,7 +60,6 @@ hr {
   border-top: 1px solid #dee2e6;
 }
 
-/* Contenedor del logo */
 .logo-container {
   margin-top: auto;
   padding: 20px;
@@ -72,7 +70,6 @@ hr {
   object-fit: contain;
 }
 
-/* Reset básico */
 * {
   margin: 0;
   padding: 0;
@@ -124,7 +121,7 @@ body {
   border: 1px solid #dee2e6;
   border-radius: 10px;
   padding: 15px;
-  width: 20%; /* Ajusta el tamaño para que se acomoden 2 cajas en una fila */
+  width: 20%; 
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s;
   position: relative;
@@ -231,14 +228,13 @@ tbody tr:hover {
   margin-top: auto;
   padding: 20px;
   display: flex;
-  justify-content: center; /* Centra el logo horizontalmente */
+  justify-content: center; 
 }
 
-/* Ajusta la imagen del logo para que no se salga del contenedor */
 .sidebar-logo {
-  width: 100%; /* Ajusta el tamaño al 100% del contenedor */
-  max-width: 150px; /* Máximo ancho permitido */
-  height: auto; /* Mantiene la proporción de la imagen */
-  object-fit: contain; /* Asegura que la imagen no se deforme ni se corte */
-  max-height: 100px; /* Evita que la imagen sea demasiado alta */
+  width: 100%;
+  max-width: 150px; 
+  height: auto; 
+  object-fit: contain; 
+  max-height: 100px; 
 }

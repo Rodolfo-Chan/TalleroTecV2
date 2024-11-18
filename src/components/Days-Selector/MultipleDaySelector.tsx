@@ -1,6 +1,7 @@
 import React from "react";
 import style from "../Days-Selector/multipledayselector.module.css";
 
+// Mapeo de IDs a nombres en español (para mostrar los días correctos en la UI)
 const daysOfWeek = [
   { id: "monday", label: "Lunes" },
   { id: "tuesday", label: "Martes" },
@@ -10,9 +11,9 @@ const daysOfWeek = [
 ];
 
 interface MultipleDaySelectorProps {
-  label?: string; 
-  selectedDays: string[];
-  onDayChange: (selectedDays: string[]) => void;
+  label?: string;
+  selectedDays: string;  // Ahora es un string, no un array
+  onDayChange: (selectedDays: string) => void;  // Recibimos un string
 }
 
 const MultipleDaySelector: React.FC<MultipleDaySelectorProps> = ({
@@ -20,12 +21,23 @@ const MultipleDaySelector: React.FC<MultipleDaySelectorProps> = ({
   selectedDays,
   onDayChange,
 }) => {
+  // Función para manejar los cambios en los checkboxes
   const handleCheckboxChange = (day: string) => {
+    let updatedDays: string;
+
+    // Si el día ya está seleccionado, lo eliminamos del string
     if (selectedDays.includes(day)) {
-      onDayChange(selectedDays.filter((d) => d !== day));
+      updatedDays = selectedDays
+        .split(", ")
+        .filter((d) => d !== day)
+        .join(", ");
     } else {
-      onDayChange([...selectedDays, day]);
+      // Si no está seleccionado, lo agregamos al string
+      updatedDays = selectedDays ? `${selectedDays}, ${day}` : day;
     }
+
+    // Actualizamos el estado con la nueva cadena de días
+    onDayChange(updatedDays);
   };
 
   return (
@@ -41,11 +53,18 @@ const MultipleDaySelector: React.FC<MultipleDaySelectorProps> = ({
               type="checkbox"
               id={day.id}
               value={day.id}
-              checked={selectedDays.includes(day.id)}
-              onChange={() => handleCheckboxChange(day.id)}
+              checked={selectedDays.includes(day.label.toLowerCase())}  // Comprobamos si el día está en la cadena
+              onChange={() => handleCheckboxChange(day.label.toLowerCase())}  // Pasamos el nombre en minúsculas
               className={style["checkbox-input"]}
             />
-            <label htmlFor={day.id} className={style["checkbox-label"]}>
+            <label
+              htmlFor={day.id}
+              className={`${style["checkbox-label"]} ${
+                selectedDays.includes(day.label.toLowerCase()) 
+                  ? style["day-label-bold"] 
+                  : style["day-label-pale"]
+              }`}
+            >
               {day.label}
             </label>
           </div>

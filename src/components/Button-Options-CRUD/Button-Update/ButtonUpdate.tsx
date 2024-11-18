@@ -17,7 +17,7 @@ const ButtonUpdate: React.FC<ButtonUpdateProps> = ({
   return (
     <button
       onClick={() => onClick && onClick()}
-      className={style["container-buttonupdate"]} // Usa los estilos del módulo CSS
+      className={style["container-buttonupdate"]} 
       title={tooltip}
     >
       {icon && <span className={style["button-icon"]}>{icon}</span>}

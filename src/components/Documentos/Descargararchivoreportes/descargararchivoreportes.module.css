@@ -1,0 +1,38 @@
+/* Archivo CSS */
+.downloadButton {
+  background-color: #007bff; /* Azul */
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.downloadButton:hover {
+  background-color: #0056b3; 
+}
+
+.errorMessage {
+  color: red;
+  font-size: 14px;
+  margin-top: 10px;
+  text-align: center;
+  display: none;
+}
+
+.showError {
+  display: block;
+  animation: fadeOut 8s forwards;
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    display: none;
+  }
+}

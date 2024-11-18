@@ -1,366 +1,356 @@
-import { useState } from "react";
-import style from "./from-inscripciones-registro.module.css";
-import ButtonRegistro from "../../../components/ButtonRegistro/ButtonRegistro";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import Input from "../../../components/Input/Input";
-import Inputbusqueda from "../../../components/Input-Busqueda/Inputbusqueda";
 import Select from "../../../components/Select/Select";
-import { useNavigate } from "react-router-dom";
 import ComponentAlert from "../../../components/Alert/ComponentAlert";
+import { useNavigate } from "react-router-dom";
+import style from "./from-inscripciones-registro.module.css"
+import ButtonRegistro from "../../../components/ButtonRegistro/ButtonRegistro";
 
-
-type AlumnoData = {
+interface Alumno {
+  id_alumno: number;
+  matricula_alumno: string;
   nombre: string;
-  apellidopaterno: string;
-  apellidomaterno: string;
-};
+  apellido_paterno: string;
+  apellido_materno: string;
+}
 
-const obtenerDatosAlumno = (matricula: string): AlumnoData | null => {
-  const datosAlumnos: { [key: string]: AlumnoData } = {
-    "12345678": { nombre: "Juan", apellidopaterno: "Pérez", apellidomaterno: "López" },
-    "87654321": { nombre: "María", apellidopaterno: "González", apellidomaterno: "Hernández" }
-  };
+interface Subgrupo {
+  id_taller_registro: number;
+  periodo_escolar: string;
+  dias_taller: string;
+  hora_inicio_12h: string;
+  hora_final_12h: string;
+  ubicacion: string;
+  turno_taller: string;
+  tipo_taller: string;
+  id_taller_catalogo: number;
+  puntos_taller:number;
+}
 
-  return datosAlumnos[matricula] || null; 
-};
+interface Supergrupo {
+  id_taller_catalogo: number;
+  nombre_taller: string;
+}
 
 const FormInscripcionesRegistro = () => {
-  
-  const [matricula, setMatricula] = useState("");
-  const [turno, setTurno] = useState("");
-
-  const [nombre, setNombre] = useState("");
-  const [apellidopaterno, setApellidoPaterno] = useState("");
-  const [apellidomaterno, setApellidoMaterno] = useState("");
-  const [taller, setTaller] = useState("");
-  const [estatus, setEstatus] = useState("");
-  const [periodoescolar, setPeriodoEscolar] = useState("");
+  const [alumnos, setAlumnos] = useState<Alumno[]>([]);
+  const [subgrupos, setSubgrupos] = useState<Subgrupo[]>([]);
+  const [supergrupos, setSupergrupos] = useState<Supergrupo[]>([]);
+  const [periodos, setPeriodos] = useState<string[]>([]);
+  const [selectedMatricula, setSelectedMatricula] = useState<string>("");
+  const [selectedAlumno, setSelectedAlumno] = useState<Alumno | null>(null);
+  const [selectedSubgrupo, setSelectedSubgrupo] = useState<Subgrupo | null>(null);
+  const [selectedPeriodo, setSelectedPeriodo] = useState<string>("");
+  const [estatus, setEstatus] = useState<string>("");
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [showAlert, setShowAlert] = useState(false);
-  const [alertSeverity, setAlertSeverity] = useState<"error" | "warning" | "info" | "success">("success"); // Tipado más estricto
+  const [alertSeverity, setAlertSeverity] = useState<"error" | "warning" | "info" | "success">("error");
   const [alertMessage, setAlertMessage] = useState("");
-  const [matriculaError, setMatriculaError] = useState("");
-  const [nombreError, setNombreError] = useState("");
-  const [apellidopaternoError, setApellidoPaternoError] = useState("");
-  const [apellidomaternoError, setApellidoMaternoError] = useState("");
-  const [turnoError, setTurnoError] = useState("");
-
-  const [estatusError, setEstatusError] = useState("");
-  const [tallerError, setTallerError] = useState("");
-  const [periodoescolarError, setPeriodoEscolarError] = useState("");
   const navigate = useNavigate();
 
+  useEffect(() => {
+    axios.get<Alumno[]>("https://drftallerotecdj.onrender.com/talleres/api/alumnos/")
+      .then(response => setAlumnos(response.data))
+      .catch(error => console.error("Error al obtener los alumnos:", error));
 
- // Validación de la matrícula en tiempo real
- const handleMatriculaChange = (value: string) => {
-  setMatricula(value);
+    axios.get<Subgrupo[]>("https://drftallerotecdj.onrender.com/talleres/api/talleres_subgrupos/")
+      .then(response => {
+        setSubgrupos(response.data);
+        setPeriodos([...new Set(response.data.map(subgrupo => subgrupo.periodo_escolar))]);
+      })
+      .catch(error => console.error("Error al obtener los subgrupos:", error));
 
-  // Validar que la matrícula tenga solo números y sea de 8 dígitos
-  if (!value) {
-    setMatriculaError("Ingrese matrícula.");
-    setNombre(""); // Vaciar campos de nombre
-    setApellidoPaterno(""); // Vaciar campos de apellido paterno
-    setApellidoMaterno(""); // Vaciar campos de apellido materno
-  } else if (!/^\d+$/.test(value)) {
-    setMatriculaError("Ingrese dígitos numéricos.");
-    setNombre(""); // Vaciar campos de nombre
-    setApellidoPaterno(""); // Vaciar campos de apellido paterno
-    setApellidoMaterno(""); // Vaciar campos de apellido materno
-  } else if (value.length !== 8) {
-    setMatriculaError("La matricula es de 8 digitos.");
-    setNombre(""); // Vaciar campos de nombre
-    setApellidoPaterno(""); // Vaciar campos de apellido paterno
-    setApellidoMaterno(""); // Vaciar campos de apellido materno
-  } else {
-    // Si la matrícula es válida, buscar los datos del alumno
-    const datosAlumno = obtenerDatosAlumno(value);
-    if (datosAlumno) {
-      setNombre(datosAlumno.nombre);
-      setApellidoPaterno(datosAlumno.apellidopaterno);
-      setApellidoMaterno(datosAlumno.apellidomaterno);
-      setMatriculaError(""); // Desactivar errores si es válida
-      setShowAlert(false);
+    axios.get<Supergrupo[]>("https://drftallerotecdj.onrender.com/talleres/api/talleres_supergrupo/")
+      .then(response => setSupergrupos(response.data))
+      .catch(error => console.error("Error al obtener los supergrupos:", error));
+  }, []);
+
+  const obtenerNombreTaller = (idTallerCatalogo: number): string => {
+    const taller = supergrupos.find((s) => s.id_taller_catalogo === idTallerCatalogo);
+    return taller ? taller.nombre_taller : "Nombre desconocido";
+  };
+
+  const validateFields = () => {
+    const newErrors: { [key: string]: string } = {};
+    if (!selectedMatricula) newErrors.matricula = "Ingrese la matrícula del alumno.";
+    if (!selectedAlumno) newErrors.alumno = "Alumno no encontrado.";
+    if (!selectedPeriodo) newErrors.periodo = "Seleccione un periodo.";
+    if (!selectedSubgrupo) newErrors.taller = "Seleccione un taller.";
+    if (!estatus) newErrors.estatus = "Seleccione un estatus.";
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleAlumnoBusqueda = async () => {
+    const alumnoEncontrado = alumnos.find(alumno => alumno.matricula_alumno === selectedMatricula);
+    if (alumnoEncontrado) {
+      setSelectedAlumno(alumnoEncontrado);
+      setErrors((prevErrors) => ({ ...prevErrors, alumno: "" }));
+  
+      try {
+        // Consultar inscripciones del alumno
+        const { data: inscripciones } = await axios.get(
+          `https://drftallerotecdj.onrender.com/talleres/api/inscripciones/`
+        );
+  
+        // Filtrar inscripciones del alumno
+        const inscripcionesAlumno = inscripciones.filter(
+          (inscripcion: { id_alumno: number }) => inscripcion.id_alumno === alumnoEncontrado.id_alumno
+        );
+  
+        // Obtener los puntos acumulados
+        let puntosAcumulados = 0;
+        for (const inscripcion of inscripcionesAlumno) {
+          const subgrupo = subgrupos.find(
+            (sg) => sg.id_taller_registro === inscripcion.id_taller_registro
+          );
+          if (subgrupo) {
+            puntosAcumulados += subgrupo.puntos_taller;
+          }
+        }
+  
+        // Validar si los puntos acumulados superan o igualan 200
+        if (puntosAcumulados >= 200) {
+          setAlertMessage(
+            // `Este alumno ya tiene ${puntosAcumulados} puntos acumulados. No es posible inscribirlo a más talleres.`
+            `Este alumno ya tiene suficientes puntos acumulados. No es posible inscribirlo a más talleres.`
+          );
+          setAlertSeverity("warning");
+          setShowAlert(true);
+          setSelectedAlumno(null); // Reiniciar selección
+          return;
+        }
+  
+        // Mensaje informativo
+        setAlertMessage(
+          `Este alumno tiene ${puntosAcumulados} puntos acumulados. Puede inscribirse a más talleres.`
+        );
+        setAlertSeverity("info");
+        setShowAlert(true);
+      } catch (error) {
+        console.error("Error al consultar inscripciones:", error);
+        setAlertMessage("Hubo un error al verificar las inscripciones del alumno.");
+        setAlertSeverity("error");
+        setShowAlert(true);
+      }
     } else {
-      // Mostrar un mensaje si la matrícula no está registrada
-      setMatriculaError("Esta matrícula no existe.");
-      setNombre(""); // Vaciar campos de nombre
-      setApellidoPaterno(""); // Vaciar campos de apellido paterno
-      setApellidoMaterno(""); // Vaciar campos de apellido materno
-    }
-  }
-};
-
-  const handleRegistrarClick = () => {
-    let isValid = true;
-
-    // Reset error messages
-    setMatriculaError("");
-    setNombreError("");
-    setTurnoError("");
-    setApellidoPaternoError("");
-    setApellidoMaternoError("");
-    setEstatusError("");
-    setTallerError("");
-    setPeriodoEscolarError("");
-
-    // if (!matricula) {
-    //   setMatriculaError("Ingrese matricula");
-    //   isValid = false;
-    // } else if (!matricula.match(/^\d+$/)) {
-    //   setMatriculaError("Ingrese dígitos numéricos.");
-    //   isValid = false;
-    // } else if (matricula.length !== 8) {
-    //   setMatriculaError("La matricula es de 8 digitos");
-    //   isValid = false;
-    // }
-    if (!nombre) {
-      setNombreError("Ingrese la matrícula.");
-      isValid = false;
-    } else if (!nombre.match(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/)) {
-      setNombreError("Solo se aceptan letras minusculas y mayusculas.");
-      isValid = false;
-    }
-    if (!turno) {
-      setTurnoError("Seleccione turno.");
-      isValid = false;
-    }
-    if (!apellidopaterno) {
-      setApellidoPaternoError("Ingrese la matrícula.");
-      isValid = false;
-    }else if (!nombre.match(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/)) {
-      setApellidoPaternoError("Solo se aceptan letras minusculas y mayusculas.");
-      isValid = false;
-    }
-    if (!apellidomaterno) {
-      setApellidoMaternoError("Ingrese la matrícula.");
-      isValid = false;
-    }
-    else if (!nombre.match(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/)) {
-      setApellidoMaternoError("Solo se aceptan letras minusculas y mayusculas.");
-      isValid = false;
-    }
-    if (!estatus) {
-      setEstatusError("Seleccione estatus.");
-      isValid = false;
-    }
-    if (!taller) {
-      setTallerError("Seleccione taller.");
-      isValid = false;
-    }
-    if (!periodoescolar) {
-      setPeriodoEscolarError("Seleccione periodo.");
-      isValid = false;
-    }
-
-    if ( !matricula || !turno || !estatus || !nombre || !apellidopaterno || !apellidomaterno  || !taller || !periodoescolar) {
+      setAlertMessage("Alumno no encontrado.");
       setAlertSeverity("error");
-      setAlertMessage("Por favor complete todos los campos.");
       setShowAlert(true);
-    } else if (!isValid) {
-      setAlertSeverity("warning");
-      setAlertMessage("Por favor corrija los errores.");
-      setShowAlert(true);
-    } else {
-      setAlertSeverity("success");
-      setAlertMessage("Usuario registrado con éxito.");
-      setShowAlert(true);
-      setMatricula("");
-      setTurno("");
-
-      setNombre("");
-      setApellidoPaterno("");
-      setApellidoMaterno("");
-      setEstatus("");
-      setTaller("");
-      setPeriodoEscolar("");
+      setSelectedAlumno(null);
     }
   };
+  
+
+  const handleSubgrupoChange = (idTallerRegistro: string) => {
+    const subgrupoSeleccionado = subgrupos.find(sg => sg.id_taller_registro === Number(idTallerRegistro));
+    setSelectedSubgrupo(subgrupoSeleccionado || null);
+    setErrors((prevErrors) => ({ ...prevErrors, taller: subgrupoSeleccionado ? "" : "Seleccione un taller." }));
+  };
+
+  const handlePeriodoChange = (value: string) => {
+    setSelectedPeriodo(value); // Actualizar el periodo seleccionado
+    setSelectedSubgrupo(null); // Restablecer el taller
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      periodo: "",
+      taller: "",
+      turno: "",
+      horario: "",
+    })); // Limpiar los errores relacionados
+  };
+
+  const handleRegistrarClick = async () => {
+    if (!validateFields()) {
+      setAlertMessage("Por favor, complete todos los campos.");
+      setAlertSeverity("error");
+      setShowAlert(true);
+      return;
+    }
+  
+    const nuevaInscripcion = {
+      id_alumno: selectedAlumno!.id_alumno,
+      id_taller_registro: selectedSubgrupo!.id_taller_registro,
+      estatus: estatus,
+    };
+  
+    try {
+      await axios.post("https://drftallerotecdj.onrender.com/talleres/api/inscripciones/", nuevaInscripcion);
+      setAlertMessage("Inscripción registrada con éxito.");
+      setAlertSeverity("success");
+      setShowAlert(true);
+  
+      // Limpiar los campos del formulario
+      setSelectedMatricula("");
+      setSelectedAlumno(null);
+      setSelectedSubgrupo(null);
+      setSelectedPeriodo("");
+      setEstatus("");
+      setErrors({});
+    } catch (error) {
+      console.error("Error al registrar la inscripción:", error);
+      setAlertMessage("Hubo un error al registrar la inscripción.");
+      setAlertSeverity("error");
+      setShowAlert(true);
+    }
+  };
+  
 
   return (
     <div className={style["div-container"]}>
-      <div className={style["name-module"]}>
-        <h1 className={style["name"]}>INSCRIPCIONES</h1>
-        <div className={`${style['alert-name']}`}>
-          <ComponentAlert
-            open={showAlert}
-            severity={alertSeverity}
-            message={alertMessage}
-            sx={{ width: 'auto', height: 'auto', fontSize: '13px' }}
-          />
-             
+    <div className={style["name-module"]}>
+      <h1 className={style["name"]}>INSCRIPCIONES</h1>
+      <div className={`${style['alert-name']}`}>
+        <ComponentAlert
+          open={showAlert}
+          severity={alertSeverity}
+          message={alertMessage}
+          sx={{ width: 'auto', height: 'auto', fontSize: '13px' }}
+        />
+           
+      </div>
+    </div>
+
+    <div>
+      <div className={style["header-data"]}>
+        <div className={style["register"]}>
+          <h1 className={style["list"]}>Ingrese datos de la inscripción</h1>
         </div>
       </div>
 
-      <div>
-        <div className={style["header-data"]}>
-          <div className={style["register"]}>
-            <h1 className={style["list"]}>Ingrese datos de la inscripción</h1>
-          </div>
+      <div className={style["padre-contenedor"]}>
+      
+      <div className={`${style['datos_seccion1']}`}>
+      <div className ={`${style['data-matricula']}`}>
+      <Input
+          label="Matrícula del Alumno"
+          value={selectedMatricula}
+          onChange={(value) => setSelectedMatricula(value)}
+          placeHolder="Ingresa la matrícula"
+          size="xsmall"
+        />
+        <button className ={`${style['boton-registro']}`} type="button" onClick={handleAlumnoBusqueda}>Buscar Alumno</button>
+
         </div>
+          
+        <div className={`${style['nombre']}`}>
+        <Input
+          label="Nombre del alumno"
+          value={selectedAlumno ? `${selectedAlumno.nombre} ${selectedAlumno.apellido_paterno} ${selectedAlumno.apellido_materno}` : ""}
+          disabled
+          placeHolder="Ingresa la matrícula del alumno"
+          size="smedium"
 
-        <div className={style["padre-contenedor"]}>
-        
-        <div className={`${style['datos_seccion1']}`}>
-        <div className ={`${style['data-matricula']}`}>
-        <Inputbusqueda
-              label="Matrícula"
-              value={matricula}
-              onChange={handleMatriculaChange} // Validar en tiempo real
-              placeHolder="Ingrese la matrícula"
-              size="xsmall"
-              onEnterPress={handleRegistrarClick}
-            />
-              <div>
-                {matriculaError && (
-                  <ComponentAlert open={!!matriculaError} severity="error" message={matriculaError} sx={{ width: 'auto', height: 'auto', fontSize: '13px' }} />
-                )}
-              </div>
+        />
+        {errors.matricula && <ComponentAlert open={!!errors.matricula} severity="error" message={errors.matricula} sx={{ width: 'auto', height: 'auto', fontSize: '12px' }} />}
 
           </div>
-            
-          <div className={`${style['nombre']}`}>
-              <Input
-                label="Nombre(s)"
-                value={nombre}
-                onChange={setNombre}
-                placeHolder="Nombre(s) del alumno"
-                size="small"
-                disabled={true} // Deshabilitar el input
 
-              />
-              <div>
-                {nombreError && (
-                  <ComponentAlert open={!!nombreError} severity="error" message={nombreError} sx={{ width: 'auto', height: 'auto', fontSize: '13px' }}/>
-                )}
-              </div>
+          <div className={`${style['periodo-escolar']}`}>
+          <Select
+  label="Periodo"
+  value={selectedPeriodo}
+  onChange={(value) => handlePeriodoChange(value as string)}
+  options={periodos.map((periodo) => ({ value: periodo, label: periodo }))}
+  placeholder="Seleccione un periodo"
+  size="xsmall"
+/>
+        {/* {errors.periodo && <p>{errors.periodo}</p>} */}
+        {errors.periodo && <ComponentAlert open={!!errors.periodo} severity="error" message={errors.periodo} sx={{ width: 'auto', height: 'auto', fontSize: '12px' }} />}
+
             </div>
 
-            <div className={`${style['apellido_paterno']}`}>
-              <Input
-                label="Apellido Paterno"
-                value={apellidopaterno}
-                onChange={setApellidoPaterno}
-                placeHolder="Apellidos del alumno"
-                size="small"
-                disabled={true} // Deshabilitar el input
-
-              />
-              <div>
-                {apellidopaternoError && (
-                  <ComponentAlert open={!!apellidopaternoError} severity="error" message={apellidopaternoError} sx={{ width: 'auto', height: 'auto', fontSize: '13px' }} />
-                )}
-              </div>
+            <div className={`${style['taller']}`}>
+            <Select
+          label="Seleccione un taller"
+          value={selectedSubgrupo?.id_taller_registro || ""}
+          onChange={(value) => handleSubgrupoChange(value as string)}
+          options={subgrupos.filter(s => s.periodo_escolar === selectedPeriodo).map((subgrupo) => ({
+            value: subgrupo.id_taller_registro,
+            label: `${obtenerNombreTaller(subgrupo.id_taller_catalogo)} - ${subgrupo.tipo_taller}`
+          }))}
+          placeholder="Seleccione un taller"
+          size="small"
+        />
+                {errors.taller && <ComponentAlert open={!!errors.taller} severity="error" message={errors.taller} sx={{ width: 'auto', height: 'auto', fontSize: '12px' }}  />}
             </div>
+
+          </div>
+
         
-            <div className={`${style['apellido_materno']}`}>
-              <Input
-                label="Apellido Materno"
-                value={apellidomaterno}
-                onChange={setApellidoMaterno}
-                placeHolder="Apellidos del alumno"
-                size="small"
-                disabled={true} // Deshabilitar el input
+        <div className={style["datos_seccion2"]}>
+         
 
-              />
-              <div>
-                {apellidomaternoError && (
-                  <ComponentAlert open={!!apellidomaternoError} severity="error" message={apellidomaternoError} sx={{ width: 'auto', height: 'auto', fontSize: '13px' }}/>
-                )}
-              </div>
-            </div>
+
+        
+
+        <div className={style['turno']}>
+           <Input
+          label="Turno"
+          value={selectedSubgrupo ? selectedSubgrupo.turno_taller : ""}
+          placeHolder="Turno del taller"
+          disabled
+          size="xsmall"
+        />
+          </div>
+
+          <div className={style['horario']}>
+          <Input
+          label="Horario"
+          value={selectedSubgrupo ? `${selectedSubgrupo.hora_inicio_12h} - ${selectedSubgrupo.hora_final_12h}` : ""}
+          placeHolder="Horario del taller"
+          disabled
+          size="xsmall"
+
+        />
+          </div>
+
  
 
-            </div>
+            <div className={`${style['estatus']}`}>
+            <Select
+          label="Estatus"
+          value={estatus}
+          onChange={(value) => setEstatus(value as string)}
+          options={[
+            { value: "En progreso", label: "En progreso" },
+            { value: "Acreditado", label: "Acreditado" },
+            { value: "Incompleto", label: "Incompleto" }
+          ]}
+          placeholder="Seleccione un estatus"
+          size="xsmall"
 
-          
-          <div className={style["datos_seccion2"]}>
-           
-          <div className={`${style['periodo-escolar']}`}>
-                <Select
-                  label="Perido escolar"
-                  value={periodoescolar}
-                  onChange={setPeriodoEscolar}
-                  options={["ENE-JUN/2019", "JUL-NOV/2020", "ENE-JUN/2022", "ENE-JUN/2023"]}
-                  placeholder="seleccione un periodo"
-              size="small"
-                />
-                {periodoescolarError && (
-                  <ComponentAlert open={!!periodoescolarError} severity="error" message={periodoescolarError} sx={{ width: 'auto', height: 'auto', fontSize: '13px' }}/>
-                )}
-              </div>
-
-          <div className={style['turno']}>
-              <Select
-                label="Turno del taller"
-                value={turno}
-                onChange={setTurno}
-                options={[
-                  "Matutino",
-                  "Vespertino"
-                ]}
-                placeholder="Seleccione el turno"
-                size="xsmall"
-              />
-              {turnoError && (
-                <ComponentAlert open={!!turnoError} severity="error" message={turnoError} sx={{ width: 'auto', height: 'auto', fontSize: '13px' }}/>
-              )}
-            </div>
-
-      
-              <div className={`${style['taller']}`}>
-                <Select
-                  label="Taller"
-                  value={taller}
-                  onChange={setTaller}
-                  options={["Voleibol Varonil", "Voleibol Femanil","Futbol Varonil", "Basquetbol Mixto", "Basquetbol Varonil", "Basquetbol Femenil", "Beisbol Varonil", "Beisbol Femenil", "Esport", "Lectura", "Folklore", "Batucada", "Reforestación", "Cuidado Ambiental"]}
-                  placeholder="seleccione un taller"
-                  size="small"
-                />
-                
-                {tallerError && (
-                  <ComponentAlert open={!!tallerError} severity="error" message={tallerError} sx={{ width: 'auto', height: 'auto', fontSize: '13px' }} />
-                )}
-              </div>
-
-              <div className={`${style['estatus']}`}>
-                <Select
-                  label="Estatus"
-                  value={estatus}
-                  onChange={setEstatus}
-                  options={["En progreso", "Completo","Baja"]}
-                  placeholder="seleccione un estado"
-                  size="xsmall"
-                />
-                
-                {estatusError && (
-                  <ComponentAlert open={!!estatusError} severity="error" message={estatusError} sx={{ width: 'auto', height: 'auto', fontSize: '13px' }}/>
-                )}
-              </div>
-              
-
-          </div>
-
-          <div className={style["button"]}>
-            <div className={style["buttons"]}>
-              <ButtonRegistro
-                onClick={() => {
-                  console.log("presionado");
-                  handleRegistrarClick();
-                }}
-                label="Registrar"
-              />
-              <ButtonRegistro
-                onClick={() => {
-                  navigate("/Inscripciones");
-                  console.log("presionado");
-                }}
-                label="Atrás"
-              />
+        />
+        {errors.estatus && <ComponentAlert open={!!errors.estatus} severity="error" message={errors.estatus} sx={{ width: 'auto', height: 'auto', fontSize: '12px' }}  />}
             </div>
             
+
+        </div>
+
+        <div className={style["button"]}>
+          <div className={style["buttons"]}>
+            <ButtonRegistro
+              onClick={() => {
+                console.log("presionado");
+                handleRegistrarClick();
+              }}
+              label="Registrar"
+            />
+            <ButtonRegistro
+              onClick={() => {
+                navigate("/Inscripciones");
+                console.log("presionado");
+              }}
+              label="Atrás"
+            />
           </div>
+          
         </div>
       </div>
     </div>
-  );
+  </div>
+);
 };
 
 export default FormInscripcionesRegistro;

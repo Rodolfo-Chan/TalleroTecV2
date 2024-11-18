@@ -10,12 +10,10 @@ import {
   Legend,
   ChartOptions,
 } from 'chart.js';
-import styles from './Grafico.module.css'; // Importa tus estilos CSS
+import styles from './Grafico.module.css';
 
-// Registra los componentes necesarios de Chart.js
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
-// Define el tipo de los datos del gráfico
 interface BarChartData {
   labels: string[];
   datasets: {
@@ -25,37 +23,82 @@ interface BarChartData {
   }[];
 }
 
-// Define un tipo para los talleres
-interface Talleres {
-  [key: string]: number; // Permite que cualquier clave de tipo string tenga un valor de tipo number
-}
-
 const Grafico2 = () => {
   const [data, setData] = useState<BarChartData>({ labels: [], datasets: [] });
 
   useEffect(() => {
     const fetchData = async () => {
-      const talleresData = [
-        { carrera: 'Ingeniería', talleres: { 'Taller de Programación': 20, 'Taller de Diseño': 10, 'Taller de Fotografía': 5 } },
-        { carrera: 'Diseño', talleres: { 'Taller de Programación': 5, 'Taller de Diseño': 25, 'Taller de Fotografía': 15 } },
-        { carrera: 'Marketing', talleres: { 'Taller de Programación': 10, 'Taller de Diseño': 15, 'Taller de Fotografía': 20 } },
-      ];
+      try {
+        // Realizar las llamadas a las APIs
+        const [alumnosRes, supergruposRes, subgruposRes, inscripcionesRes] = await Promise.all([
+          fetch('https://drftallerotecdj.onrender.com/talleres/api/alumnos/'),
+          fetch('https://drftallerotecdj.onrender.com/talleres/api/talleres_supergrupo/'),
+          fetch('https://drftallerotecdj.onrender.com/talleres/api/talleres_subgrupos/'),
+          fetch('https://drftallerotecdj.onrender.com/talleres/api/inscripciones/'),
+        ]);
 
-      const labels = ['Taller de Programación', 'Taller de Diseño', 'Taller de Fotografía'];
+        const alumnos = await alumnosRes.json();
+        const supergrupos = await supergruposRes.json();
+        const subgrupos = await subgruposRes.json();
+        const inscripciones = await inscripcionesRes.json();
 
-      const datasets = talleresData.map(carreraData => {
-        const talleres = carreraData.talleres as Talleres; // Usa el tipo Talleres para la indexación
-        return {
-          label: carreraData.carrera,
-          data: labels.map(taller => talleres[taller] || 0), // Cero si no hay datos
-          backgroundColor: `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 0.6)`, // Color aleatorio
-        };
-      });
+        // Filtrar los alumnos acreditados
+        const acreditados = inscripciones.filter((i: any) => i.estatus === 'Acreditado');
 
-      setData({
-        labels,
-        datasets,
-      });
+        // Vincular los datos de alumnos, talleres y carreras
+        const talleresMap = supergrupos.reduce((map: any, t: any) => {
+          map[t.id_taller_catalogo] = t.nombre_taller;
+          return map;
+        }, {});
+
+        const subgruposMap = subgrupos.reduce((map: any, s: any) => {
+          map[s.id_taller_registro] = talleresMap[s.id_taller_catalogo];
+          return map;
+        }, {});
+
+        const alumnosPorTallerYCarrera = acreditados.reduce((result: any, acreditado: any) => {
+          const alumno = alumnos.find((a: any) => a.id_alumno === acreditado.id_alumno);
+          const taller = subgruposMap[acreditado.id_taller_registro];
+
+          if (alumno && taller) {
+            if (!result[taller]) result[taller] = {};
+            if (!result[taller][alumno.carrera]) result[taller][alumno.carrera] = 0;
+            result[taller][alumno.carrera]++;
+          }
+          return result;
+        }, {});
+
+        const labels = Object.keys(alumnosPorTallerYCarrera);
+        const carreras = Array.from(
+          new Set(
+            Object.values(alumnosPorTallerYCarrera).flatMap((carreraData: any) =>
+              Object.keys(carreraData)
+            )
+          )
+        );
+
+        // lista de colores fijos
+        const fixedColors = [
+          'rgba(255, 99, 132, 0.6)',  // Color 1
+          'rgba(54, 162, 235, 0.6)',  // Color 2
+          'rgba(255, 206, 86, 0.6)',  // Color 3
+          'rgba(75, 192, 192, 0.6)',  // Color 4
+          'rgba(153, 102, 255, 0.6)', // Color 5
+        ];
+
+        const datasets = carreras.map((carrera, index) => ({
+          label: carrera,
+          data: labels.map((taller) => alumnosPorTallerYCarrera[taller][carrera] || 0),
+          backgroundColor: fixedColors[index % fixedColors.length], 
+        }));
+
+        setData({
+          labels,
+          datasets,
+        });
+      } catch (error) {
+        console.error('Error al obtener los datos:', error);
+      }
     };
 
     fetchData();
@@ -66,7 +109,7 @@ const Grafico2 = () => {
     plugins: {
       title: {
         display: true,
-        text: 'Preferencias de Talleres por Carrera',
+        text: 'Número de Alumnos Acreditados por Taller y Carrera',
         font: {
           size: 20,
           weight: 'bold',

@@ -7,7 +7,7 @@
 .h6-label {
   padding: 0;
   margin: 0;
-  color: rgb(255, 255, 255); /* Color blanco */
+  color: rgb(255, 255, 255); 
   font-weight: 700;
   font-size: 18px;
   padding-left: 11px;
@@ -21,25 +21,25 @@
   cursor: pointer;
   height: 34px;
   border-radius: 4px;
-  border: 2px solid #4a4dff; /* Borde del select */
+  border: 2px solid #4a4dff; 
   text-indent: 15px;
-  background-color: #ffffff; /* Fondo del select */
-  color: #000000; /* Color del texto por defecto */
+  background-color: #ffffff; 
+  color: #000000; 
 }
 
 /* Cambiar el color del placeholder */
 .select-properties option:disabled {
-  color: #999999; /* Cambia este color para el placeholder */
+  color: #999999; 
 }
 
 /* Modificar color de los options disponibles */
 .select-properties option {
-  color: #000000; /* Cambia este color para los options */
+  color: #000000; 
 }
 
 /* Estilo del placeholder cuando está seleccionado */
 .placeholder-option {
-  font-style: italic; /* Puedes agregar más estilos si lo prefieres */
+  font-style: italic; 
   font-size: 14px;
 }
 
@@ -75,8 +75,8 @@
 
 /* Estilos adicionales para estados de focus y hover */
 .select-properties:focus {
-  outline: none; /* Eliminar el borde predeterminado de focus */
-  border: 2px solid #4a4dff; /* Cambiar el borde al hacer focus */
+  outline: none; 
+  border: 2px solid #4a4dff; 
 }
 
 /* .select-properties:hover {

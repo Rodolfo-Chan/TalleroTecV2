@@ -85,14 +85,44 @@
   align-items: center;
   flex-direction: column;
   /* background: #f70dff; */
-  margin-left: 30px; 
-  width: 185px;
+  margin-left: 19px; 
+  width: 215px;
+}
+
+.boton-registro {
+  background-color: #28A745; /* Verde acción */
+  color: #FFFFFF; /* Texto blanco */
+  border: none; /* Sin borde */
+  border-radius: 5px; /* Bordes redondeados */
+  padding: 10px 20px; /* Espaciado interno */
+  font-size: 12px; /* Tamaño de fuente */
+  font-weight: bold; /* Texto en negrita */
+  cursor: pointer; /* Cursor de mano al pasar por encima */
+  margin: 5px; /* Espaciado externo */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Animación suave */
+}
+
+.boton-registro:hover {
+  background-color: #218838; /* Verde más oscuro al pasar el cursor */
+  transform: scale(1.05); /* Ligeramente más grande */
+}
+
+.boton-registro:active {
+  background-color: #1e7e34; /* Verde aún más oscuro al presionar */
+  transform: scale(0.95); /* Ligeramente más pequeño */
+}
+
+.boton-registro:disabled {
+  background-color: #cccccc; /* Gris para estado deshabilitado */
+  color: #666666; /* Texto gris oscuro */
+  cursor: not-allowed; /* Indicador de deshabilitado */
+  transform: none; /* Sin transformación */
 }
 
 .datos_seccion2{
   /* background: #f70000; */
   display: flex;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
 
 .nombre{
@@ -100,8 +130,8 @@
   align-items: center;
   flex-direction: column;
   /* background: #0015ff; */
-  width: 220px;
-  margin-left: 25px; 
+  width: 280px;
+  margin-left: 12px; 
 }
 
 .apellido_paterno{
@@ -122,18 +152,14 @@
   width: 220px;
 }
 
-.telefono{
- /*  background: #2b1b29;*/
-  width: 245px;
-  margin-left: 15px;
-}
+
 
 .taller{
   display: flex;
   align-items: center;
   flex-direction: column;
   /* background: #ef00ef; */
-  margin-left: 20px; 
+  margin-left: 15px; 
   width: 220px;
 }
 
@@ -142,7 +168,7 @@
   align-items: center;
   flex-direction: column;
   /* background: #bef6ff; */
-  margin-left: 20px; 
+  margin-left: 25px; 
   width: auto;
 }
 
@@ -151,7 +177,7 @@
   align-items: center;
   flex-direction: column;
   /* background: #a3b9c4; */
-  margin-left: 30px;
+  margin-left: 15px;
   width: 215px;
 }
 
@@ -189,6 +215,15 @@
   flex-direction: column;
   /* background: #c0d4d0;    */
   width: 190px;
-  margin-left: 25px; 
+  margin-left: 20px; 
+}
+
+.horario{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  /* background: #00ffcc;    */
+  width: 190px;
+  margin-left: 15px; 
 }
 /* ----------------------------------- */

@@ -2,6 +2,7 @@
 import style from './css/documentos.module.css';
 import SubirArchivo from '../components/Documentos/Subirarchivo/SubirArchivo';
 import DescargarArchivo from '../components/Documentos/Descargararchivo/DescargarArchivo';
+import SelectorDocumentosReportes from '../components/SelectorDocumentosReportes/SelectorDocumentosReportes';
 
 const Documentos = () => {
 
@@ -82,6 +83,7 @@ const Documentos = () => {
             </div>
           </div>
         </section>
+        <div>  <SelectorDocumentosReportes /> </div>
       </main>
     </div>
   );

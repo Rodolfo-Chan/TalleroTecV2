@@ -181,6 +181,22 @@
   width: 220px;
 }
 
+.datos_seccion3{
+  /* background: #000000; */
+  margin-top: 10px;
+  margin-bottom: 20px;
+  display: flex;
+}
+
+
+.nivel-acceso{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  /* background: #f70dff; */
+  margin-left: 15px; 
+  width: 240px;
+}
 .button{
   /* background: #f70000; */
   height: 50px;

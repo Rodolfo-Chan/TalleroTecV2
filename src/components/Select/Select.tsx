@@ -1,20 +1,19 @@
 import React from "react";
 import styles from "../Select/select.module.css"; 
-
 const Select = ({
   label,
   value,
   onChange,
   options,
-  size = "medium", // Tamaño por defecto
+  size = "medium",
   placeholder = "Selecciona una opción",
   customStyles = {},
   customClassName = ""
 }: {
   label?: string;
-  value?: any;
-  onChange?: (dat: string) => void;
-  options: string[];
+  value?: string | number;
+  onChange?: (dat: string | number) => void;
+  options: { value: string | number; label: string }[];
   size?: "xxxsmall" | "xxsmall" | "xsmall" | "small" | "medium" | "large";
   placeholder?: string;
   customStyles?: React.CSSProperties;
@@ -27,15 +26,14 @@ const Select = ({
         className={`${styles["select-properties"]} ${styles[size + "-select"]}`}
         value={value}
         onChange={(e) => onChange && onChange(e.target.value)}
-        /* Agregar esta clase para cambiar el color del placeholder */
-        style={value === "" ? { color: "#999999" } : { color: "#000000" }} // Cambiar color cuando no se selecciona nada
+        style={value === "" ? { color: "#999999" } : { color: "#000000" }}
       >
         <option value="" disabled className={styles["placeholder-option"]}>
           {placeholder}
         </option>
         {options.map((option, index) => (
-          <option key={index} value={option} className={styles["option-item"]}>
-            {option}
+          <option key={index} value={option.value} className={styles["option-item"]}>
+            {option.label}
           </option>
         ))}
       </select>

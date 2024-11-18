@@ -1,30 +1,55 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MUIDataTable, { FilterType, Responsive } from "mui-datatables";
 import style from "../datatable-talleres/tablebasic-talleres.module.css";
 import { Link } from "react-router-dom";
 //import ButtonCrud from "../../components/button-options-CRUD/ButtonCrud";
 import ModalHOC from "../../components/Modal/Modal";
-import ButtonDelete from "../../components/Button-Options-CRUD/Button-Delete/ButtonDelete";
+// import ButtonDelete from "../../components/Button-Options-CRUD/Button-Delete/ButtonDelete";
 import ButtonUpdate from "../../components/Button-Options-CRUD/Button-Update/ButtonUpdate";
-import { Edit, Delete } from '@mui/icons-material'; 
-
+import { Edit } from '@mui/icons-material';
 import ButtonModal from "../../components/ButtonModal/ButtonModal";
+import axios from "axios";
+
+
+// Define las interfaces para los datos
+interface TallerCrear {
+  id_taller_catalogo:number;
+  nombre_taller: string;
+  estatus_taller: boolean;
+}
+
+interface TallerCrearTable {
+  id: number;
+  Taller: string;
+  Estatus: string;
+}
+
 
 const TableBasicTalleresCrear = () => {
-  const [showModal, setShowModal] = useState(false); 
-  const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
+  const [showModal, setShowModal] = useState(false);
+  // const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
+  const [data, setData] = useState<TallerCrearTable[]>([]);
 
 
-  const handleDelete = (userId: number) => {
-    setSelectedUserId(userId)
-    setShowModal(true); 
-  };
+  // const handleDelete = (userId: number) => {
+  //   setSelectedUserId(userId)
+  //   setShowModal(true);
+  // };
 
-  const handleConfirmDelete = () => {
-    const updatedData = data.filter(user => user.id !== selectedUserId);
-    setData(updatedData);
-    setShowModal(false);
-  };
+
+  // const handleConfirmDelete = async () => {
+  //   if (selectedUserId) {
+  //     try {
+  //       await axios.delete(`https://drftallerotecdj.onrender.com/talleres/api/talleres_supergrupo/${selectedUserId}/`);
+
+  //       const updatedData = data.filter(user => user.id !== selectedUserId);
+  //       setData(updatedData);
+  //       setShowModal(false);
+  //     } catch (error) {
+  //       console.error("Error al eliminar el taller", error);
+  //     }
+  //   }
+  // };
 
   const columns = [
     {
@@ -35,20 +60,20 @@ const TableBasicTalleresCrear = () => {
       },
     },
 
+     {
+       name: "Estatus",
+       options: {
+         setCellProps: () => ({ style: { textAlign: 'center' } }),
+         setCellHeaderProps: () => ({ style: { textAlign: 'center', fontWeight: 'bold' } }),
+       },
+     },
+
     {
-      name: "Estatus",
+      name: "Opción",
       options: {
         setCellProps: () => ({ style: { textAlign: 'center' } }),
         setCellHeaderProps: () => ({ style: { textAlign: 'center', fontWeight: 'bold' } }),
-      },
-    },
-   
-    {
-      name: "Opciones",
-      options: {
-        setCellProps: () => ({ style: { textAlign: 'center' } }),
-        setCellHeaderProps: () => ({ style: { textAlign: 'center', fontWeight: 'bold' } }),
-       
+
         customBodyRenderLite: (dataIndex: number) => {
           const userId = data[dataIndex].id;
           return (
@@ -64,15 +89,15 @@ const TableBasicTalleresCrear = () => {
                   tooltip="Editar"
                 />
               </Link>
-            
-              <ButtonDelete
+
+              {/* <ButtonDelete
                 onClick={() => handleDelete(userId)}
                // label="Eliminar"
                // color="#F14307"
                 icon={<Delete />}
                 tooltip="Eliminar"
 
-              />
+              /> */}
             </div>
           );
         },
@@ -80,54 +105,30 @@ const TableBasicTalleresCrear = () => {
     },
   ];
 
-  const [data, setData] = useState([
+  // Efecto para cargar datos de la API
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get<TallerCrear[]>("https://drftallerotecdj.onrender.com/talleres/api/talleres_supergrupo/");
+        const creartalleresData: TallerCrearTable[] = response.data.map((tallercrear) => ({
+          id: tallercrear.id_taller_catalogo, // Asignar un ID único
+          Taller: tallercrear.nombre_taller,
+          Estatus: tallercrear.estatus_taller ? "Activo" : "Inactivo",
 
-  {
-    id:1,
-    Taller: "Banda de guerra",
-    Estatus:"Activo"
-  },
-  {
-    id:2,
-    Taller: "Escolta",
-    Estatus:"Activo"
-  },
-  {
-    id:3,
-    Taller: "Atletismo",
-    Estatus:"Inactivo"
-  },
-  {
-    id:4,
-    Taller: "Beisbol Varonil",
-    Estatus:"Activo"
-  },
-  {
-    id:5,
-    Taller: "Basquetbal Femenil",
-    Estatus:"Activo"
-  },
-  {
-    id:6,
-    Taller: "Ajedrez",
-    Estatus:"Activo"
-  },
-  {
-    id:7,
-    Taller: "Futbol varonil",
-    Estatus:"Activo"
-  },
-  {
-    id:8,
-    Taller: "Softbol Varonil",
-    Estatus:"Activo"
-  }
- 
-   ]);
+        }));
+        setData(creartalleresData);
+      } catch (error) {
+        console.error("Error al obtener los datos de la API", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
 
   const options = {
     filterType: "checkbox" as FilterType,
-    responsive: "standard" as Responsive, // Usar la enumeración Responsive en lugar de cadena
+    responsive: "standard" as Responsive,
     sort: false,
     print:false,
     filter:true,
@@ -190,12 +191,10 @@ const TableBasicTalleresCrear = () => {
             <div className ={`${style['button-modal']}`}>
 
 
-            <ButtonModal
-                onClick={() => {
-                  handleConfirmDelete();
-                }}
+            {/* <ButtonModal
+                onClick={handleConfirmDelete}
                 label="Si, eliminar"
-              />
+              /> */}
 
             <span style={{ margin: "0 5px" }}></span>
 

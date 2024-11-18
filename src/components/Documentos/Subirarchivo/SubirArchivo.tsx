@@ -1,14 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import style from './subirarchivo.module.css';
 
 interface FileUploadComponentProps {
-  onUpload: (formData: FormData) => Promise<boolean>; // Cambiamos onUpload para manejar promesas
+  onUpload: (formData: FormData) => Promise<boolean>;
+  fieldName: string;  // El nombre del campo que se pasará dinámicamente
 }
 
-const SubirArchivo: React.FC<FileUploadComponentProps> = ({ onUpload }) => {
+const SubirArchivo: React.FC<FileUploadComponentProps> = ({ onUpload, fieldName }) => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [alertMessage, setAlertMessage] = useState<string | null>(null);
   const [alertType, setAlertType] = useState<'error' | 'success' | 'warning' | null>(null);
+  const [loading, setLoading] = useState(false);  // Estado para manejar el loading
+
+  useEffect(() => {
+    if (alertMessage) {
+      // Configurar el temporizador para borrar el mensaje después de 10 segundos
+      const timer = setTimeout(() => {
+        setAlertMessage(null);
+        setAlertType(null);
+      }, 6000);  // 10 segundos
+
+      // Limpiar el temporizador cuando el componente se desmonte o el mensaje cambie
+      return () => clearTimeout(timer);
+    }
+  }, [alertMessage]);  // Solo ejecutar este efecto cuando el mensaje cambie
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -33,10 +48,11 @@ const SubirArchivo: React.FC<FileUploadComponentProps> = ({ onUpload }) => {
       return;
     }
 
-    const formData = new FormData();
-    formData.append('file', selectedFile);
+    setLoading(true);  // Activar el loading cuando empiece el proceso de carga
 
-    // Intentamos subir el archivo y capturamos el resultado
+    const formData = new FormData();
+    formData.append(fieldName, selectedFile);
+
     const uploadSuccess = await onUpload(formData);
     if (uploadSuccess) {
       setAlertMessage('¡El archivo se cargó correctamente!');
@@ -46,6 +62,8 @@ const SubirArchivo: React.FC<FileUploadComponentProps> = ({ onUpload }) => {
       setAlertMessage('Error al subir el archivo.');
       setAlertType('error');
     }
+
+    setLoading(false);  // Desactivar el loading una vez que se complete el proceso
   };
 
   return (
@@ -61,8 +79,16 @@ const SubirArchivo: React.FC<FileUploadComponentProps> = ({ onUpload }) => {
           Archivo seleccionado: <strong>{selectedFile.name}</strong>
         </p>
       )}
-      <button className={style['upload-button']} onClick={handleUpload}>
-        Subir Archivo
+      <button
+        className={style['upload-button']}
+        onClick={handleUpload}
+        disabled={loading}  // Deshabilitar el botón si está en loading
+      >
+        {loading ? (
+          <span className={style['loading-spinner']}></span>  // Mostrar el loader si está en carga
+        ) : (
+          'Subir Archivo'
+        )}
       </button>
       {alertMessage && (
         <p className={`${style['alert-message']} ${style[alertType ?? '']}`}>

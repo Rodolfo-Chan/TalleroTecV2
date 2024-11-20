@@ -1,27 +1,56 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import MUIDataTable, { FilterType, Responsive } from "mui-datatables";
 import style from "../datatable-lista-alumnos/tablebasic-lista-alumnos.module.css";
-// import { Link } from "react-router-dom";
-// import ButtonUpdate from "../../components/Button-Options-CRUD/Button-Update/ButtonUpdate";
-// import ButtonDelete from "../../components/Button-Options-CRUD/Button-Delete/ButtonDelete";
-// import ModalHOC from "../../components/Modal/Modal";
-// import ButtonModal from "../../components/ButtonModal/ButtonModal";
-// import { Edit, Delete } from '@mui/icons-material';
+import axios from "axios";
+
+// Tipos de datos
+type Alumno = {
+  id_alumno: number;
+  matricula_alumno: string;
+  nombre: string;
+  apellido_paterno: string;
+  apellido_materno: string;
+  telefono: string;
+  genero: string;
+  carrera: string;
+};
+
+type Inscripcion = {
+  id_inscripcion: number;
+  estatus: string;
+  id_alumno: number;
+  id_taller_registro: number;
+};
 
 const TableBasicListaAlumnos = () => {
-  // const [showModal, setShowModal] = useState(false);
-  // const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
+  const [data, setData] = useState<Alumno[]>([]);
 
-  // const handleDelete = (userId: number) => {
-  //   setSelectedUserId(userId);
-  //   setShowModal(true);
-  // };
+  useEffect(() => {
+    // Primero obtenemos las inscripciones para el taller con id_taller_registro 56
+    axios.get("https://drftallerotecdj.onrender.com/talleres/api/inscripciones/")
+      .then((response) => {
+        const inscripciones: Inscripcion[] = response.data.filter((inscripcion: Inscripcion) => inscripcion.id_taller_registro === 56);
+        const idsAlumnos = inscripciones.map((inscripcion: Inscripcion) => inscripcion.id_alumno);
 
-  // const handleConfirmDelete = () => {
-  //   const updatedData = data.filter(user => user.id !== selectedUserId);
-  //   setData(updatedData);
-  //   setShowModal(false);
-  // };
+        // Obtenemos los datos de los alumnos con esos ids
+        const alumnoRequests = idsAlumnos.map((idAlumno: number) =>
+          axios.get(`https://drftallerotecdj.onrender.com/talleres/api/alumnos/${idAlumno}/`)
+        );
+
+        // Hacemos todas las solicitudes de alumnos en paralelo
+        Promise.all(alumnoRequests)
+          .then((responses) => {
+            const alumnosData = responses.map((response) => response.data);
+            setData(alumnosData); // Actualizamos los datos en el estado
+          })
+          .catch((error) => {
+            console.error("Error al obtener los datos de los alumnos:", error);
+          });
+      })
+      .catch((error) => {
+        console.error("Error al obtener las inscripciones:", error);
+      });
+  }, []);
 
   const columns = [
     {
@@ -33,13 +62,6 @@ const TableBasicListaAlumnos = () => {
     },
     {
       name: "Nombre",
-      options: {
-        setCellProps: () => ({ style: { textAlign: 'center' } }),
-        setCellHeaderProps: () => ({ style: { textAlign: 'center', fontWeight: 'bold' } }),
-      },
-    },
-    {
-      name: "Apellidos",
       options: {
         setCellProps: () => ({ style: { textAlign: 'center' } }),
         setCellHeaderProps: () => ({ style: { textAlign: 'center', fontWeight: 'bold' } }),
@@ -66,178 +88,46 @@ const TableBasicListaAlumnos = () => {
         setCellHeaderProps: () => ({ style: { textAlign: 'center', fontWeight: 'bold' } }),
       },
     },
-    // {
-    //   name: "Puntos",
-    //   options: {
-    //     setCellProps: () => ({ style: { textAlign: 'center' } }),
-    //     setCellHeaderProps: () => ({ style: { textAlign: 'center', fontWeight: 'bold' } }),
-    //   },
-    // },
-//     {
-//       name: "Opciones",
-//       options: {
-//         setCellProps: () => ({ style: { textAlign: 'center' } }),
-//         setCellHeaderProps: () => ({ style: { textAlign: 'center', fontWeight: 'bold' } }),
-//         customBodyRenderLite: (dataIndex: number) => {
-//           const userId = data[dataIndex].id;
-//           return (
-// <div className ={`${style['buton-crud']}`}>
-//   <Link to={`/Alumnos/FromAlumnosActualizar/${userId}`}>
-//     <ButtonUpdate
-//       onClick={() => {
-//         console.log("presionado para editar");
-//       }}
-//       icon={<Edit />}
-//       tooltip="Editar"
-//     />
-//   </Link>
-//   <ButtonDelete
-//     onClick={() => handleDelete(userId)}
-//     icon={<Delete />}
-//     tooltip="Eliminar"
-//   />
-//     <Link to={`/Alumnos/FromAlumnosActualizar/${userId}`}>
-//     <ButtonUpdate
-//       onClick={() => {
-//         console.log("presionado para editar");
-//       }}
-//       icon={<Edit />}
-//       tooltip="Constancia"
-//     />
-//   </Link>
-// </div>
-//           );
-//         },
-//       },
-//     },
   ];
 
-  const [data] = useState([
-    /* Datos de los alumnos */
-    {
-      id:1,
-      Matricula: "20890344",
-      Nombre: "Juan Sanchez",
-      Apellidos: "Perez Ancona",
-      Telefono: "1234567890",
-      Genero: "Masculino",
-      Carrera: "ING. Informatica",
-      Puntos:"60/200",
+  const muiTableLocalization = {
+    filter: {
+      all: "Todos",
+      title: "Filtros",
+      reset: "Restablecer",
     },
-    {
-      id:2,
-      Matricula: "67836325",
-      Nombre: "Alberto Antonio",
-      Apellidos: "Puc Santos",
-      Telefono: "9872561528",
-      Genero: "Masculino",
-      Carrera: "LIC. Administracion",
-      Puntos:"0/200",
+    viewColumns: {
+      title: "Columnas",
+      titleAria: "Ver u ocultar columnas de la tabla",
     },
-    {
-      id:3,
-      Matricula: "22367534",
-      Nombre: "Juan Sanchez",
-      Apellidos: "Perez Ancona",
-      Telefono: "1234567890",
-      Genero: "Masculino",
-      Carrera: "ING. Informatica",
-      Puntos:"90/200",
+    pagination: {
+      next: "Siguiente",
+      previous: "Anterior",
+      rowsPerPage: "Filas por página",
+      displayRows: "de",
     },
-    {
-      id:4,
-      Matricula: "45678976",
-      Nombre: "Saul Antonio",
-      Apellidos: "Ake Baas",
-      Telefono: "8972628910",
-      Genero: "Masculino",
-      Carrera: "ING. Informatica",
-      Puntos:"40/200",
+    toolbar: {
+      search: "Buscar alumno",
+      downloadCsv: "Descargar CSV",
+      print: "Imprimir",
+      viewColumns: "Ver Columnas",
+      filterTable: "Filtrar Tabla",
     },
-    {
-      id:5,
-      Matricula: "91452678",
-      Nombre: "Andrea Cecilia",
-      Apellidos: "Ramirez Nauat",
-      Telefono: "1234567890",
-      Genero: "Femenino",
-      Carrera: "ING. Informatica",
-      Puntos:"155/200",
-    },
-    {
-      id:6,
-      Matricula: "81035276",
-      Nombre: "Maria Jose",
-      Apellidos: "Cime Pech",
-      Telefono: "1123098160",
-      Genero: "Femenino",
-      Carrera: "ING. Agronomia",
-      Puntos:"20/200",
-    },
-    {
-      id:7,
-      Matricula: "09362784",
-      Nombre: "Cesar Guzman",
-      Apellidos: "Noh Sanchez",
-      Telefono: "1234234509",
-      Genero: "Masculino",
-      Carrera: "ING. Informatica",
-      Puntos:"40/200",
-    },
-    {
-      id:8,
-      Matricula: "262541628",
-      Nombre: "Dalia Rosario",
-      Apellidos: "May Cupul",
-      Telefono: "1715431098",
-      Genero: "Femenino",
-      Carrera: "ING. Informatica",
-      Puntos:"200/200",
-    }
-  ]);
+  };
 
   const options = {
     filterType: "checkbox" as FilterType,
-    responsive: "standard" as Responsive, // Usar la enumeración Responsive en lugar de cadena
+    responsive: "standard" as Responsive,
     sort: false,
-    print:false,
-    filter:true,
-    download:false,
-    viewColumns:false,
-    
-    textLabels: {
-      pagination: {
-        next: "Siguiente",
-        previous: "Anterior",
-        rowsPerPage: "Filas por página:",
-        displayRows: "de",
-      },
-      toolbar: {
-        search: "Buscar alumno",
-        downloadCsv: "Descargar  lista en formato CSV",
-        print: "Imprimir",
-        viewColumns: "Ver columnas",
-        filterTable: "Filtrar tabla",
-      },
-      filter: {
-        all: "Todos",
-        title: "FILTROS",
-        reset: "REINICIAR",
-      },
-      viewColumns: {
-        title: "Mostrar columnas",
-        titleAria: "Mostrar/Ocultar columnas de la tabla",
-      },
-      selectedRows: {
-        text: "filas(s) seleccionadas",
-        delete: "Eliminar",
-        deleteAria: "Eliminar filas seleccionadas",
-      },
-    },
+    print: false,
+    filter: true,
+    download: false,
+    viewColumns: false,
     selectableRows: "none" as const,
     pagination: true,
     rowsPerPage: 35,
     rowsPerPageOptions: [15, 20, 25],
+    textLabels: muiTableLocalization,
   };
 
   return (
@@ -245,35 +135,16 @@ const TableBasicListaAlumnos = () => {
       <div className={`${style["border"]}`}>
         <MUIDataTable
           title={"Lista de alumnos inscritos"}
-          data={data}
+          data={data.map((alumno) => [
+            alumno.matricula_alumno,
+            `${alumno.nombre} ${alumno.apellido_paterno} ${alumno.apellido_materno}`,
+            alumno.telefono,
+            alumno.genero,
+            alumno.carrera,
+          ])}
           columns={columns}
           options={options}
         />
-        {/* Modal para confirmar la eliminación */}
-        {/* <ModalHOC
-          show={showModal}
-          hide={() => setShowModal(false)}
-          activeHide={false}
-        >
-          <div className ={`${style['info-modal']}`}>
-            <p>
-              ¿Estás seguro de eliminar este alumno?
-            </p>
-            <div className ={`${style['button-modal']}`}>
-              <ButtonModal
-                onClick={() => {
-                  handleConfirmDelete();
-                }}
-                label="Si, eliminar"
-              />
-              <span style={{ margin: "0 5px" }}></span>
-              <ButtonModal
-                onClick={() => setShowModal(false)}
-                label="Cancelar"
-              />
-            </div>
-          </div>
-        </ModalHOC> */}
       </div>
     </div>
   );

@@ -330,13 +330,8 @@ const FormInscripcionesRegistro = () => {
 
         <div className={style["button"]}>
           <div className={style["buttons"]}>
-            <ButtonRegistro
-              onClick={() => {
-                console.log("presionado");
-                handleRegistrarClick();
-              }}
-              label="Registrar"
-            />
+          <ButtonRegistro
+             onClick={handleRegistrarClick} label="Registrar"/>
             <ButtonRegistro
               onClick={() => {
                 navigate("/Inscripciones");

@@ -81,7 +81,7 @@ const RoutesComponent: React.FC<RoutesComponentProps> = ({ toggleSidebar, isSide
         <Route path="/DocumentosMaster" element={<MainLayout toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen}><DocumentosMaster /></MainLayout>} />
         <Route path="/HomeProfesor" element={<MainLayout toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen}><HomeProfesor /></MainLayout>} />
         <Route path="/HomeAlumno" element={<MainLayout toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen}><HomeAlumno /></MainLayout>} />
-        <Route path='/HomeAlumno/FormInscripcionAlumno/:userId' element={<MainLayout toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen}><FormInscripcionAlumno/></MainLayout>} />
+        <Route path='/HomeAlumno/FormInscripcionAlumno/:id' element={<MainLayout toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen}><FormInscripcionAlumno/></MainLayout>} />
         <Route path="/TallerAlumno" element={<MainLayout toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen}><TallerAlumno /></MainLayout>} />
 
       </Routes>

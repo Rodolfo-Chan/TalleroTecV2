@@ -275,3 +275,18 @@ tbody tr:hover {
   color: green;
   text-align: center;
 }
+
+.descargar{
+  background: #007bff;
+  display: flex;
+}
+
+.subir{
+  background: #333;
+  padding: 15px;
+}
+
+.descargar{
+  background: #4e73df;
+  padding: 15px;
+}

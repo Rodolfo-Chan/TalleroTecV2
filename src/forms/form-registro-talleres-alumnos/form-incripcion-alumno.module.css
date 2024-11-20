@@ -23,12 +23,6 @@
   /* margin-top: 20px; */
 }
 
-/* Estilos responsivos para dispositivos móviles */
-@media (max-width: 768px) {
-  .table-section {
-    max-width: 100%;
-  }
-}
 
 /* Contenedor principal */
 .header-data {
@@ -108,11 +102,10 @@
 
  .alert-name{
   display: flex;
-  width: auto;
+  width: 100%;
   flex-direction: column;
   height: auto;
   position: relative; 
-  left: 40px; 
   /* background-color: #48ff05; */
 }
 
@@ -130,6 +123,23 @@
 /* Media query para dispositivos con pantallas pequeñas (móviles) */
 @media (max-width: 768px) {
 
+  .data-matricula,
+  .nombre,
+  .periodo-escolar,
+  .taller,
+  .turno,
+  .horario {
+    width: 100%; /* Toman todo el ancho */
+  }
+
+  .datos_seccion1 {
+    gap: 0px; /* Espaciado más compacto */
+  }
+
+  
+  .table-section {
+    max-width: 100%;
+  }
   .name-and-name {
     /* background: #4602a0; */
     flex-direction: row; 
@@ -202,25 +212,7 @@
     margin: 0 auto;
     flex-direction: column;
   }
-  .taller{
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    /* background: #ef00ef; */
-    margin-left: 20px; 
-    /* width: 220px; */
-    margin-bottom: 15px;
-  }
-  .data-matricula{
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    /* background: #f70dff; */
-    margin-left: 25px; 
-  
-    /* width: 185px; */
-    margin-bottom: 15px;
-  }
+
   
 
 }
@@ -243,19 +235,6 @@
 }
 
 
-
-
-
-
-/* .list {
-  background: #00ff88;
-  display: flex;
-  align-items: center;
-  color: #ffffff;
-  font-size: 21px;
-  width: auto;
-} */
-
 .padre-contenedor {
   display: flex;
   flex-direction: column;
@@ -270,14 +249,14 @@
   border-bottom-left-radius: 10px; 
 }
 
-.datos_seccion1{
- /* background: #004954; */
- margin-bottom: 0px;
- margin-top: 15px;
- display: flex;
- /* flex-direction: column; */
- flex-wrap: wrap;
- justify-content: center;
+.datos_seccion1 {
+  /* background: #004954; */
+  margin-bottom: 0px;
+  margin-top: 15px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 25px; /* Espaciado entre campos */
 }
 
 .data-matricula{
@@ -285,10 +264,8 @@
   align-items: center;
   flex-direction: column;
   /* background: #f70dff; */
-  margin-left: 25px; 
-
-  /* width: 185px; */
-  margin-bottom: 15px;
+  /* margin-left: 25px;  */
+  /* margin-bottom: 15px; */
 }
 
 .nombre{
@@ -297,34 +274,22 @@
   flex-direction: column;
   /* background: #0015ff; */
   /* width: 220px; */
-  margin-left: 19px; 
-  margin-bottom: 15px;
+  /* margin-left: 19px;  */
+  /* margin-bottom: 15px; */
 
 }
 
-.apellido_paterno{
+.periodo-escolar{
   display: flex;
   align-items: center;
   flex-direction: column;
-  /* background: #ff0505; */
-  margin-left: 19px;
-  /* width: 220px; */
-  margin-bottom: 15px;
+  /* background: #a3b9c4; */
+  /* margin-left: 19px;  */
+
+  /* width: 215px; */
+  /* margin-bottom: 15px; */
 
 }
-
-.apellido_materno{
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  /* background: #48ff05; */
-  margin-left: 19px; 
-  /* width: 220px; */
-  margin-bottom: 15px;
-
-}
-
-
 
 .taller{
   display: flex;
@@ -333,29 +298,37 @@
   /* background: #ef00ef; */
   /* margin-left: 25px;  */
   /* width: 220px; */
-  margin-bottom: 15px;
+  /* margin-bottom: 15px; */
 }
 
-.estatus{
+
+.turno{
   display: flex;
   align-items: center;
   flex-direction: column;
-  /* background: #c8ff00; */
-  margin-left: 19px; 
-  /* width: 220px; */
-  margin-bottom: 15px;
+  /* background: #c0d4d0;    */
+  /* width: 190px; */
+  /* margin-left: 19px;  */
+  /* margin-bottom: 15px; */
 }
-
-.periodo-escolar{
+.horario{
   display: flex;
   align-items: center;
   flex-direction: column;
-  /* background: #a3b9c4; */
-  margin-left: 19px; 
+  /* background: #40b09a;    */
+  /* width: 190px; */
+  /* margin-left: 19px;  */
+  /* margin-bottom: 15px; */
+}
 
-  /* width: 215px; */
-  margin-bottom: 15px;
-
+.dias{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  /* background: #d93319;    */
+  /* width: 190px; */
+  /* margin-left: 19px;  */
+  /* margin-bottom: 15px; */
 }
 
 .radio-container{
@@ -386,14 +359,4 @@
   justify-content: space-around;
 }
 
-.turno{
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  /* background: #c0d4d0;    */
-  /* width: 190px; */
-  margin-left: 19px; 
-  margin-bottom: 15px;
-
-}
 /* ----------------------------------- */

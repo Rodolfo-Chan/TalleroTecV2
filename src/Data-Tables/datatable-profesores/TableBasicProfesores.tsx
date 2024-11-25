@@ -8,6 +8,7 @@ import ButtonUpdate from "../../components/Button-Options-CRUD/Button-Update/But
 import { Edit, Delete } from '@mui/icons-material'; 
 import ModalHOC from "../../components/Modal/Modal";
 import ButtonModal from "../../components/ButtonModal/ButtonModal";
+import DescargarArchivo from "../../components/Documentos/Descargararchivo/DescargarArchivo";
 
 const TableBasicProfesores = () => {
   const [showModal, setShowModal] = useState(false); 
@@ -54,11 +55,50 @@ const TableBasicProfesores = () => {
         setCellHeaderProps: () => ({ style: { textAlign: 'center', fontWeight: 'bold' } }),
       },
     },
+    
     {
       name: "Genero",
       options: {
         setCellProps: () => ({ style: { textAlign: 'center' } }),
         setCellHeaderProps: () => ({ style: { textAlign: 'center', fontWeight: 'bold' } }),
+      },
+    },
+    {
+      name: "Registro de participantes",
+      options: {
+        setCellProps: () => ({ style: { textAlign: 'center' } }),
+        setCellHeaderProps: () => ({ style: { textAlign: 'center', fontWeight: 'bold' } }),
+        customBodyRenderLite: (dataIndex: number) => {
+          const fileName = "registro_participantes.pdf";
+          const downloadUrl = `/path/to/registro_${data[dataIndex].id}.pdf`;
+          return (
+            <DescargarArchivo 
+              fileName={fileName} 
+              downloadUrl={downloadUrl} 
+              showDownloadText={true} 
+              showFileName={false}
+            />
+          );
+        },
+      },
+    },
+    {
+      name: "Evaluación al desempeño",
+      options: {
+        setCellProps: () => ({ style: { textAlign: 'center' } }),
+        setCellHeaderProps: () => ({ style: { textAlign: 'center', fontWeight: 'bold' } }),
+        customBodyRenderLite: (dataIndex: number) => {
+          const fileName = "evaluacion_desempeno.pdf";
+          const downloadUrl = `/path/to/evaluacion_${data[dataIndex].id}.pdf`;
+          return (
+            <DescargarArchivo 
+              fileName={fileName} 
+              downloadUrl={downloadUrl} 
+              showDownloadText={true}
+              showFileName={false}
+            />
+          );
+        },
       },
     },
     {
@@ -94,6 +134,8 @@ const TableBasicProfesores = () => {
         },
       },
     },
+
+    
   ];
 
   const [data, setData] = useState([
@@ -208,7 +250,7 @@ const TableBasicProfesores = () => {
     sort: false,
     print:false,
     filter:true,
-    download:true,
+    download:false,
     viewColumns:false,
     textLabels: {
       pagination: {
@@ -249,7 +291,7 @@ const TableBasicProfesores = () => {
     <div className={`${style["table"]}`}>
       <div className={`${style["border"]}`}>
         <MUIDataTable
-          title={"Lista de Profesores"}
+          title={"Lista de profesores"}
           data={data}
           columns={columns}
           options={options}

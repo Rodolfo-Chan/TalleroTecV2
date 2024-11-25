@@ -187,7 +187,7 @@ const TableBasicInscripciones = () => {
     sort: false,
     print:false,
     filter:true,
-    download:true,
+    download:false,
     viewColumns:false,
     
     textLabels: {
@@ -229,7 +229,7 @@ const TableBasicInscripciones = () => {
     <div className={`${style["table"]}`}>
       <div className={`${style["border"]}`}>
         <MUIDataTable
-          title={"Lista de Inscripciones"}
+          title={"Lista de inscripciones"}
           data={data}
           columns={columns}
           options={options}

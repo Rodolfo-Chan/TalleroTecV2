@@ -1,12 +1,12 @@
-// Home.tsx
-import React, { useEffect, useState } from "react";
-import "../components/styles.css";
+import React, { useState, useEffect } from "react";
+import style from "../pages/css/home.module.css";
 import { PiStudentFill } from "react-icons/pi";
 import { MdOutlineSportsKabaddi, MdSportsVolleyball } from "react-icons/md";
 import { TbLocationStar } from "react-icons/tb";
-import { FcGoogle } from "react-icons/fc";
-import { BiSolidHomeHeart } from "react-icons/bi";
+import Grafico from "../components/Graficos/Grafico";
+import Grafico2 from "../components/Graficos/Grafico2";
 import { SiHomeadvisor } from "react-icons/si";
+import { FcGoogle } from "react-icons/fc";
 
 const Home = () => {
   const [userEmail, setUserEmail] = useState('');
@@ -32,74 +32,46 @@ const Home = () => {
         </div>
       </header>
 
-      <main className="main-content">
-        <section className="cards">
-          <div className="card">
-            <div className="card-content">
-              <div className="card-text">
-                <h2>Alumnos</h2>
-                <p>$40</p>
+      <main className={style['main-content']}>
+        <section className={style['cards']}>
+          <div className={style['card']}>
+            <div className={style['card-content']}>
+              <div className={style['card-text']}>
+                <h2>Alumnos Activos</h2>
+                <p>40</p>
               </div>
-              <PiStudentFill className="card-icon" />
+              <PiStudentFill className={style['card-icon']} />
             </div>
           </div>
-          <div className="card">
-            <div className="card-content">
-              <div className="card-text">
-                <h2>Talleres</h2>
-                <p>$215,000</p>
+          <div className={style['card']}>
+            <div className={style['card-content']}>
+              <div className={style['card-text']}>
+                <h2>Talleres habilitados</h2>
+                <p>21</p>
               </div>
-              <MdSportsVolleyball className="card-icon" />
+              <MdSportsVolleyball className={style['card-icon']} />
             </div>
           </div>
-          <div className="card">
-            <div className="card-content">
-              <div className="card-text">
+          <div className={style['card']}>
+            <div className={style['card-content']}>
+              <div className={style['card-text']}>
                 <h2>Instructores</h2>
-                <p>50%</p>
+                <p>50</p>
               </div>
-              <MdOutlineSportsKabaddi className="card-icon" />
+              <MdOutlineSportsKabaddi className={style['card-icon']} />
             </div>
           </div>
-          <div className="card">
-            <div className="card-content">
-              <div className="card-text">
+          <div className={style['card']}>
+            <div className={style['card-content']}>
+              <div className={style['card-text']}>
                 <h2>Locaciones</h2>
                 <p>18</p>
               </div>
-              <TbLocationStar className="card-icon" />
+              <TbLocationStar className={style['card-icon']} />
             </div>
           </div>
-        </section>
-
-        <section className="table-section">
-          <h2>Tabla de Datos</h2>
-          <table>
-            <thead>
-              <tr>
-                <th>Nombre</th>
-                <th>Edad</th>
-                <th>Ciudad</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Juan</td>
-                <td>28</td>
-                <td>Ciudad de México</td>
-              </tr>
-              <tr>
-                <td>María</td>
-                <td>34</td>
-                <td>Guadalajara</td>
-              </tr>
-              <tr>
-                <td>Carlos</td>
-                <td>22</td>
-                <td>Monterrey</td>
-              </tr>
-            </tbody>
-          </table>
+          <Grafico />
+          <Grafico2 />
         </section>
       </main>
     </div>

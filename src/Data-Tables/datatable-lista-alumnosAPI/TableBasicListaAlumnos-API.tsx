@@ -244,7 +244,7 @@ const TableBasicListaAlumnos = () => {
     <div className={`${style["table"]}`}>
       <div className={`${style["border"]}`}>
         <MUIDataTable
-          title={"Lista de alumnos inscritos"}
+          title={"Lista de Alumnos"}
           data={data}
           columns={columns}
           options={options}

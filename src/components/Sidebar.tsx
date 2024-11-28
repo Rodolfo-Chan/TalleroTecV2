@@ -23,13 +23,9 @@ interface SidebarProps {
 const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
   const location = useLocation();
   const currentPath = location.pathname;
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [] = useState(false);
 
-  const handleLogout = () => {
-    localStorage.clear(); // Limpiar el localStorage
-    toggleSidebar(); // Cerrar el sidebar
-    setIsModalOpen(false); // Cerrar el modal
-  };
+  
 
   const [isTalleresOpen, setIsTalleresOpen] = useState(false);
   const [isAlumnosOpen, setIsAlumnosOpen] = useState(false);

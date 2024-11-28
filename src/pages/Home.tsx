@@ -1,12 +1,12 @@
 
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import style from "../pages/css/home.module.css";
 import { PiStudentFill } from "react-icons/pi";
 import { MdOutlineSportsKabaddi, MdSportsVolleyball } from "react-icons/md";
 import { TbLocationStar } from "react-icons/tb";
 import Grafico from "../components/Graficos/Grafico";
 import Grafico2 from "../components/Graficos/Grafico2";
-import { SiHomeadvisor } from "react-icons/si";
+
 import { FcGoogle } from "react-icons/fc";
 
 type TallerSubgrupo = {

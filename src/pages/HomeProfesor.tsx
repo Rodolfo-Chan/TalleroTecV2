@@ -5,7 +5,8 @@ import TableBasicListaAlumnos from "../Data-Tables/datatable-lista-alumnos/Table
 import style from "../pages/css/alumnos.module.css"
 //  import Button from '../components/Button/Button';
 // import { useNavigate } from "react-router-dom";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
+
 
 const   HomeProfesor = () => {
   const [userEmail, setUserEmail] = useState(""); // Mover el hook aquí

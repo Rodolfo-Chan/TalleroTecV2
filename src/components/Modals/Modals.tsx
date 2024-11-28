@@ -1,4 +1,4 @@
-import React, { FC, ReactNode } from 'react';
+import { FC, ReactNode } from 'react';
 import styles from './Modal.module.css';
 
 interface ModalProps {
@@ -15,11 +15,11 @@ const Modal: FC<ModalProps> = ({ show, onClose, children }) => {
   return (
     <div className={styles.modalOverlay}>
       <div className={styles.modalContent}>
-        <div className={styles.modalBody}>
-          {children}
-        </div>
+        <div className={styles.modalBody}>{children}</div>
         <div className={styles.footer}>
-          <button className={styles.closeModalButton} onClick={onClose}>Cerrar</button>
+          <button className={styles.closeModalButton} onClick={onClose}>
+            Cerrar
+          </button>
         </div>
       </div>
     </div>
@@ -27,5 +27,3 @@ const Modal: FC<ModalProps> = ({ show, onClose, children }) => {
 };
 
 export default Modal;
-
-

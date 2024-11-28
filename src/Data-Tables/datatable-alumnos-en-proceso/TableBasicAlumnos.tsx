@@ -73,94 +73,62 @@ const TableBasicAlumnos = () => {
 
   const columns = [
     {
-      name: "matricula_alumno",
-      label: "Matrícula",
+      name: "Matricula",
       options: {
-        setCellProps: () => ({ style: { textAlign: "center" } }),
-        setCellHeaderProps: () => ({ style: { textAlign: "center", fontWeight: "bold" } }),
+        setCellProps: () => ({ style: { textAlign: 'center' } }),
+        setCellHeaderProps: () => ({ style: { textAlign: 'center', fontWeight: 'bold' } }),
       },
     },
     {
-      name: "nombre",
-      label: "Nombre",
+      name: "Nombre",
       options: {
-        setCellProps: () => ({ style: { textAlign: "center" } }),
-        setCellHeaderProps: () => ({ style: { textAlign: "center", fontWeight: "bold" } }),
+        setCellProps: () => ({ style: { textAlign: 'center' } }),
+        setCellHeaderProps: () => ({ style: { textAlign: 'center', fontWeight: 'bold' } }),
       },
     },
     {
-      name: "apellido_paterno",
-      label: "Apellido Paterno",
+      name: "Apellidos",
       options: {
-        setCellProps: () => ({ style: { textAlign: "center" } }),
-        setCellHeaderProps: () => ({ style: { textAlign: "center", fontWeight: "bold" } }),
+        setCellProps: () => ({ style: { textAlign: 'center' } }),
+        setCellHeaderProps: () => ({ style: { textAlign: 'center', fontWeight: 'bold' } }),
       },
     },
     {
-      name: "apellido_materno",
-      label: "Apellido Materno",
+      name: "Telefono",
       options: {
-        setCellProps: () => ({ style: { textAlign: "center" } }),
-        setCellHeaderProps: () => ({ style: { textAlign: "center", fontWeight: "bold" } }),
+        setCellProps: () => ({ style: { textAlign: 'center' } }),
+        setCellHeaderProps: () => ({ style: { textAlign: 'center', fontWeight: 'bold' } }),
       },
     },
     {
-      name: "telefono",
-      label: "Teléfono",
+      name: "Genero",
       options: {
-        setCellProps: () => ({ style: { textAlign: "center" } }),
-        setCellHeaderProps: () => ({ style: { textAlign: "center", fontWeight: "bold" } }),
+        setCellProps: () => ({ style: { textAlign: 'center' } }),
+        setCellHeaderProps: () => ({ style: { textAlign: 'center', fontWeight: 'bold' } }),
       },
     },
     {
-      name: "genero",
-      label: "Género",
+      name: "Carrera",
       options: {
-        setCellProps: () => ({ style: { textAlign: "center" } }),
-        setCellHeaderProps: () => ({ style: { textAlign: "center", fontWeight: "bold" } }),
+        setCellProps: () => ({ style: { textAlign: 'center' } }),
+        setCellHeaderProps: () => ({ style: { textAlign: 'center', fontWeight: 'bold' } }),
       },
     },
     {
-      name: "carrera",
-      label: "Carrera",
+      name: "Puntos",
       options: {
-        setCellProps: () => ({ style: { textAlign: "center" } }),
-        setCellHeaderProps: () => ({ style: { textAlign: "center", fontWeight: "bold" } }),
-      },
-    },
-    {
-      name: "semestre",
-      label: "Semestre",
-      options: {
-        setCellProps: () => ({ style: { textAlign: "center" } }),
-        setCellHeaderProps: () => ({ style: { textAlign: "center", fontWeight: "bold" } }),
-      },
-    },
-    {
-      name: "email",
-      label: "Email",
-      options: {
-        setCellProps: () => ({ style: { textAlign: "center" } }),
-        setCellHeaderProps: () => ({ style: { textAlign: "center", fontWeight: "bold" } }),
-      },
-    },
-    {
-      name: "nivel_acceso",
-      label: "Nivel de Acceso",
-      options: {
-        setCellProps: () => ({ style: { textAlign: "center" } }),
-        setCellHeaderProps: () => ({ style: { textAlign: "center", fontWeight: "bold" } }),
+        setCellProps: () => ({ style: { textAlign: 'center' } }),
+        setCellHeaderProps: () => ({ style: { textAlign: 'center', fontWeight: 'bold' } }),
       },
     },
     {
       name: "Opción",
       options: {
-        setCellProps: () => ({ style: { textAlign: "center" } }),
-        setCellHeaderProps: () => ({ style: { textAlign: "center", fontWeight: "bold" } }),
+        setCellProps: () => ({ style: { textAlign: 'center' } }),
+        setCellHeaderProps: () => ({ style: { textAlign: 'center', fontWeight: 'bold' } }),
         customBodyRenderLite: (dataIndex: number) => {
           const userId = data[dataIndex].id;
           return (
-
             <div className={`${style['buton-crud']}`}>
               <Link to={`/Alumnos/FromAlumnosActualizar/${userId}`}>
                 <ButtonUpdate
@@ -177,9 +145,6 @@ const TableBasicAlumnos = () => {
                 tooltip="Eliminar"
               /> */}
             </div>
-
-            
-
           );
         },
       },
@@ -245,7 +210,6 @@ useEffect(() => {
     filterType: "checkbox" as FilterType,
     responsive: "standard" as Responsive, 
     sort: false,
-
     print:false,
     filter:true,
     download:false,
@@ -260,7 +224,7 @@ useEffect(() => {
       },
       toolbar: {
         search: "Buscar alumno",
-        downloadCsv: "Descargar lista en formato CSV",
+        downloadCsv: "Descargar  lista en formato CSV",
         print: "Imprimir",
         viewColumns: "Ver columnas",
         filterTable: "Filtrar tabla",
@@ -287,7 +251,6 @@ useEffect(() => {
   };
 
   return (
-
     <div className={`${style["table"]}`}>
       <div className={`${style["border"]}`}>
         <MUIDataTable
@@ -311,7 +274,6 @@ useEffect(() => {
                 onClick={handleConfirmDelete}
                 label="Si, eliminar"
               />
->>>>>>> 8b6eee0a42a95509d02f224fca6cef9993bbafb1:src/Data-Tables/datatable-alumnos-en-proceso/TableBasicAlumnos.tsx
               <span style={{ margin: "0 5px" }}></span>
               <ButtonModal
                 onClick={() => setShowModal(false)}

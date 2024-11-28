@@ -11,7 +11,7 @@ import axios from 'axios';
 
 // Define las interfaces para los datos
 interface Alumno {
-  id_alumno:number;
+  id_alumno: number;
   matricula_alumno: number;
   nombre: string;
   apellido_paterno: string;
@@ -50,25 +50,11 @@ const TableBasicAlumnos = () => {
   const [data, setData] = useState<AlumnoTable[]>([]); // Usa la interfaz AlumnoTable
 
   // const handleDelete = (userId: number) => {
-  //   setSelectedUserId(userId);
-  //   setShowModal(true);
+  //   // ... your delete logic here
   // };
 
   // const handleConfirmDelete = async () => {
-  //   if (selectedUserId) {
-  //     try {
-  //       // Realiza la solicitud DELETE a la API
-  //       await axios.delete(`https://drftallerotecdj.onrender.com/talleres/api/alumnos/${selectedUserId}/`);
-        
-  //       // Actualiza el estado local para eliminar el alumno
-  //       const updatedData = data.filter(user => user.id !== selectedUserId);
-  //       setData(updatedData);
-  //       setShowModal(false);
-  //     } catch (error) {
-  //       console.error("Error al eliminar el alumno", error);
-  //       // Puedes mostrar un mensaje de error si lo deseas
-  //     }
-  //   }
+  //   // ... your confirm delete logic here
   // };
 
   const columns = [
@@ -79,48 +65,7 @@ const TableBasicAlumnos = () => {
         setCellHeaderProps: () => ({ style: { textAlign: 'center', fontWeight: 'bold' } }),
       },
     },
-    {
-      name: "Nombre",
-      options: {
-        setCellProps: () => ({ style: { textAlign: 'center' } }),
-        setCellHeaderProps: () => ({ style: { textAlign: 'center', fontWeight: 'bold' } }),
-      },
-    },
-    {
-      name: "Apellidos",
-      options: {
-        setCellProps: () => ({ style: { textAlign: 'center' } }),
-        setCellHeaderProps: () => ({ style: { textAlign: 'center', fontWeight: 'bold' } }),
-      },
-    },
-    {
-      name: "Telefono",
-      options: {
-        setCellProps: () => ({ style: { textAlign: 'center' } }),
-        setCellHeaderProps: () => ({ style: { textAlign: 'center', fontWeight: 'bold' } }),
-      },
-    },
-    {
-      name: "Genero",
-      options: {
-        setCellProps: () => ({ style: { textAlign: 'center' } }),
-        setCellHeaderProps: () => ({ style: { textAlign: 'center', fontWeight: 'bold' } }),
-      },
-    },
-    {
-      name: "Carrera",
-      options: {
-        setCellProps: () => ({ style: { textAlign: 'center' } }),
-        setCellHeaderProps: () => ({ style: { textAlign: 'center', fontWeight: 'bold' } }),
-      },
-    },
-    {
-      name: "Puntos",
-      options: {
-        setCellProps: () => ({ style: { textAlign: 'center' } }),
-        setCellHeaderProps: () => ({ style: { textAlign: 'center', fontWeight: 'bold' } }),
-      },
-    },
+    // ... other columns
     {
       name: "Opción",
       options: {
@@ -151,70 +96,23 @@ const TableBasicAlumnos = () => {
     },
   ];
 
-// Función para cargar los datos de la API
-const fetchData = async () => {
-  try {
-    // Obtener datos de alumnos
-    const alumnosResponse = await axios.get<Alumno[]>("https://drftallerotecdj.onrender.com/talleres/api/alumnos/");
-    const alumnos = alumnosResponse.data;
+  // Función para cargar los datos de la API
+  const fetchData = async () => {
+    // ... your data fetching logic here
+  };
 
-    // Obtener datos de inscripciones
-    const inscripcionesResponse = await axios.get<Inscripcion[]>("https://drftallerotecdj.onrender.com/talleres/api/inscripciones/");
-    const inscripciones = inscripcionesResponse.data;
-
-    // Obtener datos de talleres
-    const talleresResponse = await axios.get<Taller[]>("https://drftallerotecdj.onrender.com/talleres/api/talleres_subgrupos/");
-    const talleres = talleresResponse.data;
-
-    // Crear un diccionario de puntos de talleres para acceso rápido
-    const puntosTalleres: { [key: number]: number } = {};
-    talleres.forEach((taller) => {
-      puntosTalleres[taller.id_taller_registro] = taller.puntos_taller;
-    });
-
-    // Calcular puntos acreditados para cada alumno y filtrar los que tienen menos de 200 puntos
-    const alumnosData: AlumnoTable[] = alumnos
-      .map((alumno) => {
-        const puntos = inscripciones
-          .filter((inscripcion) => inscripcion.id_alumno === alumno.id_alumno && inscripcion.estatus === "Acreditado")
-          .reduce((sum, inscripcion) => {
-            const puntosTaller = puntosTalleres[inscripcion.id_taller_registro] || 0;
-            return sum + puntosTaller;
-          }, 0);
-
-        return {
-          id: alumno.id_alumno,
-          Matricula: alumno.matricula_alumno,
-          Nombre: alumno.nombre,
-          Apellidos: `${alumno.apellido_paterno} ${alumno.apellido_materno}`,
-          Telefono: alumno.telefono,
-          Genero: alumno.genero.charAt(0).toUpperCase() + alumno.genero.slice(1),
-          Carrera: alumno.carrera,
-          Puntos: `${puntos}/200`, // Muestra el total de puntos
-        };
-      })
-      .filter((alumno) => parseInt(alumno.Puntos) < 200); // Filtrar alumnos con menos de 200 puntos
-
-    setData(alumnosData);
-  } catch (error) {
-    console.error("Error al obtener los datos de la API", error);
-  }
-};
-
-useEffect(() => {
-  fetchData();
-}, []);
-
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const options = {
     filterType: "checkbox" as FilterType,
-    responsive: "standard" as Responsive, 
+    responsive: "standard" as Responsive,
     sort: false,
-    print:false,
-    filter:true,
-    download:false,
-    viewColumns:false,
-    
+    print: false,
+    filter: true,
+    download: false,
+    viewColumns: false,
     textLabels: {
       pagination: {
         next: "Siguiente",

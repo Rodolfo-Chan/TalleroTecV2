@@ -3,9 +3,7 @@ import MUIDataTable, { FilterType, Responsive } from "mui-datatables";
 import style from "./tablebasic-alumnos.module.css";
 import { Link } from "react-router-dom";
 import ButtonUpdate from "../../components/Button-Options-CRUD/Button-Update/ButtonUpdate";
-// import ButtonDelete from "../../components/Button-Options-CRUD/Button-Delete/ButtonDelete";
 import ModalHOC from "../../components/Modal/Modal";
-// import ButtonModal from "../../components/ButtonModal/ButtonModal";
 import { Edit } from "@mui/icons-material";
 import axios from "axios";
 
@@ -98,8 +96,8 @@ const TableBasicAlumnos = () => {
   }, []);
 
   const options = {
-    filterType: "checkbox" as FilterType,
-    responsive: "standard" as Responsive,
+    filterType: "checkbox" as const,  // Opción de filtro tipo checkbox
+    responsive: "standard" as const,  // Estilo de tabla responsive
     sort: false,
     print: false,
     filter: true,
@@ -117,7 +115,7 @@ const TableBasicAlumnos = () => {
         filterTable: "Filtrar tabla",
       },
     },
-    selectableRows: "none" as const,
+    selectableRows: "none" as const,  // No seleccionar filas
     pagination: true,
     rowsPerPage: 5,
     rowsPerPageOptions: [5, 10, 15],
@@ -151,7 +149,7 @@ const TableBasicAlumnos = () => {
       },
     },
   ];
-{/*test*/}
+
   return (
     <div className={style["table"]}>
       <div className={style["border"]}>

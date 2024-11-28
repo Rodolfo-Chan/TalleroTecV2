@@ -385,3 +385,69 @@ color: #00c3ff; /* Change text color on hover */
 .sidebar nav ul li ul li a .icon {
   margin-right: 10px;
 }
+
+.sidebar ul .submenu {
+  list-style: none;
+  padding: 0 0 0 20px; /* Indentar el submenú */
+  margin: 10px 0;
+}
+
+.sidebar ul .submenu li {
+  margin: 10px 0;
+}
+
+.sidebar ul .submenu li a {
+  color: #b0b0b0; /* Color más claro para diferenciar los submenús */
+  font-size: 0.9rem; /* Reducir el tamaño del texto */
+}
+.submenu {
+  list-style: none;
+  padding-left: 20px;
+}
+
+.submenu-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+/* Agrega estos estilos al archivo Sidebar.css */
+
+.submenu {
+  list-style-type: none;
+  padding-left: 20px;
+  display: none; /* Se oculta inicialmente */
+}
+
+.submenu-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  color: #555;
+}
+
+.submenu li {
+  padding: 5px 0;
+}
+
+.submenu li a {
+  color: #aaa;
+}
+
+.submenu li a:hover {
+  color: #fff;
+}
+
+.submenu.open {
+  display: block; /* Se muestra cuando el submenú está abierto */
+}
+.contenedor-imagen {
+  text-align: center;
+}
+
+.imagentecnm {
+  width: 200px;
+  height: 180px;
+  margin: 0 auto;
+  margin-bottom: 20px;  /* Establece un margen inferior para la imagen */
+}

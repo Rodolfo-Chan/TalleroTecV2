@@ -1,9 +1,11 @@
+
 // import React from 'react';
 //import '../components/styles.css'; // Asegúrate de que la ruta sea correcta
-import TableBasicAlumnos from '../Data-Tables/datatable-alumnos-en-proceso/TableBasicAlumnos';
+//import TableBasicAlumnos from '../Data-Tables/datatable-alumnos-en-proceso/TableBasicAlumnos';
 import style from "../pages/css/alumnos.module.css"
  import Button from '../components/Button/Button';
 import { useNavigate } from "react-router-dom";
+import TableBasicAlumnos from "../Data-Tables/datatable-alumnos-en-proceso/TableBasicAlumnos";
 
 const   Alumnos = () => {
   const navigate = useNavigate();
@@ -23,7 +25,7 @@ const   Alumnos = () => {
     </div>
   </div>
                 <div>
-                    <TableBasicAlumnos /> 
+                    {<TableBasicAlumnos />}
                 </div>
         </section>
       </main>

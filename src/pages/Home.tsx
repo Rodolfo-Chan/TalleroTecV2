@@ -1,10 +1,13 @@
-import { useState, useEffect } from "react";
+
+import React, { useState, useEffect } from "react";
 import style from "../pages/css/home.module.css";
 import { PiStudentFill } from "react-icons/pi";
 import { MdOutlineSportsKabaddi, MdSportsVolleyball } from "react-icons/md";
 import { TbLocationStar } from "react-icons/tb";
 import Grafico from "../components/Graficos/Grafico";
 import Grafico2 from "../components/Graficos/Grafico2";
+import { SiHomeadvisor } from "react-icons/si";
+import { FcGoogle } from "react-icons/fc";
 
 type TallerSubgrupo = {
   ubicacion: string;
@@ -17,10 +20,20 @@ type TallerSupergrupo = {
 };
 
 const Home = () => {
+
   const [alumnosCount, setAlumnosCount] = useState(0);
   const [talleresSupergrupoCount, setTalleresSupergrupoCount] = useState(0);
   const [instructoresCount, setInstructoresCount] = useState(0);
   const [locacionesCount, setLocacionesCount] = useState(0);
+  
+  const [userEmail, setUserEmail] = useState('');
+
+  useEffect(() => {
+    const email = localStorage.getItem('userEmail');
+    if (email) {
+      setUserEmail(email);
+    }
+  }, []);
 
   // Obtener datos de las APIs
   useEffect(() => {
@@ -63,16 +76,25 @@ const Home = () => {
         <div className={`${style['header-content']}`}>
           <h1 className={`${style['titulo']}`}>DEPARTAMENTO DE ACTIVIDADES EXTRAESCOLARES</h1>
         </div>
+        
       </header>
 
       <main className={`${style['main-content']}`}>
+      <p>
+            <FcGoogle />
+            {userEmail || "Usuario no identificado"}
+          </p>
         <section className={`${style['cards']}`}>
           <div className={`${style['card']}`}>
             <div className={`${style['card-content']}`}>
               <div className={`${style['card-text']}`}>
+
+
+
                 <h2>Alumnos Activos</h2>
                 <p>{alumnosCount}</p>
               </div>
+
               <PiStudentFill className={`${style['card-icon']}`} />
             </div>
           </div>
@@ -88,7 +110,23 @@ const Home = () => {
 
           <div className={`${style['card']}`}>
             <div className={`${style['card-content']}`}>
-              <div className={`${style['card-text']}`}>
+
+              <PiStudentFill className={style['card-icon']} />
+            </div>
+          </div>
+          <div className={style['card']}>
+            <div className={style['card-content']}>
+              <div className={style['card-text']}>
+                <h2>Talleres habilitados</h2>
+                <p>21</p>
+              </div>
+              <MdSportsVolleyball className={style['card-icon']} />
+            </div>
+          </div>
+          <div className={style['card']}>
+            <div className={style['card-content']}>
+              <div className={style['card-text']}>
+
                 <h2>Instructores</h2>
                 <p>{instructoresCount}</p>
               </div>

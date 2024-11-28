@@ -2,6 +2,9 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import style from "../pages/css/homealumno.module.css";
 import ImageCarrusel from "../components/Carrusel/ImageCarrusel";
+import { FcGoogle } from "react-icons/fc";
+
+
 
 interface Subgrupo {
   id_taller_registro: number;
@@ -13,6 +16,7 @@ interface Subgrupo {
   estatus_card: boolean;
   tipo_taller: string;
 }
+
 
 interface Supergrupo {
   id_taller_catalogo: number;
@@ -28,11 +32,20 @@ interface Inscripcion {
 }
 
 const HomeAlumno = () => {
-  const navigate = useNavigate();
+
   const [talleres, setTalleres] = useState<any[]>([]);
   const [periodosBloqueados, setPeriodosBloqueados] = useState<string[]>([]);
   const idAlumno = 5; // Usamos el ID del alumno fijo para el bloqueo de las cards que sean del mismo periodo escolar pero puedes poner el localstorach bro para saber que alumno esta accediendo
+  const navigate = useNavigate(); // Hook de React Router para la navegación
+  const [userEmail, setUserEmail] = useState(""); // Mover el hook aquí
 
+  // Hook para obtener el correo electrónico del localStorage
+  useEffect(() => {
+    const email = localStorage.getItem("userEmail");
+    if (email) {
+      setUserEmail(email);
+    }
+  }, []);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -95,18 +108,30 @@ const HomeAlumno = () => {
       navigate(`/HomeAlumno/FormInscripcionAlumno/${taller.id}`, {
         state: { tallerData: taller },
       });
+
+
+
     }
   };
 
   return (
-    <div className={`${style["home-container"]}`}>
-      <header className={`${style["header"]}`}>
-        <div className={`${style["header-content"]}`}>
+
+    <div className={`${style['home-container']}`}>
+      <header className={`${style['header']}`}>
+        
+        <div className={`${style['header-content']}`}>
           <ImageCarrusel />
-          <h1 className={`${style["text"]}`}>Seleccione el taller de su preferencia</h1>
-          <p className={`${style["nota"]}`}>
+          
+          <h1 className={`${style['text']}`}>Seleccione el taller de su preferencia</h1>
+          <p>
+          <FcGoogle />
+          {userEmail || "Usuario no identificado"}
+        </p>
+          <p className={`${style['nota']}`}>
+
             Nota: Los talleres se activan en fechas específicas y solo se puede seleccionar un taller por periodo. Verifique que el taller no interfiera con sus actividades académicas.
           </p>
+
         </div>
       </header>
 

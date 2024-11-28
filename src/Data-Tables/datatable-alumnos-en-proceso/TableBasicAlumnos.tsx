@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import MUIDataTable, { FilterType, Responsive } from "mui-datatables";
+import MUIDataTable from "mui-datatables";
 import style from "./tablebasic-alumnos.module.css";
 import { Link } from "react-router-dom";
 import ButtonUpdate from "../../components/Button-Options-CRUD/Button-Update/ButtonUpdate";
-import ModalHOC from "../../components/Modal/Modal";
 import { Edit } from "@mui/icons-material";
 import axios from "axios";
+import ModalHOC from "../../components/Modals/Modals"; // Ajusta la ruta según la ubicación de tu componente
+
 
 interface Alumno {
   id_alumno: number;
@@ -154,14 +155,17 @@ const TableBasicAlumnos = () => {
     <div className={style["table"]}>
       <div className={style["border"]}>
         <MUIDataTable title="Lista de alumnos" data={data} columns={columns} options={options} />
-        <ModalHOC show={showModal} hide={() => setShowModal(false)} activeHide={false}>
-          <div className={style["info-modal"]}>
-            <p>¿Estás seguro de eliminar este alumno?</p>
-          </div>
-        </ModalHOC>
+        {showModal && (
+          <ModalHOC show={showModal} hide={() => setShowModal(false)} activeHide={false}>
+            <div className={style["info-modal"]}>
+              <p>¿Estás seguro de eliminar este alumno?</p>
+            </div>
+          </ModalHOC>
+        )}
       </div>
     </div>
   );
 };
 
 export default TableBasicAlumnos;
+

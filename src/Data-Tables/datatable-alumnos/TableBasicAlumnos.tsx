@@ -58,7 +58,7 @@ const TableBasicAlumnos = () => {
   //   if (selectedUserId) {
   //     try {
   //       // Realiza la solicitud DELETE a la API
-  //       await axios.delete(https://drftallerotecdj.onrender.com/talleres/api/alumnos/${selectedUserId}/);
+  //       await axios.delete(`https://drftallerotecdj.onrender.com/talleres/api/alumnos/${selectedUserId}/`);
         
   //       // Actualiza el estado local para eliminar el alumno
   //       const updatedData = data.filter(user => user.id !== selectedUserId);
@@ -73,79 +73,112 @@ const TableBasicAlumnos = () => {
 
   const columns = [
     {
-      name: "Matricula",
+      name: "matricula_alumno",
+      label: "Matrícula",
       options: {
-        setCellProps: () => ({ style: { textAlign: 'center' } }),
-        setCellHeaderProps: () => ({ style: { textAlign: 'center', fontWeight: 'bold' } }),
+        setCellProps: () => ({ style: { textAlign: "center" } }),
+        setCellHeaderProps: () => ({ style: { textAlign: "center", fontWeight: "bold" } }),
       },
     },
     {
-      name: "Nombre",
+      name: "nombre",
+      label: "Nombre",
       options: {
-        setCellProps: () => ({ style: { textAlign: 'center' } }),
-        setCellHeaderProps: () => ({ style: { textAlign: 'center', fontWeight: 'bold' } }),
+        setCellProps: () => ({ style: { textAlign: "center" } }),
+        setCellHeaderProps: () => ({ style: { textAlign: "center", fontWeight: "bold" } }),
       },
     },
     {
-      name: "Apellidos",
+      name: "apellido_paterno",
+      label: "Apellido Paterno",
       options: {
-        setCellProps: () => ({ style: { textAlign: 'center' } }),
-        setCellHeaderProps: () => ({ style: { textAlign: 'center', fontWeight: 'bold' } }),
+        setCellProps: () => ({ style: { textAlign: "center" } }),
+        setCellHeaderProps: () => ({ style: { textAlign: "center", fontWeight: "bold" } }),
       },
     },
     {
-      name: "Telefono",
+      name: "apellido_materno",
+      label: "Apellido Materno",
       options: {
-        setCellProps: () => ({ style: { textAlign: 'center' } }),
-        setCellHeaderProps: () => ({ style: { textAlign: 'center', fontWeight: 'bold' } }),
+        setCellProps: () => ({ style: { textAlign: "center" } }),
+        setCellHeaderProps: () => ({ style: { textAlign: "center", fontWeight: "bold" } }),
       },
     },
     {
-      name: "Genero",
+      name: "telefono",
+      label: "Teléfono",
       options: {
-        setCellProps: () => ({ style: { textAlign: 'center' } }),
-        setCellHeaderProps: () => ({ style: { textAlign: 'center', fontWeight: 'bold' } }),
+        setCellProps: () => ({ style: { textAlign: "center" } }),
+        setCellHeaderProps: () => ({ style: { textAlign: "center", fontWeight: "bold" } }),
       },
     },
     {
-      name: "Carrera",
+      name: "genero",
+      label: "Género",
       options: {
-        setCellProps: () => ({ style: { textAlign: 'center' } }),
-        setCellHeaderProps: () => ({ style: { textAlign: 'center', fontWeight: 'bold' } }),
+        setCellProps: () => ({ style: { textAlign: "center" } }),
+        setCellHeaderProps: () => ({ style: { textAlign: "center", fontWeight: "bold" } }),
       },
     },
     {
-      name: "Puntos",
+      name: "carrera",
+      label: "Carrera",
       options: {
-        setCellProps: () => ({ style: { textAlign: 'center' } }),
-        setCellHeaderProps: () => ({ style: { textAlign: 'center', fontWeight: 'bold' } }),
+        setCellProps: () => ({ style: { textAlign: "center" } }),
+        setCellHeaderProps: () => ({ style: { textAlign: "center", fontWeight: "bold" } }),
+      },
+    },
+    {
+      name: "semestre",
+      label: "Semestre",
+      options: {
+        setCellProps: () => ({ style: { textAlign: "center" } }),
+        setCellHeaderProps: () => ({ style: { textAlign: "center", fontWeight: "bold" } }),
+      },
+    },
+    {
+      name: "email",
+      label: "Email",
+      options: {
+        setCellProps: () => ({ style: { textAlign: "center" } }),
+        setCellHeaderProps: () => ({ style: { textAlign: "center", fontWeight: "bold" } }),
+      },
+    },
+    {
+      name: "nivel_acceso",
+      label: "Nivel de Acceso",
+      options: {
+        setCellProps: () => ({ style: { textAlign: "center" } }),
+        setCellHeaderProps: () => ({ style: { textAlign: "center", fontWeight: "bold" } }),
       },
     },
     {
       name: "Opción",
       options: {
-        setCellProps: () => ({ style: { textAlign: 'center' } }),
-        setCellHeaderProps: () => ({ style: { textAlign: 'center', fontWeight: 'bold' } }),
+        setCellProps: () => ({ style: { textAlign: "center" } }),
+        setCellHeaderProps: () => ({ style: { textAlign: "center", fontWeight: "bold" } }),
         customBodyRenderLite: (dataIndex: number) => {
           const userId = data[dataIndex].id;
           return (
-            <div className={style['buton-crud']}>
-  <Link to={`/Alumnos/FromAlumnosActualizar/${userId}`}>
-    <ButtonUpdate
-      onClick={() => {
-        console.log("presionado para editar");
-      }}
-      icon={<Edit />}
-      tooltip="Editar"
-    />
-  </Link>
-  {/* Aquí puedes habilitar el botón de eliminar si lo necesitas */}
-  {/* <ButtonDelete
-    onClick={() => handleDelete(userId)}
-    icon={<Delete />}
-    tooltip="Eliminar"
-  /> */}
-</div>
+
+            <div className={`${style['buton-crud']}`}>
+              <Link to={`/Alumnos/FromAlumnosActualizar/${userId}`}>
+                <ButtonUpdate
+                  onClick={() => {
+                    console.log("presionado para editar");
+                  }}
+                  icon={<Edit />}
+                  tooltip="Editar"
+                />
+              </Link>
+              {/* <ButtonDelete
+                onClick={() => handleDelete(userId)}
+                icon={<Delete />}
+                tooltip="Eliminar"
+              /> */}
+            </div>
+
+            
 
           );
         },
@@ -188,11 +221,11 @@ const fetchData = async () => {
           id: alumno.id_alumno,
           Matricula: alumno.matricula_alumno,
           Nombre: alumno.nombre,
-          Apellidos: ${alumno.apellido_paterno} ${alumno.apellido_materno},
+          Apellidos: `${alumno.apellido_paterno} ${alumno.apellido_materno}`,
           Telefono: alumno.telefono,
           Genero: alumno.genero.charAt(0).toUpperCase() + alumno.genero.slice(1),
           Carrera: alumno.carrera,
-          Puntos: ${puntos}/200, // Muestra el total de puntos
+          Puntos: `${puntos}/200`, // Muestra el total de puntos
         };
       })
       .filter((alumno) => parseInt(alumno.Puntos) < 200); // Filtrar alumnos con menos de 200 puntos
@@ -212,6 +245,7 @@ useEffect(() => {
     filterType: "checkbox" as FilterType,
     responsive: "standard" as Responsive, 
     sort: false,
+
     print:false,
     filter:true,
     download:false,
@@ -226,7 +260,7 @@ useEffect(() => {
       },
       toolbar: {
         search: "Buscar alumno",
-        downloadCsv: "Descargar  lista en formato CSV",
+        downloadCsv: "Descargar lista en formato CSV",
         print: "Imprimir",
         viewColumns: "Ver columnas",
         filterTable: "Filtrar tabla",
@@ -253,8 +287,9 @@ useEffect(() => {
   };
 
   return (
-    <div className={${style["table"]}}>
-      <div className={${style["border"]}}>
+
+    <div className={`${style["table"]}`}>
+      <div className={`${style["border"]}`}>
         <MUIDataTable
           title={"Lista de alumnos"}
           data={data}
@@ -267,15 +302,16 @@ useEffect(() => {
           hide={() => setShowModal(false)}
           activeHide={false}
         >
-          <div className={${style['info-modal']}}>
+          <div className={`${style['info-modal']}`}>
             <p>
               ¿Estás seguro de eliminar este alumno?
             </p>
-            {/* <div className={${style['button-modal']}}>
+            {/* <div className={`${style['button-modal']}`}>
               <ButtonModal
                 onClick={handleConfirmDelete}
                 label="Si, eliminar"
               />
+>>>>>>> 8b6eee0a42a95509d02f224fca6cef9993bbafb1:src/Data-Tables/datatable-alumnos-en-proceso/TableBasicAlumnos.tsx
               <span style={{ margin: "0 5px" }}></span>
               <ButtonModal
                 onClick={() => setShowModal(false)}

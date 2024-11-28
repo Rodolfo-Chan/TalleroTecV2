@@ -6,8 +6,8 @@ import ButtonUpdate from "../../components/Button-Options-CRUD/Button-Update/But
 // import ButtonDelete from "../../components/Button-Options-CRUD/Button-Delete/ButtonDelete";
 import ModalHOC from "../../components/Modal/Modal";
 // import ButtonModal from "../../components/ButtonModal/ButtonModal";
-import { Edit } from '@mui/icons-material';
-import axios from 'axios';
+import { Edit } from "@mui/icons-material";
+import axios from "axios";
 
 // Define las interfaces para los datos
 interface Alumno {
@@ -46,64 +46,105 @@ interface AlumnoTable {
 
 const TableBasicAlumnos = () => {
   const [showModal, setShowModal] = useState(false);
-  // const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
-  const [data, setData] = useState<AlumnoTable[]>([]); // Usa la interfaz AlumnoTable
+  const [data, setData] = useState<AlumnoTable[]>([]); // Define el estado con tipificación
 
-  // const handleDelete = (userId: number) => {
-  //   // ... your delete logic here
-  // };
+  // Función para cargar los datos de la API
+  const fetchData = async () => {
+    try {
+      // Obtener datos de alumnos
+      const alumnosResponse = await axios.get<Alumno[]>(
+        "https://drftallerotecdj.onrender.com/talleres/api/alumnos/"
+      );
+      const alumnos = alumnosResponse.data;
 
-  // const handleConfirmDelete = async () => {
-  //   // ... your confirm delete logic here
-  // };
+      // Obtener datos de inscripciones
+      const inscripcionesResponse = await axios.get<Inscripcion[]>(
+        "https://drftallerotecdj.onrender.com/talleres/api/inscripciones/"
+      );
+      const inscripciones = inscripcionesResponse.data;
+
+      // Obtener datos de talleres
+      const talleresResponse = await axios.get<Taller[]>(
+        "https://drftallerotecdj.onrender.com/talleres/api/talleres_subgrupos/"
+      );
+      const talleres = talleresResponse.data;
+
+      // Crear un diccionario de puntos de talleres para acceso rápido
+      const puntosTalleres = talleres.reduce<Record<number, number>>(
+        (acc, taller) => {
+          acc[taller.id_taller_registro] = taller.puntos_taller;
+          return acc;
+        },
+        {}
+      );
+
+      // Calcular puntos acreditados para cada alumno
+      const alumnosData: AlumnoTable[] = alumnos
+        .map((alumno) => {
+          const puntos = inscripciones
+            .filter(
+              (inscripcion) =>
+                inscripcion.id_alumno === alumno.id_alumno &&
+                inscripcion.estatus === "Acreditado"
+            )
+            .reduce((sum, inscripcion) => {
+              const puntosTaller =
+                puntosTalleres[inscripcion.id_taller_registro] || 0;
+              return sum + puntosTaller;
+            }, 0);
+
+          return {
+            id: alumno.id_alumno,
+            Matricula: alumno.matricula_alumno,
+            Nombre: alumno.nombre,
+            Apellidos: `${alumno.apellido_paterno} ${alumno.apellido_materno}`,
+            Telefono: alumno.telefono,
+            Genero: alumno.genero.charAt(0).toUpperCase() + alumno.genero.slice(1),
+            Carrera: alumno.carrera,
+            Puntos: `${puntos}/200`, // Muestra el total de puntos
+          };
+        })
+        .filter((alumno) => parseInt(alumno.Puntos) < 200); // Filtrar alumnos con menos de 200 puntos
+
+      setData(alumnosData);
+    } catch (error) {
+      console.error("Error al obtener los datos de la API", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const columns = [
-    {
-      name: "Matricula",
-      options: {
-        setCellProps: () => ({ style: { textAlign: 'center' } }),
-        setCellHeaderProps: () => ({ style: { textAlign: 'center', fontWeight: 'bold' } }),
-      },
-    },
-    // ... other columns
+    { name: "Matricula" },
+    { name: "Nombre" },
+    { name: "Apellidos" },
+    { name: "Telefono" },
+    { name: "Genero" },
+    { name: "Carrera" },
+    { name: "Puntos" },
     {
       name: "Opción",
       options: {
-        setCellProps: () => ({ style: { textAlign: 'center' } }),
-        setCellHeaderProps: () => ({ style: { textAlign: 'center', fontWeight: 'bold' } }),
+        setCellProps: () => ({ style: { textAlign: "center" } }),
         customBodyRenderLite: (dataIndex: number) => {
           const userId = data[dataIndex].id;
           return (
-            <div className={`${style['buton-crud']}`}>
+            <div className={style["buton-crud"]}>
               <Link to={`/Alumnos/FromAlumnosActualizar/${userId}`}>
                 <ButtonUpdate
-                  onClick={() => {
-                    console.log("presionado para editar");
-                  }}
+                  onClick={() => console.log("Presionado para editar")}
                   icon={<Edit />}
                   tooltip="Editar"
                 />
               </Link>
-              {/* <ButtonDelete
-                onClick={() => handleDelete(userId)}
-                icon={<Delete />}
-                tooltip="Eliminar"
-              /> */}
             </div>
           );
         },
       },
     },
   ];
-
-  // Función para cargar los datos de la API
-  const fetchData = async () => {
-    // ... your data fetching logic here
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
 
   const options = {
     filterType: "checkbox" as FilterType,
@@ -122,35 +163,22 @@ const TableBasicAlumnos = () => {
       },
       toolbar: {
         search: "Buscar alumno",
-        downloadCsv: "Descargar  lista en formato CSV",
-        print: "Imprimir",
-        viewColumns: "Ver columnas",
-        filterTable: "Filtrar tabla",
       },
       filter: {
         all: "Todos",
         title: "FILTROS",
         reset: "REINICIAR",
       },
-      viewColumns: {
-        title: "Mostrar columnas",
-        titleAria: "Mostrar/Ocultar columnas de la tabla",
-      },
-      selectedRows: {
-        text: "filas(s) seleccionadas",
-        delete: "Eliminar",
-        deleteAria: "Eliminar filas seleccionadas",
-      },
     },
     selectableRows: "none" as const,
     pagination: true,
     rowsPerPage: 5,
-    rowsPerPageOptions: [5, 10, 15], 
+    rowsPerPageOptions: [5, 10, 15],
   };
 
   return (
-    <div className={`${style["table"]}`}>
-      <div className={`${style["border"]}`}>
+    <div className={style["table"]}>
+      <div className={style["border"]}>
         <MUIDataTable
           title={"Lista de alumnos"}
           data={data}
@@ -163,21 +191,8 @@ const TableBasicAlumnos = () => {
           hide={() => setShowModal(false)}
           activeHide={false}
         >
-          <div className={`${style['info-modal']}`}>
-            <p>
-              ¿Estás seguro de eliminar este alumno?
-            </p>
-            {/* <div className={`${style['button-modal']}`}>
-              <ButtonModal
-                onClick={handleConfirmDelete}
-                label="Si, eliminar"
-              />
-              <span style={{ margin: "0 5px" }}></span>
-              <ButtonModal
-                onClick={() => setShowModal(false)}
-                label="Cancelar"
-              />
-            </div> */}
+          <div className={style["info-modal"]}>
+            <p>¿Estás seguro de eliminar este alumno?</p>
           </div>
         </ModalHOC>
       </div>

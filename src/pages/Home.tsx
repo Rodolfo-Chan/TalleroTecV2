@@ -25,7 +25,7 @@ const Home = () => {
   const [talleresSupergrupoCount, setTalleresSupergrupoCount] = useState(0);
   const [instructoresCount, setInstructoresCount] = useState(0);
   const [locacionesCount, setLocacionesCount] = useState(0);
-  
+
   const [userEmail, setUserEmail] = useState('');
 
   useEffect(() => {
@@ -50,7 +50,7 @@ const Home = () => {
 
         // Filtrar los talleres habilitados (estatus_taller === true)
         const talleresHabilitados = data.filter(taller => taller.estatus_taller === true);
-        setTalleresSupergrupoCount(talleresHabilitados.length); 
+        setTalleresSupergrupoCount(talleresHabilitados.length);
       })
       .catch((error) => console.error("Error fetching supergrupos:", error));
 
@@ -76,14 +76,14 @@ const Home = () => {
         <div className={`${style['header-content']}`}>
           <h1 className={`${style['titulo']}`}>DEPARTAMENTO DE ACTIVIDADES EXTRAESCOLARES</h1>
         </div>
-        
+
       </header>
 
       <main className={`${style['main-content']}`}>
-      <p>
-            <FcGoogle />
-            {userEmail || "Usuario no identificado"}
-          </p>
+        <p>
+          <FcGoogle />
+          {userEmail || "Usuario no identificado"}
+        </p>
         <section className={`${style['cards']}`}>
           <div className={`${style['card']}`}>
             <div className={`${style['card-content']}`}>

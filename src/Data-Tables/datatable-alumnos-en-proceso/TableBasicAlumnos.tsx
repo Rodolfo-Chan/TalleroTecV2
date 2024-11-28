@@ -155,13 +155,7 @@ const TableBasicAlumnos = () => {
     <div className={style["table"]}>
       <div className={style["border"]}>
         <MUIDataTable title="Lista de alumnos" data={data} columns={columns} options={options} />
-        {showModal && (
-          <ModalHOC show={showModal} hide={() => setShowModal(false)} activeHide={false}>
-            <div className={style["info-modal"]}>
-              <p>¿Estás seguro de eliminar este alumno?</p>
-            </div>
-          </ModalHOC>
-        )}
+        
       </div>
     </div>
   );

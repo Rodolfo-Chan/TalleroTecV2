@@ -151,7 +151,7 @@ const TableBasicAlumnos = () => {
       },
     },
   ];
-
+{/*test*/}
   return (
     <div className={style["table"]}>
       <div className={style["border"]}>

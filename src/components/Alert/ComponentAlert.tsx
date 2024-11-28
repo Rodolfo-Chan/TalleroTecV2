@@ -1,6 +1,6 @@
 import React from "react";
 import Alert from "@mui/material/Alert";
-import style from "../alert/component-alert.module.css";
+import style from "./component-alert.module.css";
 
 interface ComponentAlertProps {
   open: boolean;

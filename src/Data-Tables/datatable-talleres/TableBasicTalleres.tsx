@@ -4,9 +4,9 @@ import style from "../datatable-talleres/tablebasic-talleres.module.css";
 import { Link } from "react-router-dom";
 //import ButtonCrud from "../../components/button-options-CRUD/ButtonCrud";
 import ModalHOC from "../../components/Modal/Modal";
-import ButtonDelete from "../../components/Button-Options-CRUD/Button-Delete/ButtonDelete";
+// import ButtonDelete from "../../components/Button-Options-CRUD/Button-Delete/ButtonDelete";
 import ButtonUpdate from "../../components/Button-Options-CRUD/Button-Update/ButtonUpdate";
-import { Edit, Delete } from '@mui/icons-material'; 
+import { Edit} from '@mui/icons-material'; 
 //import ButtonModal from "../../components/ButtonModal/ButtonModal";
 import axios from "axios";
 import DescargarArchivoReportes from "../../components/Documentos/Descargararchivoreportes/DescargarArchivoReportes";
@@ -52,29 +52,29 @@ interface TallerCrearTable {
 
 const TableBasicTalleres = () => {
   const [showModal, setShowModal] = useState(false); 
-  const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
+  // const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
   const [data, setData] = useState<TallerCrearTable[]>([]); // Usa la interfaz TallereCrearTable
   
 
-  const handleDelete = (userId: number) => {
-    setSelectedUserId(userId)
-    setShowModal(true); 
-  };
+  // const handleDelete = (userId: number) => {
+  //   setSelectedUserId(userId)
+  //   setShowModal(true); 
+  // };
 
-  const handleConfirmDelete = async () => {
-    if (selectedUserId) {
-      try {
-        // Realiza la solicitud DELETE a la API
-        await axios.delete(`https://drftallerotecdj.onrender.com/talleres/api/talleres_subgrupos/${selectedUserId}/`);
+  // const handleConfirmDelete = async () => {
+  //   if (selectedUserId) {
+  //     try {
+  //       // Realiza la solicitud DELETE a la API
+  //       await axios.delete(`https://drftallerotecdj.onrender.com/talleres/api/talleres_subgrupos/${selectedUserId}/`);
         
-        const updatedData = data.filter(user => user.id !== selectedUserId);
-        setData(updatedData);
-        setShowModal(false);
-      } catch (error) {
-        console.error("Error al eliminar el taller", error);
-      }
-    }
-  };
+  //       const updatedData = data.filter(user => user.id !== selectedUserId);
+  //       setData(updatedData);
+  //       setShowModal(false);
+  //     } catch (error) {
+  //       console.error("Error al eliminar el taller", error);
+  //     }
+  //   }
+  // };
 
 
 
@@ -183,11 +183,11 @@ const TableBasicTalleres = () => {
                 />
               </Link>
             
-              <ButtonDelete
+              {/* <ButtonDelete
                 onClick={() => handleDelete(userId)}
                 icon={<Delete />}
                 tooltip="Eliminar"
-              />
+              /> */}
             </div>
           );
         },

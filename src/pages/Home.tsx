@@ -107,13 +107,6 @@ const Home = () => {
               <MdSportsVolleyball className={`${style['card-icon']}`} />
             </div>
           </div>
-
-          <div className={`${style['card']}`}>
-            <div className={`${style['card-content']}`}>
-
-              <PiStudentFill className={style['card-icon']} />
-            </div>
-          </div>
           <div className={style['card']}>
             <div className={style['card-content']}>
               <div className={style['card-text']}>

@@ -7,7 +7,7 @@ import ModalHOC from "../../components/Modal/Modal";
 import ButtonDelete from "../../components/Button-Options-CRUD/Button-Delete/ButtonDelete";
 import ButtonUpdate from "../../components/Button-Options-CRUD/Button-Update/ButtonUpdate";
 import { Edit, Delete } from '@mui/icons-material'; 
-import ButtonModal from "../../components/ButtonModal/ButtonModal";
+//import ButtonModal from "../../components/ButtonModal/ButtonModal";
 import axios from "axios";
 import DescargarArchivoReportes from "../../components/Documentos/Descargararchivoreportes/DescargarArchivoReportes";
 // import DescargarArchivo from "../../components/Documentos/Descargararchivo/DescargarArchivo";

@@ -298,7 +298,7 @@ const TableBasicTalleres = () => {
               ¿Estás seguro de eliminar este taller?
             </p>
             <div className ={`${style['button-modal']}`}>
-
+{/** 
             <ButtonModal
                 onClick={handleConfirmDelete}
                 label="Si, eliminar"
@@ -307,7 +307,7 @@ const TableBasicTalleres = () => {
               <ButtonModal
                 onClick={() => setShowModal(false)}
                 label="Cancelar"
-              />
+              />*/}
             </div>
           </div>
         </ModalHOC>

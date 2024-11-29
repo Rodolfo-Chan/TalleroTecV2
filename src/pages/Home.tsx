@@ -117,15 +117,6 @@ const Home = () => {
           <div className={style['card']}>
             <div className={style['card-content']}>
               <div className={style['card-text']}>
-                <h2>Talleres habilitados</h2>
-                <p>21</p>
-              </div>
-              <MdSportsVolleyball className={style['card-icon']} />
-            </div>
-          </div>
-          <div className={style['card']}>
-            <div className={style['card-content']}>
-              <div className={style['card-text']}>
 
                 <h2>Instructores</h2>
                 <p>{instructoresCount}</p>

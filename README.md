@@ -1,50 +1,27 @@
 # React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Frontend - TalleroTec
 
-Currently, two official plugins are available:
+Este proyecto corresponde al **frontend** de la plataforma **TalleroTec**, una herramienta web diseñada para gestionar los talleres deportivos del Tecnológico de Tizimín. La interfaz fue desarrollada con **React** y **TypeScript**, ofreciendo una experiencia de usuario moderna, rápida y responsiva.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🧩 Características principales
 
-## Expanding the ESLint configuration
+- Interfaz clara y amigable para alumnos, instructores y administradores.
+- Panel de administración con navegación por sidebar y autenticación por roles.
+- Visualización de talleres disponibles, inscripciones y créditos complementarios.
+- Acceso seguro mediante autenticación con tokens.
+- Estilos personalizados con CSS Modules y soporte para modo claro/oscuro (opcional).
+- Soporte para pantallas móviles, tabletas y escritorios (responsive design).
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## 🛠️ Tecnologías utilizadas
 
-- Configure the top-level `parserOptions` property like this:
+- **React** + **TypeScript**
+- **React Router Dom** para navegación
+- **Axios** para consumo de API REST (Django)
+- **CSS Modules** para estilos por componente
+- **Vite** como bundler para desarrollo rápido
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+## 🔗 Backend del proyecto
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+Este frontend se conecta con el backend desarrollado en Django
 ```
